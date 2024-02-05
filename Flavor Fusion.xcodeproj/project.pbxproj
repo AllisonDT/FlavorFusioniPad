@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE02B7F62B719A9F0093AA4F /* Flavor_FusionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B7F52B719A9F0093AA4F /* Flavor_FusionApp.swift */; };
+		BE02B7F82B719A9F0093AA4F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B7F72B719A9F0093AA4F /* ContentView.swift */; };
+		BE02B7FA2B719AA00093AA4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE02B7F92B719AA00093AA4F /* Assets.xcassets */; };
+		BE02B7FE2B719AA00093AA4F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE02B7FD2B719AA00093AA4F /* Preview Assets.xcassets */; };
+		BE02B8082B719AA10093AA4F /* Flavor_FusionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */; };
+		BE02B8122B719AA10093AA4F /* Flavor_FusionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */; };
+		BE02B8142B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BE02B8042B719AA10093AA4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE02B7EA2B719A9F0093AA4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE02B7F12B719A9F0093AA4F;
+			remoteInfo = "Flavor Fusion";
+		};
+		BE02B80E2B719AA10093AA4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE02B7EA2B719A9F0093AA4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE02B7F12B719A9F0093AA4F;
+			remoteInfo = "Flavor Fusion";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flavor Fusion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B7F52B719A9F0093AA4F /* Flavor_FusionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionApp.swift; sourceTree = "<group>"; };
+		BE02B7F72B719A9F0093AA4F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BE02B7F92B719AA00093AA4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE02B7FB2B719AA00093AA4F /* Flavor_Fusion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flavor_Fusion.entitlements; sourceTree = "<group>"; };
+		BE02B7FD2B719AA00093AA4F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionTests.swift; sourceTree = "<group>"; };
+		BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITests.swift; sourceTree = "<group>"; };
+		BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE02B7EF2B719A9F0093AA4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B8002B719AA10093AA4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B80A2B719AA10093AA4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE02B7E92B719A9F0093AA4F = {
+			isa = PBXGroup;
+			children = (
+				BE02B7F42B719A9F0093AA4F /* Flavor Fusion */,
+				BE02B8062B719AA10093AA4F /* Flavor FusionTests */,
+				BE02B8102B719AA10093AA4F /* Flavor FusionUITests */,
+				BE02B7F32B719A9F0093AA4F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BE02B7F32B719A9F0093AA4F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */,
+				BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */,
+				BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE02B7F42B719A9F0093AA4F /* Flavor Fusion */ = {
+			isa = PBXGroup;
+			children = (
+				BE02B7F52B719A9F0093AA4F /* Flavor_FusionApp.swift */,
+				BE02B7F72B719A9F0093AA4F /* ContentView.swift */,
+				BE02B7F92B719AA00093AA4F /* Assets.xcassets */,
+				BE02B7FB2B719AA00093AA4F /* Flavor_Fusion.entitlements */,
+				BE02B7FC2B719AA00093AA4F /* Preview Content */,
+			);
+			path = "Flavor Fusion";
+			sourceTree = "<group>";
+		};
+		BE02B7FC2B719AA00093AA4F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BE02B7FD2B719AA00093AA4F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BE02B8062B719AA10093AA4F /* Flavor FusionTests */ = {
+			isa = PBXGroup;
+			children = (
+				BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */,
+			);
+			path = "Flavor FusionTests";
+			sourceTree = "<group>";
+		};
+		BE02B8102B719AA10093AA4F /* Flavor FusionUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */,
+				BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */,
+			);
+			path = "Flavor FusionUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE02B7F12B719A9F0093AA4F /* Flavor Fusion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion" */;
+			buildPhases = (
+				BE02B7EE2B719A9F0093AA4F /* Sources */,
+				BE02B7EF2B719A9F0093AA4F /* Frameworks */,
+				BE02B7F02B719A9F0093AA4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flavor Fusion";
+			productName = "Flavor Fusion";
+			productReference = BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BE02B8022B719AA10093AA4F /* Flavor FusionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionTests" */;
+			buildPhases = (
+				BE02B7FF2B719AA10093AA4F /* Sources */,
+				BE02B8002B719AA10093AA4F /* Frameworks */,
+				BE02B8012B719AA10093AA4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BE02B8052B719AA10093AA4F /* PBXTargetDependency */,
+			);
+			name = "Flavor FusionTests";
+			productName = "Flavor FusionTests";
+			productReference = BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BE02B80C2B719AA10093AA4F /* Flavor FusionUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionUITests" */;
+			buildPhases = (
+				BE02B8092B719AA10093AA4F /* Sources */,
+				BE02B80A2B719AA10093AA4F /* Frameworks */,
+				BE02B80B2B719AA10093AA4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BE02B80F2B719AA10093AA4F /* PBXTargetDependency */,
+			);
+			name = "Flavor FusionUITests";
+			productName = "Flavor FusionUITests";
+			productReference = BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE02B7EA2B719A9F0093AA4F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					BE02B7F12B719A9F0093AA4F = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					BE02B8022B719AA10093AA4F = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = BE02B7F12B719A9F0093AA4F;
+					};
+					BE02B80C2B719AA10093AA4F = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = BE02B7F12B719A9F0093AA4F;
+					};
+				};
+			};
+			buildConfigurationList = BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE02B7E92B719A9F0093AA4F;
+			productRefGroup = BE02B7F32B719A9F0093AA4F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE02B7F12B719A9F0093AA4F /* Flavor Fusion */,
+				BE02B8022B719AA10093AA4F /* Flavor FusionTests */,
+				BE02B80C2B719AA10093AA4F /* Flavor FusionUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE02B7F02B719A9F0093AA4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE02B7FE2B719AA00093AA4F /* Preview Assets.xcassets in Resources */,
+				BE02B7FA2B719AA00093AA4F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B8012B719AA10093AA4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B80B2B719AA10093AA4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE02B7EE2B719A9F0093AA4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE02B7F82B719A9F0093AA4F /* ContentView.swift in Sources */,
+				BE02B7F62B719A9F0093AA4F /* Flavor_FusionApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B7FF2B719AA10093AA4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE02B8082B719AA10093AA4F /* Flavor_FusionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE02B8092B719AA10093AA4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE02B8142B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift in Sources */,
+				BE02B8122B719AA10093AA4F /* Flavor_FusionUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BE02B8052B719AA10093AA4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion */;
+			targetProxy = BE02B8042B719AA10093AA4F /* PBXContainerItemProxy */;
+		};
+		BE02B80F2B719AA10093AA4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion */;
+			targetProxy = BE02B80E2B719AA10093AA4F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BE02B8152B719AA10093AA4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BE02B8162B719AA10093AA4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		BE02B8182B719AA10093AA4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Flavor Fusion/Flavor_Fusion.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Flavor Fusion/Preview Content\"";
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BE02B8192B719AA10093AA4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Flavor Fusion/Flavor_Fusion.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Flavor Fusion/Preview Content\"";
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BE02B81B2B719AA10093AA4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-FusionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion";
+			};
+			name = Debug;
+		};
+		BE02B81C2B719AA10093AA4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-FusionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion";
+			};
+			name = Release;
+		};
+		BE02B81E2B719AA10093AA4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-FusionUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Flavor Fusion";
+			};
+			name = Debug;
+		};
+		BE02B81F2B719AA10093AA4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55F8S74UUY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-FusionUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Flavor Fusion";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE02B8152B719AA10093AA4F /* Debug */,
+				BE02B8162B719AA10093AA4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE02B8182B719AA10093AA4F /* Debug */,
+				BE02B8192B719AA10093AA4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE02B81B2B719AA10093AA4F /* Debug */,
+				BE02B81C2B719AA10093AA4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE02B81E2B719AA10093AA4F /* Debug */,
+				BE02B81F2B719AA10093AA4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE02B7EA2B719A9F0093AA4F /* Project object */;
+}
