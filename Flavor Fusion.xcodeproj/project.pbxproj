@@ -14,6 +14,29 @@
 		BE02B8082B719AA10093AA4F /* Flavor_FusionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */; };
 		BE02B8122B719AA10093AA4F /* Flavor_FusionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */; };
 		BE02B8142B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */; };
+		BE1C9D7C2BB8644D00D597FC /* RecipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */; };
+		BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */; };
+		BE1C9D802BB8680000D597FC /* SpiceColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */; };
+		BE35352C2B86B64000806E7D /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352B2B86B64000806E7D /* RecipeDetail.swift */; };
+		BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352D2B86B69100806E7D /* AddRecipeView.swift */; };
+		BE3535302B8707E300806E7D /* SpiceDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352F2B8707E300806E7D /* SpiceDataTests.swift */; };
+		BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3535312B87080B00806E7D /* SpiceRowTests.swift */; };
+		BE70987E2BB0DDEA00E04F11 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987D2BB0DDEA00E04F11 /* List.swift */; };
+		BE7098802BB0DE9400E04F11 /* SpicePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */; };
+		BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7098862BB0E18E00E04F11 /* ListTabView.swift */; };
+		BE70988B2BB0E3D900E04F11 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70988A2BB0E3D900E04F11 /* SettingsView.swift */; };
+		BE70988D2BB0E41300E04F11 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70988C2BB0E41300E04F11 /* AboutView.swift */; };
+		BE7098912BB0E98F00E04F11 /* SpiceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7098902BB0E98F00E04F11 /* SpiceRowView.swift */; };
+		BE7098932BB0E9C200E04F11 /* SpiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7098922BB0E9C200E04F11 /* SpiceRow.swift */; };
+		BE7098992BB0F54600E04F11 /* BlendingNewExistingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7098982BB0F54600E04F11 /* BlendingNewExistingView.swift */; };
+		BE70989E2BB0F95600E04F11 /* RecipeBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70989D2BB0F95600E04F11 /* RecipeBook.swift */; };
+		BE8D1CED2B71A2DD00A71CE9 /* SpiceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8D1CEC2B71A2DD00A71CE9 /* SpiceData.swift */; };
+		BE8D1CF12B71A57400A71CE9 /* SpiceIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8D1CF02B71A57400A71CE9 /* SpiceIndicator.swift */; };
+		BE95D8202BB1D2F300A2E59C /* CreatePasscode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D81F2BB1D2F300A2E59C /* CreatePasscode.swift */; };
+		BE95D8222BB1D2FD00A2E59C /* LoginPasscode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D8212BB1D2FD00A2E59C /* LoginPasscode.swift */; };
+		BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */; };
+		BEDFF4032BB102FF00EF4F56 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFF4022BB102FF00EF4F56 /* RecipeModel.swift */; };
+		BEDFF4052BB1034B00EF4F56 /* RecipeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFF4042BB1034B00EF4F56 /* RecipeStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +68,29 @@
 		BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITests.swift; sourceTree = "<group>"; };
 		BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
+		BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlendView.swift; sourceTree = "<group>"; };
+		BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceColumns.swift; sourceTree = "<group>"; };
+		BE35352B2B86B64000806E7D /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
+		BE35352D2B86B69100806E7D /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
+		BE35352F2B8707E300806E7D /* SpiceDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceDataTests.swift; sourceTree = "<group>"; };
+		BE3535312B87080B00806E7D /* SpiceRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRowTests.swift; sourceTree = "<group>"; };
+		BE70987D2BB0DDEA00E04F11 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpicePopupView.swift; sourceTree = "<group>"; };
+		BE7098862BB0E18E00E04F11 /* ListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTabView.swift; sourceTree = "<group>"; };
+		BE70988A2BB0E3D900E04F11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BE70988C2BB0E41300E04F11 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		BE7098902BB0E98F00E04F11 /* SpiceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRowView.swift; sourceTree = "<group>"; };
+		BE7098922BB0E9C200E04F11 /* SpiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRow.swift; sourceTree = "<group>"; };
+		BE7098982BB0F54600E04F11 /* BlendingNewExistingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendingNewExistingView.swift; sourceTree = "<group>"; };
+		BE70989D2BB0F95600E04F11 /* RecipeBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeBook.swift; sourceTree = "<group>"; };
+		BE8D1CEC2B71A2DD00A71CE9 /* SpiceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceData.swift; sourceTree = "<group>"; };
+		BE8D1CF02B71A57400A71CE9 /* SpiceIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceIndicator.swift; sourceTree = "<group>"; };
+		BE95D81F2BB1D2F300A2E59C /* CreatePasscode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasscode.swift; sourceTree = "<group>"; };
+		BE95D8212BB1D2FD00A2E59C /* LoginPasscode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasscode.swift; sourceTree = "<group>"; };
+		BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeButton.swift; sourceTree = "<group>"; };
+		BEDFF4022BB102FF00EF4F56 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
+		BEDFF4042BB1034B00EF4F56 /* RecipeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +141,14 @@
 		BE02B7F42B719A9F0093AA4F /* Flavor Fusion */ = {
 			isa = PBXGroup;
 			children = (
+				BE95D81C2BB1D2B200A2E59C /* Passcode */,
+				BE7098972BB0F52500E04F11 /* Blending */,
+				BE7098952BB0F4CE00E04F11 /* NavigationTabs */,
+				BE7098942BB0EA2A00E04F11 /* MockSpiceData */,
+				BE7098892BB0E3D000E04F11 /* About */,
+				BE7098882BB0E3C900E04F11 /* Settings */,
+				BE70987C2BB0DD8F00E04F11 /* HomeList */,
+				BE8D1CF42B73FE1000A71CE9 /* RecipeBook */,
 				BE02B7F52B719A9F0093AA4F /* Flavor_FusionApp.swift */,
 				BE02B7F72B719A9F0093AA4F /* ContentView.swift */,
 				BE02B7F92B719AA00093AA4F /* Assets.xcassets */,
@@ -116,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */,
+				BE35352F2B8707E300806E7D /* SpiceDataTests.swift */,
+				BE3535312B87080B00806E7D /* SpiceRowTests.swift */,
 			);
 			path = "Flavor FusionTests";
 			sourceTree = "<group>";
@@ -127,6 +183,91 @@
 				BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */,
 			);
 			path = "Flavor FusionUITests";
+			sourceTree = "<group>";
+		};
+		BE70987C2BB0DD8F00E04F11 /* HomeList */ = {
+			isa = PBXGroup;
+			children = (
+				BE70987D2BB0DDEA00E04F11 /* List.swift */,
+				BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */,
+				BE8D1CF02B71A57400A71CE9 /* SpiceIndicator.swift */,
+				BE7098902BB0E98F00E04F11 /* SpiceRowView.swift */,
+				BE7098922BB0E9C200E04F11 /* SpiceRow.swift */,
+				BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */,
+			);
+			path = HomeList;
+			sourceTree = "<group>";
+		};
+		BE7098882BB0E3C900E04F11 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BE70988A2BB0E3D900E04F11 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		BE7098892BB0E3D000E04F11 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				BE70988C2BB0E41300E04F11 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		BE7098942BB0EA2A00E04F11 /* MockSpiceData */ = {
+			isa = PBXGroup;
+			children = (
+				BE8D1CEC2B71A2DD00A71CE9 /* SpiceData.swift */,
+			);
+			path = MockSpiceData;
+			sourceTree = "<group>";
+		};
+		BE7098952BB0F4CE00E04F11 /* NavigationTabs */ = {
+			isa = PBXGroup;
+			children = (
+				BE7098862BB0E18E00E04F11 /* ListTabView.swift */,
+			);
+			path = NavigationTabs;
+			sourceTree = "<group>";
+		};
+		BE7098972BB0F52500E04F11 /* Blending */ = {
+			isa = PBXGroup;
+			children = (
+				BE7098982BB0F54600E04F11 /* BlendingNewExistingView.swift */,
+				BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */,
+			);
+			path = Blending;
+			sourceTree = "<group>";
+		};
+		BE8D1CF42B73FE1000A71CE9 /* RecipeBook */ = {
+			isa = PBXGroup;
+			children = (
+				BEDFF4012BB102F300EF4F56 /* RecipeData */,
+				BE35352B2B86B64000806E7D /* RecipeDetail.swift */,
+				BE35352D2B86B69100806E7D /* AddRecipeView.swift */,
+				BE70989D2BB0F95600E04F11 /* RecipeBook.swift */,
+				BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */,
+			);
+			path = RecipeBook;
+			sourceTree = "<group>";
+		};
+		BE95D81C2BB1D2B200A2E59C /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				BE95D81F2BB1D2F300A2E59C /* CreatePasscode.swift */,
+				BE95D8212BB1D2FD00A2E59C /* LoginPasscode.swift */,
+				BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */,
+			);
+			path = Passcode;
+			sourceTree = "<group>";
+		};
+		BEDFF4012BB102F300EF4F56 /* RecipeData */ = {
+			isa = PBXGroup;
+			children = (
+				BEDFF4022BB102FF00EF4F56 /* RecipeModel.swift */,
+				BEDFF4042BB1034B00EF4F56 /* RecipeStore.swift */,
+			);
+			path = RecipeData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,7 +334,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					BE02B7F12B719A9F0093AA4F = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -259,8 +400,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE8D1CED2B71A2DD00A71CE9 /* SpiceData.swift in Sources */,
+				BE95D8222BB1D2FD00A2E59C /* LoginPasscode.swift in Sources */,
+				BE35352C2B86B64000806E7D /* RecipeDetail.swift in Sources */,
+				BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */,
+				BE7098912BB0E98F00E04F11 /* SpiceRowView.swift in Sources */,
 				BE02B7F82B719A9F0093AA4F /* ContentView.swift in Sources */,
+				BE7098932BB0E9C200E04F11 /* SpiceRow.swift in Sources */,
+				BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */,
+				BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */,
+				BEDFF4052BB1034B00EF4F56 /* RecipeStore.swift in Sources */,
+				BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */,
+				BE70988D2BB0E41300E04F11 /* AboutView.swift in Sources */,
+				BE7098802BB0DE9400E04F11 /* SpicePopupView.swift in Sources */,
+				BE70987E2BB0DDEA00E04F11 /* List.swift in Sources */,
+				BE7098992BB0F54600E04F11 /* BlendingNewExistingView.swift in Sources */,
 				BE02B7F62B719A9F0093AA4F /* Flavor_FusionApp.swift in Sources */,
+				BE1C9D802BB8680000D597FC /* SpiceColumns.swift in Sources */,
+				BE8D1CF12B71A57400A71CE9 /* SpiceIndicator.swift in Sources */,
+				BE1C9D7C2BB8644D00D597FC /* RecipeList.swift in Sources */,
+				BE70989E2BB0F95600E04F11 /* RecipeBook.swift in Sources */,
+				BE95D8202BB1D2F300A2E59C /* CreatePasscode.swift in Sources */,
+				BE70988B2BB0E3D900E04F11 /* SettingsView.swift in Sources */,
+				BEDFF4032BB102FF00EF4F56 /* RecipeModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +430,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3535302B8707E300806E7D /* SpiceDataTests.swift in Sources */,
+				BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */,
 				BE02B8082B719AA10093AA4F /* Flavor_FusionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +495,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -392,6 +557,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -419,6 +585,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flavor Fusion/Flavor_Fusion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Flavor Fusion/Preview Content\"";
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -457,6 +624,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flavor Fusion/Flavor_Fusion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Flavor Fusion/Preview Content\"";
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -494,6 +662,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -517,6 +686,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -539,6 +709,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -561,6 +732,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 55F8S74UUY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

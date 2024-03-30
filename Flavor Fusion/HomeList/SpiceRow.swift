@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct SpiceRow: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    let spice: Spice // Assuming Spice is the model struct
+    let isSelecting: Bool
+    var onTap: (Bool) -> Void
 
-#Preview {
-    SpiceRow()
+    @State private var isShowingPopup = false
+
+    var body: some View {
+        Button(action: {
+            isShowingPopup.toggle()
+        }) {
+            Text(spice.name) // Assuming name is a property of Spice
+                .foregroundColor(spice.isSelected ? .blue : .black)
+        }
+        .sheet(isPresented: $isShowingPopup) {
+            SpicePopupView(spice: spice, isPresented: $isShowingPopup)
+        }
+    }
 }

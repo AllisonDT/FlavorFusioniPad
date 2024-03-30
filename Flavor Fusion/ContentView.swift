@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("isFirstTimeOpen") private var isFirstTimeOpen: Bool = true
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if isFirstTimeOpen {
+            CreatePasscode()
+                .onDisappear {
+                    // Update the flag to indicate the app has been opened before
+                    isFirstTimeOpen = false
+                }
+        } else {
+            LoginPasscode()
         }
-        .padding()
     }
 }
 

@@ -1,18 +1,30 @@
+////
+////  RecipeDetail.swift
+////  Flavor Fusion
+////
+////  Created by Allison Turner on 2/21/24.
+////
 //
-//  RecipeDetail.swift
-//  Flavor Fusion
+//import SwiftUI
 //
-//  Created by Allison Turner on 2/21/24.
+//// Define the RecipeDetail view to display details of a spice mix recipe
+//struct RecipeDetail: View {
+//    let recipe: SpiceMixRecipe
 //
-
-import SwiftUI
-
-struct RecipeDetail: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    RecipeDetail()
-}
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 16) {
+//            Text(recipe.name)
+//                .font(.title)
+//            Text("Ingredients:")
+//                .font(.headline)
+//            ForEach(recipe.ingredients, id: \.self) { ingredient in
+//                Text("• \(ingredient)")
+//            }
+//            Text("Instructions:")
+//                .font(.headline)
+//            Text(recipe.instructions)
+//        }
+//        .padding()
+//        .navigationTitle(recipe.name)
+//    }
+//}

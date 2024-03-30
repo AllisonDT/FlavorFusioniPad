@@ -1,35 +1,40 @@
-//
-//  SpiceDataTests.swift
-//  Flavor FusionTests
-//
-//  Created by Allison Turner on 2/21/24.
-//
-
 import XCTest
+@testable import Flavor_Fusion
 
-final class SpiceDataTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class SpiceDataTests: XCTestCase {
+    
+    // Test Spice initialization
+    func testSpiceInitialization() {
+        let spice = Spice(name: "Test Spice", spiceAmount: 0.5, selectedAmount: 0.0, containerNumber: 101)
+        XCTAssertEqual(spice.name, "Test Spice")
+        XCTAssertEqual(spice.spiceAmount, 0.5)
+        XCTAssertEqual(spice.selectedAmount, 0.0)
+        XCTAssertEqual(spice.containerNumber, 101)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    // Test if all spices are initialized properly
+    func testAllSpicesInitialization() {
+        XCTAssertEqual(spicesData.count, 10)
+        
+        let firstSpice = spicesData[0]
+        XCTAssertEqual(firstSpice.name, "Spice 1")
+        XCTAssertEqual(firstSpice.spiceAmount, 1.0)
+        XCTAssertEqual(firstSpice.selectedAmount, 0.0)
+        XCTAssertEqual(firstSpice.containerNumber, 101)
+        
+        let lastSpice = spicesData[spicesData.count - 1]
+        XCTAssertEqual(lastSpice.name, "Spice 10")
+        XCTAssertEqual(lastSpice.spiceAmount, 0.7)
+        XCTAssertEqual(lastSpice.selectedAmount, 0.0)
+        XCTAssertEqual(lastSpice.containerNumber, 110)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    // Test Spice selection
+    func testSpiceSelection() {
+        var spice = Spice(name: "Test Spice", spiceAmount: 0.5, selectedAmount: 0.0, containerNumber: 101)
+        XCTAssertFalse(spice.isSelected)
+        
+        spice.isSelected = true
+        XCTAssertTrue(spice.isSelected)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

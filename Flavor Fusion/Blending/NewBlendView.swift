@@ -1,34 +1,33 @@
 //
-//  List.swift
+//  NewBlendView.swift
 //  Flavor Fusion
 //
-//  Created by Allison Turner on 3/24/24.
+//  Created by Allison Turner on 3/30/24.
 //
 
 import SwiftUI
 
-struct List: View {
+struct NewBlendView: View {
     @State private var isSelecting: Bool = false
-    @State private var isBlendPopupVisible: Bool = false // State to manage the visibility of the blend popup
-
+    @State private var spiceName = ""
+    @State private var servings = 1
+    let servingOptions = Array(1...10) // Array of serving options
+    
     var body: some View {
-        VStack { // Wrap the VStack around the HStack
-            Text("Allison's Cabinet") // Add the title
-                .font(.title)
-                .padding(.bottom, 10) // Add some bottom padding
+        VStack {
+            TextField("Spice Blend Name", text: $spiceName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
             
-            // BLEND Button
-            Button(action: {
-                isBlendPopupVisible.toggle()
-            }) {
-                Text("BLEND")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue.opacity(0.5))
-                    .clipShape(Ellipse()) // Oval shape
+            HStack {
+                Text("Servings:") // Title next to the Picker
+                Picker(selection: $servings, label: Text("Servings")) {
+                    ForEach(servingOptions, id: \.self) { option in
+                        Text("\(option)")
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
             }
-            .padding(.bottom, 10) // Adjust bottom padding for the button
             
             HStack {
                 // First column
@@ -54,16 +53,11 @@ struct List: View {
                 }
             }
             .padding()
-            
         }
-        .sheet(isPresented: $isBlendPopupVisible) {
-            BlendingNewExistingView()
-        }
+        .padding()
     }
 }
 
-struct List_Previews: PreviewProvider {
-    static var previews: some View {
-        List()
-    }
+#Preview {
+    NewBlendView()
 }

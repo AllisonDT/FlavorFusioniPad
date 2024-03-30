@@ -18,7 +18,7 @@ struct ListTabView: View {
                 }
                 .tag(0)
                 
-            RecipeBookView()
+            RecipeBook()
                 .tabItem {
                     Label("Recipe Book", systemImage: "book")
                 }
@@ -28,13 +28,13 @@ struct ListTabView: View {
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-                .tag(1)
+                .tag(2)
             
             AboutView()
                 .tabItem {
                     Label("About", systemImage: "info.circle")
                 }
-                .tag(2)
+                .tag(3)
         }
         .id(tabSelection)
     }

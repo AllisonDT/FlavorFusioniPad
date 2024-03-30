@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct PasscodeButton: View {
+    let number: String
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action) {
+            Text(number)
+                .font(.title)
+                .frame(width: 80, height: 80)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(40)
+        }
     }
-}
-
-#Preview {
-    PasscodeButton()
 }
