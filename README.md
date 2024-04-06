@@ -22,23 +22,18 @@ xcode-select --install
 
 5. **Final Steps**: Xcode may require additional setup steps, such as signing in with your Apple ID or configuring preferences. Follow the prompts to complete the setup process.
 
-## Setting Up Repository for Development
+## Setting Up Flavor Fusion for Development
 
-1. **Create a New Repository**:
-- Choose a hosting service for your repository (e.g., GitHub, Bitbucket, GitLab).
-- Log in to your chosen hosting service and create a new repository.
-- Follow the instructions provided by the hosting service to create the repository.
-
-2. **Clone the Repository**:
+1. **Clone the Repository**:
 - Open Terminal.
-- Navigate to the directory where you want to store your project.
+- Navigate to the directory where you want to store the project.
 - Use the following command to clone the repository:
 
 ```bash
 git clone https://github.com/AllisonDT/Flavor-Fusion.git
 ```
 
-3. **Start Developing**:
+2. **Start Developing**:
 - Navigate into the cloned repository directory.
 - Start developing your project using Xcode.
 - You can now commit changes to your repository and push them to the remote repository as needed.
