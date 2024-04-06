@@ -76,6 +76,7 @@
 		BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITests.swift; sourceTree = "<group>"; };
 		BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BE0588D22BC1F92A00BDB6E1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
 		BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlendView.swift; sourceTree = "<group>"; };
 		BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceColumns.swift; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		BE02B7E92B719A9F0093AA4F = {
 			isa = PBXGroup;
 			children = (
+				BE0588D22BC1F92A00BDB6E1 /* README.md */,
 				BE02B7F42B719A9F0093AA4F /* Flavor Fusion */,
 				BE02B8062B719AA10093AA4F /* Flavor FusionTests */,
 				BE02B8102B719AA10093AA4F /* Flavor FusionUITests */,
