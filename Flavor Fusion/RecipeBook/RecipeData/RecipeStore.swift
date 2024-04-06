@@ -39,9 +39,12 @@ class RecipeStore: ObservableObject {
             }
         }
         // If no recipes found in UserDefaults, load sample data
-        recipes = [
-            Recipe(name: "Spaghetti Carbonara", ingredients: ["Spaghetti", "Eggs", "Guanciale", "Parmesan cheese"]),
-            Recipe(name: "Chicken Curry", ingredients: ["Chicken", "Curry powder", "Coconut milk", "Onion", "Garlic"])
+        recipes += [
+            Recipe(name: "Chili Powder", ingredients: ["Paprika", "Cayenne pepper", "Cumin", "Oregano", "Garlic powder", "Onion powder"], servings: 1),
+            Recipe(name: "Taco Seasoning", ingredients: ["Chili powder", "Cumin", "Paprika", "Garlic powder", "Onion powder", "Red pepper flakes"], servings: 1),
+            Recipe(name: "Cajun Seasoning", ingredients: ["Paprika", "Garlic powder", "Onion powder", "Cayenne pepper", "Thyme", "Oregano"], servings: 1),
+            Recipe(name: "Italian Seasoning", ingredients: ["Dried basil", "Dried oregano", "Dried thyme", "Dried rosemary", "Dried marjoram", "Garlic powder"], servings: 1),
+            Recipe(name: "Chinese Five Spice", ingredients: ["Star anise", "Cloves", "Cinnamon", "Sichuan peppercorns", "Fennel seeds"], servings: 1)
         ]
     }
 

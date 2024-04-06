@@ -11,10 +11,12 @@ struct Recipe: Identifiable, Codable {
     let id: UUID
     let name: String
     let ingredients: [String]
+    let servings: Int
     
-    init(name: String, ingredients: [String]) {
+    init(name: String, ingredients: [String], servings: Int) {
         self.id = UUID()
         self.name = name
         self.ingredients = ingredients
+        self.servings = servings
     }
 }

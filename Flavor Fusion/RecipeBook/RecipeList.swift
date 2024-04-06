@@ -8,37 +8,112 @@
 import SwiftUI
 
 struct RecipeList: View {
-    @ObservedObject var recipeStore: RecipeStore
-
-    init(recipeStore: RecipeStore) {
-        self.recipeStore = recipeStore
+    // Create a shared instance of RecipeStore
+    static let sharedRecipeStore = RecipeStore()
+    
+    @State private var searchText: String = ""
+    @State private var isAddRecipeViewPresented = false
+    
+    var filteredSpices: [Spice] {
+        if searchText.isEmpty {
+            return spicesData
+        } else {
+            return spicesData.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
     }
 
     var body: some View {
         NavigationView {
+            ScrollView {
+                HStack {
+                    Spacer()
+                    SearchBar(searchText: $searchText)
+                    FiltersButton()
+                    Button(action: {
+                        isAddRecipeViewPresented.toggle()
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .font(.system(size: 24))
+                            .padding()
+                    }
+                }
+                VStack(spacing: 20) {
+                    ForEach(RecipeList.sharedRecipeStore.recipes) { recipe in
+                        RecipeRow(recipe: recipe)
+                    }
+                }
+                .padding()
+            }
+        }
+        .sheet(isPresented: $isAddRecipeViewPresented) {
+            AddRecipeView(isPresented: $isAddRecipeViewPresented)
+        }
+    }
+
+    private func deleteRecipe(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let recipe = RecipeList.sharedRecipeStore.recipes[index]
+            RecipeList.sharedRecipeStore.removeRecipe(recipe)
         }
     }
 }
 
-struct RecipeDetailView: View {
+struct FiltersButton: View {
+    var body: some View {
+        Button(action: {
+            // Action for Filters Button
+        }) {
+            Image(systemName: "line.horizontal.3.decrease.circle")
+                .font(.system(size: 24))
+                .padding()
+        }
+    }
+}
+
+struct AddButton: View {
+    var body: some View {
+        Button(action: {
+            // Action for Add Button
+        }) {
+            Image(systemName: "plus.circle")
+                .font(.system(size: 24))
+                .padding()
+        }
+    }
+}
+
+struct RecipeRow: View {
     var recipe: Recipe
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(recipe.name)
-                .font(.title)
-                .padding(.bottom)
-            Text("Ingredients:")
-                .font(.headline)
-            ForEach(recipe.ingredients, id: \.self) { ingredient in
-                Text(ingredient)
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(recipe.name)
+                    .font(.headline)
+                Text("Servings: \(recipe.servings)")
+                    .font(.subheadline)
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                // Action for the green "go" button
+            }) {
+                Image(systemName: "arrow.right.circle.fill")
+                    .font(.title)
+                    .foregroundColor(.green)
             }
         }
         .padding()
+        .background(Color.secondary.opacity(0.1))
+        .cornerRadius(10)
     }
 }
 
-#Preview {
-    let recipeStore = RecipeStore() // Initialize RecipeStore
-    return RecipeList(recipeStore: recipeStore) // Pass RecipeStore to RecipeList
+
+
+struct RecipeList_Previews: PreviewProvider {
+    static var previews: some View {
+        return RecipeList()
+    }
 }

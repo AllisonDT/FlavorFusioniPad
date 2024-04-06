@@ -33,18 +33,17 @@ struct NewBlendView: View {
                 // First column
                 VStack {
                     ForEach(firstColumnSpices) { spice in
-                        SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
+                        SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
                             if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
                                 spicesData[index].isSelected = selected
                             }
                         }
                     }
                 }
-                
                 // Second column
                 VStack {
                     ForEach(secondColumnSpices) { spice in
-                        SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
+                        SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
                             if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
                                 spicesData[index].isSelected = selected
                             }

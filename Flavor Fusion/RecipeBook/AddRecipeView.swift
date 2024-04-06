@@ -1,43 +1,81 @@
-////
-////  AddRecipeView.swift
-////  Flavor Fusion
-////
-////  Created by Allison Turner on 2/21/24.
-////
-//
-//import SwiftUI
-//
-//struct AddRecipeView: View {
-//    @Binding var isPresented: Bool
-//    @Binding var recipes: [SpiceMixRecipe]
-//    
-//    @State private var recipeName = ""
-//    @State private var ingredients = ""
-//    @State private var instructions = ""
-//    
-//    var body: some View {
-//        NavigationView {
-//            Form {
-//                Section(header: Text("Recipe Details")) {
-//                    TextField("Recipe Name", text: $recipeName)
-//                    TextField("Ingredients", text: $ingredients)
-//                    TextField("Instructions", text: $instructions)
-//                }
-//                
-//                Section {
-//                    Button("Add Recipe") {
-//                        // Validate and add the recipe
-//                        let ingredientList = ingredients.components(separatedBy: ",")
-//                        let newRecipe = SpiceMixRecipe(name: recipeName, ingredients: ingredientList, instructions: instructions)
-//                        recipes.append(newRecipe)
-//                        isPresented = false // Dismiss the sheet
-//                    }
-//                }
-//            }
-//            .navigationTitle("Add Recipe")
-//            .navigationBarItems(trailing: Button("Cancel") {
-//                isPresented = false // Dismiss the sheet
-//            })
-//        }
-//    }
-//}
+import SwiftUI
+
+struct AddRecipeView: View {
+    @Binding var isPresented: Bool
+    @State private var recipeName: String = ""
+    @State private var selectedServingsIndex: Int = 0
+    let servings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // You can customize this according to your needs
+    @State private var isSelecting: Bool = false
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                // Text field for entering recipe name
+                TextField("Enter Recipe Name", text: $recipeName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                // Picker for selecting number of servings
+                Picker("Servings", selection: $selectedServingsIndex) {
+                    ForEach(0..<servings.count) {
+                        Text("\(self.servings[$0]) servings")
+                    }
+                }
+                .pickerStyle(DefaultPickerStyle())
+                .padding()
+                
+                ScrollView {
+                    HStack {
+                        LazyVGrid(columns: [GridItem(.flexible())]) {
+                            ForEach(firstColumnSpices) { spice in
+                                SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
+                                    if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
+                                        spicesData[index].isSelected = selected
+                                    }
+                                }
+                            }
+                        }
+                        .padding()
+                        
+                        LazyVGrid(columns: [GridItem(.flexible())]) {
+                            ForEach(secondColumnSpices) { spice in
+                                SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
+                                    if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
+                                        spicesData[index].isSelected = selected
+                                    }
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+            }
+            
+            // Floating save button
+            VStack {
+                Spacer()
+                Button(action: {
+                    // add in save code
+                }) {
+                    Text("SAVE")
+                        .frame(width: 200, height: 60)
+                        .foregroundColor(.black)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.green, lineWidth: 2)
+                        )
+                        .background(Color.green.opacity(0.5))
+                        .cornerRadius(8)
+                }
+                .padding()
+            }
+        }
+    }
+}
+
+
+struct AddRecipeView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddRecipeView(isPresented: .constant(false))
+    }
+}
