@@ -9,10 +9,12 @@ import SwiftUI
 import CryptoKit
 
 struct LoginPasscode: View {
+    // State variables to manage passcode input and login status
     @State private var passcode: String = ""
     @State private var isLoginSuccessful: Bool = false
     @State private var showIncorrectPasscodeMessage: Bool = false
 
+    // Layout for the passcode buttons
     let gridLayout = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -22,10 +24,12 @@ struct LoginPasscode: View {
     var body: some View {
         NavigationView {
             VStack {
+                // Title
                 Text("Enter Passcode")
                     .font(.title)
                     .padding()
                 
+                // Grid of passcode buttons
                 LazyVGrid(columns: gridLayout, spacing: 10) {
                     ForEach(1...9, id: \.self) { number in
                         PasscodeButton(number: "\(number)") {
@@ -39,36 +43,43 @@ struct LoginPasscode: View {
                 }
                 .padding(.horizontal)
                 
+                // Secure text field for passcode input
                 SecureField("Passcode", text: $passcode)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
+                // Login button
                 Button(action: login) {
                     Text("Login")
                 }
                 .padding()
                 
+                // Navigation link to ListTabView upon successful login
                 NavigationLink(destination: ListTabView().navigationBarBackButtonHidden(true), isActive: $isLoginSuccessful) {
                     EmptyView()
                 }
             }
             .padding()
+            // Alert to show incorrect passcode message
             .alert(isPresented: $showIncorrectPasscodeMessage) {
                 Alert(title: Text("Incorrect Passcode"), message: Text("Please try again."), dismissButton: .default(Text("OK")))
             }
         }
     }
     
+    // Function to add a digit to the passcode
     func addToPasscode(number: String) {
         passcode += number
     }
     
+    // Function to delete the last digit from the passcode
     func deleteLast() {
         if !passcode.isEmpty {
             passcode.removeLast()
         }
     }
     
+    // Function to handle login attempt
     func login() {
         // Retrieve the stored passcode from UserDefaults
         guard let storedPasscode = UserDefaults.standard.string(forKey: "passcode") else {
@@ -88,8 +99,6 @@ struct LoginPasscode: View {
             showIncorrectPasscodeMessage = true // Set flag to show the incorrect passcode message
         }
     }
-
-
 }
 
 struct LoginPasscode_Previews: PreviewProvider {

@@ -7,13 +7,16 @@
 
 import SwiftUI
 
+// This struct represents the list of recipes view.
 struct RecipeList: View {
-    // Create a shared instance of RecipeStore
+    // Creating a shared instance of RecipeStore for managing recipes.
     static let sharedRecipeStore = RecipeStore()
     
+    // State variables for managing search text and add recipe view presentation.
     @State private var searchText: String = ""
     @State private var isAddRecipeViewPresented = false
     
+    // Computed property for filtering spices based on search text.
     var filteredSpices: [Spice] {
         if searchText.isEmpty {
             return spicesData
@@ -27,8 +30,11 @@ struct RecipeList: View {
             ScrollView {
                 HStack {
                     Spacer()
+                    // Displaying the search bar
                     SearchBar(searchText: $searchText)
+                    // Button for filters (not implemented)
                     FiltersButton()
+                    // Button for adding a new recipe
                     Button(action: {
                         isAddRecipeViewPresented.toggle()
                     }) {
@@ -38,6 +44,7 @@ struct RecipeList: View {
                     }
                 }
                 VStack(spacing: 20) {
+                    // Displaying each recipe in a list
                     ForEach(RecipeList.sharedRecipeStore.recipes) { recipe in
                         RecipeRow(recipe: recipe)
                     }
@@ -45,19 +52,14 @@ struct RecipeList: View {
                 .padding()
             }
         }
+        // Presenting the AddRecipeView as a sheet
         .sheet(isPresented: $isAddRecipeViewPresented) {
             AddRecipeView(isPresented: $isAddRecipeViewPresented)
         }
     }
-
-    private func deleteRecipe(at offsets: IndexSet) {
-        offsets.forEach { index in
-            let recipe = RecipeList.sharedRecipeStore.recipes[index]
-            RecipeList.sharedRecipeStore.removeRecipe(recipe)
-        }
-    }
 }
 
+// This struct represents the filters button (not implemented).
 struct FiltersButton: View {
     var body: some View {
         Button(action: {
@@ -70,6 +72,7 @@ struct FiltersButton: View {
     }
 }
 
+// This struct represents the add button (not implemented).
 struct AddButton: View {
     var body: some View {
         Button(action: {
@@ -82,6 +85,7 @@ struct AddButton: View {
     }
 }
 
+// This struct represents the row view for displaying a recipe.
 struct RecipeRow: View {
     var recipe: Recipe
     
@@ -96,6 +100,7 @@ struct RecipeRow: View {
             
             Spacer()
             
+            // Button for navigating to recipe details (not implemented)
             Button(action: {
                 // Action for the green "go" button
             }) {
@@ -110,8 +115,7 @@ struct RecipeRow: View {
     }
 }
 
-
-
+// Preview Provider for the RecipeList view
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
         return RecipeList()

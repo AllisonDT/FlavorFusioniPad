@@ -7,18 +7,22 @@
 
 import SwiftUI
 
+// This struct represents the List view.
 struct List: View {
+    // State variables for managing selection and visibility of blend popup.
     @State private var isSelecting: Bool = false
-    @State private var isBlendPopupVisible: Bool = false // State to manage the visibility of the blend popup
+    @State private var isBlendPopupVisible: Bool = false
 
     var body: some View {
         VStack { // Wrap the VStack around the HStack
-            Text("Allison's Cabinet") // Add the title
+            // Title of the cabinet
+            Text("Allison's Cabinet")
                 .font(.title)
-                .padding(.bottom, 10) // Add some bottom padding
+                .padding(.bottom, 10)
             
             // BLEND Button
             Button(action: {
+                // Toggling visibility of blend popup
                 isBlendPopupVisible.toggle()
             }) {
                 Text("BLEND")
@@ -26,15 +30,17 @@ struct List: View {
                     .foregroundColor(.white)
                     .padding()
                     .background(Color.blue.opacity(0.5))
-                    .clipShape(Ellipse()) // Oval shape
+                    .clipShape(Ellipse())
             }
-            .padding(.bottom, 10) // Adjust bottom padding for the button
+            .padding(.bottom, 10)
             
             HStack {
-                // First column
+                // First column of spices
                 VStack {
                     ForEach(firstColumnSpices) { spice in
+                        // Displaying each spice row
                         SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
+                            // Updating isSelected property of spice
                             if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
                                 spicesData[index].isSelected = selected
                             }
@@ -42,10 +48,12 @@ struct List: View {
                     }
                 }
                 
-                // Second column
+                // Second column of spices
                 VStack {
                     ForEach(secondColumnSpices) { spice in
+                        // Displaying each spice row
                         SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
+                            // Updating isSelected property of spice
                             if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
                                 spicesData[index].isSelected = selected
                             }
@@ -54,14 +62,15 @@ struct List: View {
                 }
             }
             .padding()
-            
         }
+        // Presenting the blend popup as a sheet when isBlendPopupVisible is true
         .sheet(isPresented: $isBlendPopupVisible) {
             BlendingNewExistingView()
         }
     }
 }
 
+// Preview Provider for the List view
 struct List_Previews: PreviewProvider {
     static var previews: some View {
         List()

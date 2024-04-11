@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+// This struct represents the Team View.
 struct TeamView: View {
+    // Array containing team members and their positions
     let teamMembers = [
         ("Ryan Latterell", "Project Manager"),
         ("Allison Turner", "Developer"),
@@ -19,10 +21,13 @@ struct TeamView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            // Iterating through rows
             ForEach(0..<3) { row in
                 HStack(spacing: 20) {
+                    // Iterating through columns
                     ForEach(0..<2) { column in
                         if let index = self.indexFor(row: row, column: column) {
+                            // Displaying team member view
                             TeamMemberView(name: self.teamMembers[index].0, position: self.teamMembers[index].1)
                         } else {
                             Spacer()
@@ -34,26 +39,28 @@ struct TeamView: View {
         .padding()
     }
 
+    // Function to calculate index for team members array
     func indexFor(row: Int, column: Int) -> Int? {
         let index = row * 2 + column
         return index < teamMembers.count ? index : nil
     }
 }
 
+// This struct represents the view for an individual team member.
 struct TeamMemberView: View {
     let name: String
     let position: String
 
     var body: some View {
         VStack {
-            // Headshot placeholder
+            // Placeholder for team member's headshot
             Image(systemName: "person.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 60, height: 60)
                 .padding(.bottom, 5)
             
-            // Name and position
+            // Displaying team member's name and position
             Text(name)
                 .font(.headline)
             Text(position)
@@ -68,6 +75,7 @@ struct TeamMemberView: View {
     }
 }
 
+// Preview Provider for the TeamView
 #Preview {
     TeamView()
 }
