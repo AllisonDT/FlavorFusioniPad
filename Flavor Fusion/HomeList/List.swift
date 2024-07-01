@@ -16,11 +16,10 @@ struct List: View {
     var body: some View {
         VStack { // Wrap the VStack around the HStack
             // Title of the cabinet
-            Text("Allison's Cabinet")
-                .font(.title)
-                .padding(.bottom, 10)
+//            Text("Allison's Cabinet")
+//                .font(.title)
+//                .padding(.bottom, 10)
             
-            // BLEND Button
             Button(action: {
                 // Toggling visibility of blend popup
                 isBlendPopupVisible.toggle()
@@ -30,9 +29,8 @@ struct List: View {
                     .foregroundColor(.white)
                     .padding()
                     .background(Color.blue.opacity(0.5))
-                    .clipShape(Ellipse())
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
-            .padding(.bottom, 10)
             
             HStack {
                 // First column of spices

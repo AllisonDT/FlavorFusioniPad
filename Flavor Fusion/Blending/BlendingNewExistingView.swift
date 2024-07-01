@@ -12,29 +12,25 @@ struct BlendingNewExistingView: View {
     @State private var selectedOption = 0 // 0 for New, 1 for Existing
     
     var body: some View {
-        VStack {
-            // Segmented control for selecting new or existing
-            Picker(selection: $selectedOption, label: Text("")) {
-                Text("New").tag(0)
-                Text("Existing").tag(1)
+        NavigationView {
+            VStack {
+                // Segmented control for selecting new or existing
+                Picker(selection: $selectedOption, label: Text("")) {
+                    Text("New").tag(0)
+                    Text("Existing").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                // Display content based on selection
+                if selectedOption == 0 {
+                    NewBlendView()
+                } else {
+                    ExistingBlendView()
+                }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            
-            // Display content based on selection
-            if selectedOption == 0 {
-                NewBlendView()
-            } else {
-                ExistingBlendView()
-            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity) // Set a fixed frame size
         }
-    }
-}
-
-struct ExistingBlendView: View {
-    var body: some View {
-        Text("Existing Blend Content")
-            // Add any content specific to existing blends
     }
 }
 

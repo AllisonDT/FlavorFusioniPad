@@ -9,19 +9,18 @@ import SwiftUI
 
 // This struct represents the list of recipes view.
 struct RecipeList: View {
-    // Creating a shared instance of RecipeStore for managing recipes.
-    static let sharedRecipeStore = RecipeStore()
+    @ObservedObject var recipeStore = RecipeStore()
     
     // State variables for managing search text and add recipe view presentation.
     @State private var searchText: String = ""
     @State private var isAddRecipeViewPresented = false
     
-    // Computed property for filtering spices based on search text.
-    var filteredSpices: [Spice] {
+    // Computed property for filtering recipes based on search text.
+    var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
-            return spicesData
+            return recipeStore.recipes
         } else {
-            return spicesData.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            return recipeStore.recipes.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
 
@@ -45,8 +44,8 @@ struct RecipeList: View {
                 }
                 VStack(spacing: 20) {
                     // Displaying each recipe in a list
-                    ForEach(RecipeList.sharedRecipeStore.recipes) { recipe in
-                        RecipeRow(recipe: recipe)
+                    ForEach(filteredRecipes) { recipe in
+                        RecipeRow(recipe: recipe, recipeStore: recipeStore)
                     }
                 }
                 .padding()
@@ -54,7 +53,8 @@ struct RecipeList: View {
         }
         // Presenting the AddRecipeView as a sheet
         .sheet(isPresented: $isAddRecipeViewPresented) {
-            AddRecipeView(isPresented: $isAddRecipeViewPresented)
+            // Pass the recipe store to the AddRecipeView
+            AddRecipeView(isPresented: $isAddRecipeViewPresented, recipeStore: recipeStore)
         }
     }
 }
@@ -72,23 +72,12 @@ struct FiltersButton: View {
     }
 }
 
-// This struct represents the add button (not implemented).
-struct AddButton: View {
-    var body: some View {
-        Button(action: {
-            // Action for Add Button
-        }) {
-            Image(systemName: "plus.circle")
-                .font(.system(size: 24))
-                .padding()
-        }
-    }
-}
-
 // This struct represents the row view for displaying a recipe.
 struct RecipeRow: View {
     var recipe: Recipe
-    
+    var recipeStore: RecipeStore
+    @State private var isMixPreviewPresented = false
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
@@ -100,9 +89,9 @@ struct RecipeRow: View {
             
             Spacer()
             
-            // Button for navigating to recipe details (not implemented)
+            // Button to trigger the MixRecipePreview view
             Button(action: {
-                // Action for the green "go" button
+                isMixPreviewPresented.toggle()
             }) {
                 Image(systemName: "arrow.right.circle.fill")
                     .font(.title)
@@ -112,8 +101,21 @@ struct RecipeRow: View {
         .padding()
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(10)
+        .contextMenu {
+            Button(action: {
+                recipeStore.removeRecipe(recipe)
+            }) {
+                Text("Delete")
+                Image(systemName: "trash")
+            }
+        }
+        // Presenting the MixRecipePreview as a sheet
+        .sheet(isPresented: $isMixPreviewPresented) {
+            MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
+        }
     }
 }
+
 
 // Preview Provider for the RecipeList view
 struct RecipeList_Previews: PreviewProvider {

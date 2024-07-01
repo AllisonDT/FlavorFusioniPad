@@ -42,3 +42,12 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 
 - [Xcode Documentation](https://developer.apple.com/documentation/xcode)
 - [GitHub Guides](https://guides.github.com/)
+
+## July Flavor Fusion Development
+**July 2024**
+- 7/1 implemented plus button for add recipe, implemented recipe search functionalit, drafted MixRecipePreview view
+       
+
+
+
+

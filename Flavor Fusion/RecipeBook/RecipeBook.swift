@@ -7,33 +7,59 @@
 
 import SwiftUI
 
-// This struct represents the main view of the Recipe Book.
 struct RecipeBook: View {
+    @State private var isAddRecipeViewPresented: Bool = false
+    @ObservedObject var recipeStore = RecipeStore()
     
     var body: some View {
-        VStack {
-            // Title of the Recipe Book
-            Text("Recipe Book")
-                .font(.title)
-                .padding()
-            
-            // Favorite Recipes Section
+        NavigationStack {
             VStack {
-                HStack {
-                    // Displaying favorite recipe circles for three different recipes
-                    FavoriteRecipeCircle(spiceName: "Taco Seasoning")
-                    FavoriteRecipeCircle(spiceName: "Pizza")
-                    FavoriteRecipeCircle(spiceName: "Secret Spice")
-                }
-                .padding()
+                // Title of the Recipe Book
+                Text("Recipe Book")
+                    .font(.title)
+                    .padding()
+                
+                // Favorite Recipes Section
+//                VStack {
+//                    HStack {
+//                        // Displaying favorite recipe circles for three different recipes
+//                        FavoriteRecipeCircle(spiceName: "Taco Seasoning")
+//                        FavoriteRecipeCircle(spiceName: "Pizza")
+//                        FavoriteRecipeCircle(spiceName: "Secret Spice")
+//                    }
+//                    .padding()
+//                }
+                
+                // Displaying the list of recipes
+                RecipeList()
+                    .padding()
+                
+                // Button to add a new recipe
+//                Button(action: {
+//                    isAddRecipeViewPresented.toggle()
+//                }) {
+//                    Text("Add Recipe")
+//                        .frame(width: 200, height: 60)
+//                        .foregroundColor(.white)
+//                        .background(Color.blue)
+//                        .cornerRadius(8)
+//                }
+//                .padding()
+//                .sheet(isPresented: $isAddRecipeViewPresented) {
+//                    AddRecipeView(isPresented: $isAddRecipeViewPresented, recipeStore: recipeStore)
+//                }
             }
-            
-            // Displaying the list of recipes
-            RecipeList()
-                .padding()
         }
     }
 }
+
+// Preview Provider for the RecipeBook view
+struct RecipeBook_Previews: PreviewProvider {
+    static var previews: some View {
+        RecipeBook()
+    }
+}
+
 
 // This struct represents the search bar used for searching recipes.
 struct SearchBar: View {
@@ -45,12 +71,5 @@ struct SearchBar: View {
             .padding()
             .background(Color.gray.opacity(0.1))
             .cornerRadius(10)
-    }
-}
-
-// Preview Provider for the RecipeBook view
-struct RecipeBook_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeBook()
     }
 }

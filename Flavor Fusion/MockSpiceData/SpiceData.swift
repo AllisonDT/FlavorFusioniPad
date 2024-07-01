@@ -8,7 +8,7 @@
 import Foundation
 
 // Spice Data Model
-public struct Spice: Identifiable, Equatable {
+public struct Spice: Identifiable, Equatable, Hashable {
     public let id = UUID()
     public var name: String
     public var spiceAmount: Double

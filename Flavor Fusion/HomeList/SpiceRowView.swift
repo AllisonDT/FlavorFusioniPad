@@ -16,7 +16,7 @@ struct SpiceRowView: View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 // Overlay the Rectangle and the SpiceRow
-                Rectangle()
+                RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.blue.opacity(Double(spice.spiceAmount))) // Adjust opacity based on spiceAmount
                     .frame(width: geometry.size.width) // Stretch the rectangle to match width
                 SpiceRow(spice: spice, isSelecting: isSelecting) { selected in
@@ -24,6 +24,6 @@ struct SpiceRowView: View {
                 }
             }
         }
-        .padding(.vertical, 4) // Adjust vertical padding as needed
+        .padding(.vertical, 4)
     }
 }

@@ -35,9 +35,8 @@ struct SpiceRow: View {
         }
         .padding()
         .background(
-            Rectangle()
-                .fill(Color.blue.opacity(0.1)) // Background color of the rectangle
-                .cornerRadius(8)
+            RoundedRectangle(cornerRadius: 8) // Rounded rectangle shape
+                .fill(Color.blue.opacity(0.1)) // Background color of the rounded rectangle
                 .overlay(
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
