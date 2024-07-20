@@ -41,11 +41,16 @@
 		BE95D8202BB1D2F300A2E59C /* CreatePasscode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D81F2BB1D2F300A2E59C /* CreatePasscode.swift */; };
 		BE95D8222BB1D2FD00A2E59C /* LoginPasscode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D8212BB1D2FD00A2E59C /* LoginPasscode.swift */; };
 		BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */; };
+		BEA8193A2C4319EE0073606B /* BlendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA819392C4319EE0073606B /* BlendingView.swift */; };
+		BEA8193C2C431A200073606B /* BlendConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8193B2C431A200073606B /* BlendConfirmationView.swift */; };
+		BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8193D2C431A530073606B /* BlendCompletionView.swift */; };
+		BEA819442C4C6E160073606B /* ExistingRecipesRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */; };
 		BEA9D0F12BC1C17700B57779 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F02BC1C17700B57779 /* TeamView.swift */; };
 		BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */; };
 		BEA9D0F72BC1C1DC00B57779 /* ProjectOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */; };
 		BEA9D0F92BC1C1F400B57779 /* UserManualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F82BC1C1F400B57779 /* UserManualView.swift */; };
 		BEAAB0B32C33755F008A11E9 /* MixRecipePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAAB0B22C33755F008A11E9 /* MixRecipePreview.swift */; };
+		BEAAB0B52C3E0D20008A11E9 /* NewBlendSpiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAAB0B42C3E0D20008A11E9 /* NewBlendSpiceView.swift */; };
 		BEDFF4032BB102FF00EF4F56 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFF4022BB102FF00EF4F56 /* RecipeModel.swift */; };
 		BEDFF4052BB1034B00EF4F56 /* RecipeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFF4042BB1034B00EF4F56 /* RecipeStore.swift */; };
 /* End PBXBuildFile section */
@@ -107,11 +112,16 @@
 		BE95D81F2BB1D2F300A2E59C /* CreatePasscode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasscode.swift; sourceTree = "<group>"; };
 		BE95D8212BB1D2FD00A2E59C /* LoginPasscode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasscode.swift; sourceTree = "<group>"; };
 		BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeButton.swift; sourceTree = "<group>"; };
+		BEA819392C4319EE0073606B /* BlendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendingView.swift; sourceTree = "<group>"; };
+		BEA8193B2C431A200073606B /* BlendConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendConfirmationView.swift; sourceTree = "<group>"; };
+		BEA8193D2C431A530073606B /* BlendCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendCompletionView.swift; sourceTree = "<group>"; };
+		BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingRecipesRows.swift; sourceTree = "<group>"; };
 		BEA9D0F02BC1C17700B57779 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyInfoView.swift; sourceTree = "<group>"; };
 		BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewView.swift; sourceTree = "<group>"; };
 		BEA9D0F82BC1C1F400B57779 /* UserManualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManualView.swift; sourceTree = "<group>"; };
 		BEAAB0B22C33755F008A11E9 /* MixRecipePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixRecipePreview.swift; sourceTree = "<group>"; };
+		BEAAB0B42C3E0D20008A11E9 /* NewBlendSpiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlendSpiceView.swift; sourceTree = "<group>"; };
 		BEDFF4022BB102FF00EF4F56 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		BEDFF4042BB1034B00EF4F56 /* RecipeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -288,10 +298,13 @@
 		BE7098972BB0F52500E04F11 /* Blending */ = {
 			isa = PBXGroup;
 			children = (
+				BEA819422C4C6DC60073606B /* ExistingBlend */,
+				BEA819412C4C6DBB0073606B /* NewBlend */,
+				BEA819382C4319D30073606B /* Blending Sub  Pages */,
 				BE7098982BB0F54600E04F11 /* BlendingNewExistingView.swift */,
 				BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */,
 				BE1C9D812BB8D3A400D597FC /* SpiceBlendSelections.swift */,
-				BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */,
+				BEAAB0B42C3E0D20008A11E9 /* NewBlendSpiceView.swift */,
 			);
 			path = Blending;
 			sourceTree = "<group>";
@@ -318,6 +331,32 @@
 				BE95D8232BB1D5EE00A2E59C /* PasscodeButton.swift */,
 			);
 			path = Passcode;
+			sourceTree = "<group>";
+		};
+		BEA819382C4319D30073606B /* Blending Sub  Pages */ = {
+			isa = PBXGroup;
+			children = (
+				BEA819392C4319EE0073606B /* BlendingView.swift */,
+				BEA8193B2C431A200073606B /* BlendConfirmationView.swift */,
+				BEA8193D2C431A530073606B /* BlendCompletionView.swift */,
+			);
+			path = "Blending Sub  Pages";
+			sourceTree = "<group>";
+		};
+		BEA819412C4C6DBB0073606B /* NewBlend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NewBlend;
+			sourceTree = "<group>";
+		};
+		BEA819422C4C6DC60073606B /* ExistingBlend */ = {
+			isa = PBXGroup;
+			children = (
+				BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */,
+				BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */,
+			);
+			path = ExistingBlend;
 			sourceTree = "<group>";
 		};
 		BEDFF4012BB102F300EF4F56 /* RecipeData */ = {
@@ -466,13 +505,18 @@
 				BE1C9D882BBA487D00D597FC /* RecipeBookBackground.swift in Sources */,
 				BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */,
 				BE7098912BB0E98F00E04F11 /* SpiceRowView.swift in Sources */,
+				BEA8193A2C4319EE0073606B /* BlendingView.swift in Sources */,
 				BE02B7F82B719A9F0093AA4F /* ContentView.swift in Sources */,
 				BE7098932BB0E9C200E04F11 /* SpiceRow.swift in Sources */,
+				BEAAB0B52C3E0D20008A11E9 /* NewBlendSpiceView.swift in Sources */,
+				BEA819442C4C6E160073606B /* ExistingRecipesRows.swift in Sources */,
 				BE1C9D822BB8D3A400D597FC /* SpiceBlendSelections.swift in Sources */,
 				BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */,
 				BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */,
+				BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */,
 				BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */,
 				BEDFF4052BB1034B00EF4F56 /* RecipeStore.swift in Sources */,
+				BEA8193C2C431A200073606B /* BlendConfirmationView.swift in Sources */,
 				BEA9D0F92BC1C1F400B57779 /* UserManualView.swift in Sources */,
 				BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */,
 				BE2431D82BF051DB00B77990 /* ExistingBlendView.swift in Sources */,

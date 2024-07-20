@@ -40,14 +40,47 @@ class RecipeStore: ObservableObject {
         }
         // If no recipes found in UserDefaults, load sample data
         recipes += [
-            Recipe(name: "Chili Powder", ingredients: ["Paprika", "Cayenne pepper", "Cumin", "Oregano", "Garlic powder", "Onion powder"], servings: 1),
-            Recipe(name: "Taco Seasoning", ingredients: ["Chili powder", "Cumin", "Paprika", "Garlic powder", "Onion powder", "Red pepper flakes"], servings: 1),
-            Recipe(name: "Cajun Seasoning", ingredients: ["Paprika", "Garlic powder", "Onion powder", "Cayenne pepper", "Thyme", "Oregano"], servings: 1),
-            Recipe(name: "Italian Seasoning", ingredients: ["Dried basil", "Dried oregano", "Dried thyme", "Dried rosemary", "Dried marjoram", "Garlic powder"], servings: 1),
-            Recipe(name: "Chinese Five Spice", ingredients: ["Star anise", "Cloves", "Cinnamon", "Sichuan peppercorns", "Fennel seeds"], servings: 1)
+            Recipe(name: "Chili Powder", ingredients: [
+                Ingredient(name: "Spice 1", amount: 1),
+                Ingredient(name: "Spice 2", amount: 1),
+                Ingredient(name: "Cumin", amount: 1),
+                Ingredient(name: "Oregano", amount: 1),
+                Ingredient(name: "Garlic powder", amount: 1),
+                Ingredient(name: "Onion powder", amount: 1)
+            ], servings: 1),
+            Recipe(name: "Taco Seasoning", ingredients: [
+                Ingredient(name: "Chili powder", amount: 1),
+                Ingredient(name: "Cumin", amount: 1),
+                Ingredient(name: "Paprika", amount: 1),
+                Ingredient(name: "Garlic powder", amount: 1),
+                Ingredient(name: "Onion powder", amount: 1),
+                Ingredient(name: "Red pepper flakes", amount: 1)
+            ], servings: 1),
+            Recipe(name: "Cajun Seasoning", ingredients: [
+                Ingredient(name: "Paprika", amount: 1),
+                Ingredient(name: "Garlic powder", amount: 1),
+                Ingredient(name: "Onion powder", amount: 1),
+                Ingredient(name: "Cayenne pepper", amount: 1),
+                Ingredient(name: "Thyme", amount: 1),
+                Ingredient(name: "Oregano", amount: 1)
+            ], servings: 1),
+            Recipe(name: "Italian Seasoning", ingredients: [
+                Ingredient(name: "Dried basil", amount: 1),
+                Ingredient(name: "Dried oregano", amount: 1),
+                Ingredient(name: "Dried thyme", amount: 1),
+                Ingredient(name: "Dried rosemary", amount: 1),
+                Ingredient(name: "Dried marjoram", amount: 1),
+                Ingredient(name: "Garlic powder", amount: 1)
+            ], servings: 1),
+            Recipe(name: "Chinese Five Spice", ingredients: [
+                Ingredient(name: "Star anise", amount: 1),
+                Ingredient(name: "Cloves", amount: 1),
+                Ingredient(name: "Cinnamon", amount: 1),
+                Ingredient(name: "Sichuan peppercorns", amount: 1),
+                Ingredient(name: "Fennel seeds", amount: 1)
+            ], servings: 1)
         ]
     }
-
 
     // Function to save recipes to storage (UserDefaults)
     private func saveRecipes() {

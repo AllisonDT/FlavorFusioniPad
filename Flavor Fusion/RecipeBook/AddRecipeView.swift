@@ -1,8 +1,8 @@
 //
-//  AddRecipeView.swift
+//  RecipeModel.swift
 //  Flavor Fusion
 //
-//  Created by Allison Turner on 6/6/24.
+//  Created by Allison Turner on 7/20/24.
 //
 
 import SwiftUI
@@ -10,131 +10,154 @@ import SwiftUI
 struct AddRecipeView: View {
     @Binding var isPresented: Bool
     @ObservedObject var recipeStore: RecipeStore
-    
+
     @State private var recipeName: String = ""
-    @State private var selectedServingsIndex: Int = 0
-    let servings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    @State private var servings = 1
+    @State private var spicesData = spiceData
     @State private var selectedSpices: [Spice: Int] = [:]
-    let spiceQuantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
+    @State private var showPopup = false
+    @State private var showBlending = false
+    @State private var showCompletion = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+
+    let servingOptions = Array(1...10)
+
+    var selectedIngredients: [String] {
+        spicesData.filter { $0.isSelected }.map { $0.name }
+    }
+
     var body: some View {
         ZStack {
             VStack {
-                // Text field for entering recipe name
-                TextField("Enter Recipe Name", text: $recipeName)
+                TextField("Recipe Name", text: $recipeName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                // Picker for selecting number of servings
-                Picker("Servings", selection: $selectedServingsIndex) {
-                    ForEach(0..<servings.count) {
-                        Text("\(self.servings[$0]) servings")
+                    .padding(.horizontal)
+
+                HStack {
+                    Text("Servings:")
+                    Picker(selection: $servings, label: Text("Servings")) {
+                        ForEach(servingOptions, id: \.self) { option in
+                            Text("\(option)")
+                        }
                     }
+                    .pickerStyle(MenuPickerStyle())
+                    .padding(.horizontal)
                 }
-                .pickerStyle(DefaultPickerStyle())
-                .padding()
-                
-                // Spice list
+
                 ScrollView {
-                    ForEach(spicesData) { spice in
-                        HStack {
-                            // Checkbox circle on the left
-                            Button(action: {
-                                if self.selectedSpices.keys.contains(spice) {
-                                    self.selectedSpices.removeValue(forKey: spice)
-                                } else {
-                                    self.selectedSpices[spice] = 1 // Default quantity to 1
-                                }
-                            }) {
-                                Image(systemName: self.selectedSpices.keys.contains(spice) ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(self.selectedSpices.keys.contains(spice) ? .green : .gray)
-                            }
-                            Spacer()
-                            Text(spice.name)
-                            Spacer()
-                            // Quantity picker
-                            if self.selectedSpices.keys.contains(spice) {
-                                Picker("Quantity", selection: Binding(
-                                    get: { self.selectedSpices[spice] ?? 1 },
-                                    set: { self.selectedSpices[spice] = $0 }
-                                )) {
-                                    ForEach(spiceQuantities, id: \.self) { quantity in
-                                        Text("\(quantity)")
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle()) // Adjust picker style as needed
-                                .frame(width: 100) // Adjust width as needed
+                    HStack(alignment: .top) {
+                        // First column
+                        VStack {
+                            ForEach(spicesData.indices.filter { $0 < spicesData.count / 2 }, id: \.self) { index in
+                                AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
                             }
                         }
-                        .padding(.vertical, 5)
+                        // Second column
+                        VStack {
+                            ForEach(spicesData.indices.filter { $0 >= spicesData.count / 2 }, id: \.self) { index in
+                                AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                            }
+                        }
                     }
+                    .padding(.horizontal)
                 }
             }
-            
-            // Floating save button
+
             VStack {
                 Spacer()
                 Button(action: {
-                    // Save the new recipe to RecipeStore
+                    if recipeName.isEmpty {
+                        alertMessage = "Please enter a recipe name."
+                        showAlert = true
+                        return
+                    }
+
+                    if selectedSpices.isEmpty {
+                        alertMessage = "Please select at least one spice."
+                        showAlert = true
+                        return
+                    }
+
+                    let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: $0.value) }
                     let newRecipe = Recipe(
                         name: recipeName,
-                        ingredients: Array(selectedSpices.keys.map { $0.name }),
-                        servings: servings[selectedServingsIndex]
+                        ingredients: ingredients,
+                        servings: servings
                     )
                     recipeStore.addRecipe(newRecipe)
-                    // Dismiss the view after saving
                     isPresented = false
                 }) {
                     Text("SAVE")
-                        .frame(width: 200, height: 60)
-                        .foregroundColor(.black)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.green, lineWidth: 2)
-                        )
-                        .background(Color.green.opacity(0.5))
-                        .cornerRadius(8)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                 }
-                .padding()
+                .padding(.horizontal)
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
             }
         }
     }
 }
 
+struct AddRecipeSpiceView: View {
+    @Binding var spice: Spice
+    @Binding var selectedSpices: [Spice: Int]
 
+    let spiceQuantities = Array(1...10)
 
+    var body: some View {
+        HStack {
+            Button(action: {
+                if self.selectedSpices.keys.contains(spice) {
+                    self.selectedSpices.removeValue(forKey: spice)
+                } else {
+                    self.selectedSpices[spice] = 1
+                }
+            }) {
+                Image(systemName: self.selectedSpices.keys.contains(spice) ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(self.selectedSpices.keys.contains(spice) ? .green : .gray)
+            }
+            .buttonStyle(PlainButtonStyle())
 
-//
-//struct AddRecipeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddRecipeView(isPresented: .constant(false), recipeStore: recipeStore)
-//    }
-//}
+            Text(spice.name)
+                .foregroundColor(.black)
+                .font(.body)
 
+            Spacer()
 
-
-/*ScrollView {
-    HStack {
-        LazyVGrid(columns: [GridItem(.flexible())]) {
-            ForEach(firstColumnSpices) { spice in
-                SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
-                    if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
-                        spicesData[index].isSelected = selected
+            if self.selectedSpices.keys.contains(spice) {
+                Picker("Quantity", selection: Binding(
+                    get: { self.selectedSpices[spice] ?? 1 },
+                    set: { self.selectedSpices[spice] = $0 }
+                )) {
+                    ForEach(spiceQuantities, id: \.self) { quantity in
+                        Text("\(quantity)")
                     }
                 }
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 70)
             }
         }
-        .padding()
-        
-        LazyVGrid(columns: [GridItem(.flexible())]) {
-            ForEach(secondColumnSpices) { spice in
-                SpiceBlendSelections(spice: spice, isSelecting: isSelecting) { selected in
-                    if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
-                        spicesData[index].isSelected = selected
-                    }
-                }
-            }
-        }
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.white)
+                .shadow(color: .gray, radius: 2, x: 0, y: 2)
+        )
+        .padding(.vertical, 5)
     }
-}*/
+}
+
+struct AddRecipeView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddRecipeView(isPresented: .constant(false), recipeStore: RecipeStore())
+    }
+}

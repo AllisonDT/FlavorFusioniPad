@@ -1,21 +1,11 @@
-//
-//  RecipeList.swift
-//  Flavor Fusion
-//
-//  Created by Allison Turner on 3/30/24.
-//
-
 import SwiftUI
 
-// This struct represents the list of recipes view.
 struct RecipeList: View {
     @ObservedObject var recipeStore = RecipeStore()
     
-    // State variables for managing search text and add recipe view presentation.
     @State private var searchText: String = ""
     @State private var isAddRecipeViewPresented = false
     
-    // Computed property for filtering recipes based on search text.
     var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
             return recipeStore.recipes
@@ -26,14 +16,11 @@ struct RecipeList: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
+            VStack {
                 HStack {
                     Spacer()
-                    // Displaying the search bar
                     SearchBar(searchText: $searchText)
-                    // Button for filters (not implemented)
                     FiltersButton()
-                    // Button for adding a new recipe
                     Button(action: {
                         isAddRecipeViewPresented.toggle()
                     }) {
@@ -42,24 +29,24 @@ struct RecipeList: View {
                             .padding()
                     }
                 }
-                VStack(spacing: 20) {
-                    // Displaying each recipe in a list
-                    ForEach(filteredRecipes) { recipe in
-                        RecipeRow(recipe: recipe, recipeStore: recipeStore)
+                .padding([.leading, .trailing, .top])
+                
+                ScrollView {
+                    VStack(spacing: 10) {
+                        ForEach(filteredRecipes) { recipe in
+                            RecipeRow(recipe: recipe, recipeStore: recipeStore)
+                        }
                     }
+                    .padding(.horizontal)
                 }
-                .padding()
             }
         }
-        // Presenting the AddRecipeView as a sheet
         .sheet(isPresented: $isAddRecipeViewPresented) {
-            // Pass the recipe store to the AddRecipeView
             AddRecipeView(isPresented: $isAddRecipeViewPresented, recipeStore: recipeStore)
         }
     }
 }
 
-// This struct represents the filters button (not implemented).
 struct FiltersButton: View {
     var body: some View {
         Button(action: {
@@ -72,54 +59,63 @@ struct FiltersButton: View {
     }
 }
 
-// This struct represents the row view for displaying a recipe.
 struct RecipeRow: View {
     var recipe: Recipe
     var recipeStore: RecipeStore
     @State private var isMixPreviewPresented = false
+    @State private var isDeleteAlertPresented = false
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(recipe.name)
-                    .font(.headline)
+            VStack(alignment: .leading) {
+                Button(action: {
+                    isMixPreviewPresented.toggle()
+                }) {
+                    Text(recipe.name)
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
+                .sheet(isPresented: $isMixPreviewPresented) {
+                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
+                }
+                
                 Text("Servings: \(recipe.servings)")
-                    .font(.subheadline)
+                    .font(.caption)
+                    .foregroundColor(.gray)
             }
+            .padding()
             
             Spacer()
             
-            // Button to trigger the MixRecipePreview view
             Button(action: {
-                isMixPreviewPresented.toggle()
+                isDeleteAlertPresented = true
             }) {
-                Image(systemName: "arrow.right.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.green)
-            }
-        }
-        .padding()
-        .background(Color.secondary.opacity(0.1))
-        .cornerRadius(10)
-        .contextMenu {
-            Button(action: {
-                recipeStore.removeRecipe(recipe)
-            }) {
-                Text("Delete")
                 Image(systemName: "trash")
+                    .foregroundColor(.red)
+            }
+            .padding()
+            .alert(isPresented: $isDeleteAlertPresented) {
+                Alert(
+                    title: Text("Delete Recipe"),
+                    message: Text("Are you sure you want to delete this recipe?"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        recipeStore.removeRecipe(recipe)
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
-        // Presenting the MixRecipePreview as a sheet
-        .sheet(isPresented: $isMixPreviewPresented) {
-            MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
-        }
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.white)
+                .shadow(color: .gray, radius: 2, x: 0, y: 2)
+        )
+        .padding(.vertical, 4)
     }
 }
 
-
-// Preview Provider for the RecipeList view
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        return RecipeList()
+        RecipeList()
     }
 }

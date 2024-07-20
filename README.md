@@ -36,16 +36,21 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 2. **Start Developing**:
 - Navigate into the cloned repository directory.
 - Start developing your project using Xcode.
-- You can now commit changes to your repository and push them to the remote repository as needed.
 
 ## Additional Resources
 
 - [Xcode Documentation](https://developer.apple.com/documentation/xcode)
 - [GitHub Guides](https://guides.github.com/)
 
-## July Flavor Fusion Development
+## Summer Flavor Fusion Development
 **July 2024**
 - 7/1 implemented plus button for add recipe, implemented recipe search functionalit, drafted MixRecipePreview view
+- 7/9 fixed bug where new vs existing view picker was moving up and down the screen, added selection button and amount selector for the new spice view selections
+- 7/13 added floating blend button to NewBlendView view, drafted all of the blending pages for new blend
+- 7/14 added blending from recipe book
+- 7/15 updated BlendConfirmationView to include the ingredients that are in the blend, updated the BlendExistingView to have the confirmation, loading, and complete views, redesigned main list, added setting for changing display name
+- 7/16 added list of recipes in SpicePopupView
+- 7/20 fixed bug where user could only click on name not entire box on home list, redesigned style of SpicePopupView, styled NewBlendView to match home list, created ExistingRecipesRows file, added alerts
        
 
 

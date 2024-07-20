@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct PasscodeButton: View {
-    let number: String
-    let action: () -> Void
+    var number: String
+    var action: () -> Void
     
     var body: some View {
         Button(action: action) {
             Text(number)
                 .font(.title)
+                .fontWeight(.semibold)
                 .frame(width: 80, height: 80)
-                .background(Color.blue)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
+                .background(Color(.systemGray5))
                 .cornerRadius(40)
         }
     }

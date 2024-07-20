@@ -7,13 +7,18 @@
 
 import Foundation
 
+struct Ingredient: Codable {
+    let name: String
+    let amount: Int
+}
+
 struct Recipe: Identifiable, Codable {
     let id: UUID
     let name: String
-    let ingredients: [String]
+    let ingredients: [Ingredient]
     let servings: Int
     
-    init(name: String, ingredients: [String], servings: Int) {
+    init(name: String, ingredients: [Ingredient], servings: Int) {
         self.id = UUID()
         self.name = name
         self.ingredients = ingredients

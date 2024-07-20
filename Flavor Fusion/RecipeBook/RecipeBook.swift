@@ -19,35 +19,10 @@ struct RecipeBook: View {
                     .font(.title)
                     .padding()
                 
-                // Favorite Recipes Section
-//                VStack {
-//                    HStack {
-//                        // Displaying favorite recipe circles for three different recipes
-//                        FavoriteRecipeCircle(spiceName: "Taco Seasoning")
-//                        FavoriteRecipeCircle(spiceName: "Pizza")
-//                        FavoriteRecipeCircle(spiceName: "Secret Spice")
-//                    }
-//                    .padding()
-//                }
-                
                 // Displaying the list of recipes
                 RecipeList()
                     .padding()
                 
-                // Button to add a new recipe
-//                Button(action: {
-//                    isAddRecipeViewPresented.toggle()
-//                }) {
-//                    Text("Add Recipe")
-//                        .frame(width: 200, height: 60)
-//                        .foregroundColor(.white)
-//                        .background(Color.blue)
-//                        .cornerRadius(8)
-//                }
-//                .padding()
-//                .sheet(isPresented: $isAddRecipeViewPresented) {
-//                    AddRecipeView(isPresented: $isAddRecipeViewPresented, recipeStore: recipeStore)
-//                }
             }
         }
     }

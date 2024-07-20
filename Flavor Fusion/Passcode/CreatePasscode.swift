@@ -10,9 +10,8 @@ import SwiftUI
 struct CreatePasscode: View {
     // State variables to manage passcode creation process
     @State private var passcode: String = ""
-    @State private var passcodeError: Bool = false
-    @State private var passcodeMatchError: Bool = false
-    @State private var passcodeCreated: Bool = false
+    @State private var isPasscodeCreated: Bool = false
+    @State private var showPasscodeError: Bool = false
     
     // Layout for the passcode buttons
     let gridLayout = [
@@ -22,59 +21,71 @@ struct CreatePasscode: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                // If passcode not created yet
-                if !passcodeCreated {
-                    Text("Create a Passcode")
-                        .font(.title)
-                        .padding()
-                    
-                    // Grid of passcode buttons
-                    LazyVGrid(columns: gridLayout, spacing: 10) {
-                        ForEach(1...9, id: \.self) { number in
-                            PasscodeButton(number: "\(number)") {
-                                addToPasscode(number: "\(number)")
-                            }
-                        }
-                        Spacer()
-                        PasscodeButton(number: "Del") {
-                            deleteLast()
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    // Text field for passcode input
-                    TextField("Passcode", text: $passcode)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        // Visual indication of passcode error
-                        .background(RoundedRectangle(cornerRadius: 10).stroke(passcodeError ? Color.red : Color.clear, lineWidth: 1))
-                        .foregroundColor(passcodeError ? .red : .black)
-                    
-                    // Error message for passcode length
-                    if passcodeError {
-                        Text("Passcode must be at least 4 characters")
-                            .foregroundColor(.red)
-                            .padding(.bottom)
-                    }
-                    
-                    // Button to create passcode
-                    Button(action: createPasscode) {
-                        Text("Create Passcode")
-                    }
+                // Title
+                Text("Create a Passcode")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding(.top, 50)
+                
+                Spacer()
+                
+                // Secure text field for passcode input
+                SecureField("Passcode", text: $passcode)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                } else {
-                    // Redirect to ListTabView upon successful passcode creation
-                    NavigationLink(destination: ListTabView().navigationBarBackButtonHidden(true), isActive: $passcodeCreated) {
-                        Text("Welcome to Flavor Fusion!")
-                            .font(.title)
-                            .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 40)
+                    .padding(.bottom, 30)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(showPasscodeError ? Color.red : Color.clear, lineWidth: 1)
+                    )
+                
+                // Grid of passcode buttons
+                LazyVGrid(columns: gridLayout, spacing: 20) {
+                    ForEach(1...9, id: \.self) { number in
+                        PasscodeButton(number: "\(number)") {
+                            addToPasscode(number: "\(number)")
+                        }
+                    }
+                    Spacer()
+                    PasscodeButton(number: "Del") {
+                        deleteLast()
                     }
                 }
+                .padding(.horizontal, 40)
+                
+                Spacer()
+                
+                // Create passcode button
+                Button(action: createPasscode) {
+                    Text("Create Passcode")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
+                }
+                .padding(.bottom, 40)
+                
+                // Error message for passcode length
+                if showPasscodeError {
+                    Text("Passcode must be at least 4 characters")
+                        .foregroundColor(.red)
+                        .padding(.bottom)
+                }
             }
-            .padding()
+            .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+            .navigationDestination(isPresented: $isPasscodeCreated) {
+                ListTabView().navigationBarBackButtonHidden(true)
+            }
         }
     }
     
@@ -93,18 +104,15 @@ struct CreatePasscode: View {
     // Function to create passcode
     func createPasscode() {
         if passcode.count < 4 {
-            passcodeError = true
-            passcodeMatchError = false
+            showPasscodeError = true
             return
-        } else {
-            passcodeError = false
         }
         
         // Save passcode in UserDefaults
         UserDefaults.standard.set(passcode, forKey: "passcode")
         
         // Set passcode created flag to true
-        passcodeCreated = true
+        isPasscodeCreated = true
     }
 }
 

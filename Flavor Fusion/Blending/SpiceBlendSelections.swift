@@ -26,6 +26,5 @@ struct SpiceBlendSelections: View {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(Color.blue.opacity(0.1)) // Adjust color and opacity as needed
         )
-        .padding(.vertical, 8) // Adjust vertical padding as needed
     }
 }

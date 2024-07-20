@@ -7,68 +7,76 @@
 
 import SwiftUI
 
-// This struct represents the List view.
 struct List: View {
-    // State variables for managing selection and visibility of blend popup.
     @State private var isSelecting: Bool = false
     @State private var isBlendPopupVisible: Bool = false
+    @State private var isSpicePopupVisible: Bool = false
+    @State private var selectedSpice: Spice?
+    @ObservedObject var recipeStore = RecipeStore()
+    @State private var displayName: String = UserDefaults.standard.string(forKey: "displayName") ?? "Flavor Fusion"
 
     var body: some View {
-        VStack { // Wrap the VStack around the HStack
-            // Title of the cabinet
-//            Text("Allison's Cabinet")
-//                .font(.title)
-//                .padding(.bottom, 10)
+        VStack {
+            Text("\(displayName)'s Cabinet")
+                .font(.title)
+                .padding(.bottom, 10)
             
             Button(action: {
-                // Toggling visibility of blend popup
                 isBlendPopupVisible.toggle()
             }) {
                 Text("BLEND")
-                    .font(.title)
+                    .font(.headline)
                     .foregroundColor(.white)
                     .padding()
-                    .background(Color.blue.opacity(0.5))
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
             }
+            .padding(.horizontal)
             
             HStack {
-                // First column of spices
                 VStack {
                     ForEach(firstColumnSpices) { spice in
-                        // Displaying each spice row
-                        SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
-                            // Updating isSelected property of spice
-                            if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
-                                spicesData[index].isSelected = selected
+                        SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                            if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
+                                spiceData[index].isSelected = selected
                             }
+                        }
+                        .onTapGesture {
+                            selectedSpice = spice
+                            isSpicePopupVisible = true
                         }
                     }
                 }
                 
-                // Second column of spices
                 VStack {
                     ForEach(secondColumnSpices) { spice in
-                        // Displaying each spice row
-                        SpiceRowView(spice: spice, isSelecting: isSelecting) { selected in
-                            // Updating isSelected property of spice
-                            if let index = spicesData.firstIndex(where: { $0.id == spice.id }) {
-                                spicesData[index].isSelected = selected
+                        SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                            if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
+                                spiceData[index].isSelected = selected
                             }
+                        }
+                        .onTapGesture {
+                            selectedSpice = spice
+                            isSpicePopupVisible = true
                         }
                     }
                 }
             }
             .padding()
         }
-        // Presenting the blend popup as a sheet when isBlendPopupVisible is true
         .sheet(isPresented: $isBlendPopupVisible) {
             BlendingNewExistingView()
+        }
+        .sheet(isPresented: $isSpicePopupVisible) {
+            if let selectedSpice = selectedSpice {
+                SpicePopupView(spice: selectedSpice, recipes: recipeStore.recipes, isPresented: $isSpicePopupVisible)
+            }
         }
     }
 }
 
-// Preview Provider for the List view
 struct List_Previews: PreviewProvider {
     static var previews: some View {
         List()

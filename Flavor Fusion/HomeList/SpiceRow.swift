@@ -8,45 +8,53 @@
 import SwiftUI
 
 struct SpiceRow: View {
-    let spice: Spice // Assuming Spice is the model struct
+    let spice: Spice
     let isSelecting: Bool
+    let recipes: [Recipe]
     var onTap: (Bool) -> Void
 
     @State private var isShowingPopup = false
 
     var body: some View {
-        VStack {
-            Button(action: {
-                isShowingPopup.toggle()
-            }) {
-                Text(spice.name) // Assuming name is a property of Spice
-                    .foregroundColor(spice.isSelected ? .blue : .black)
+        Button(action: {
+            isShowingPopup.toggle()
+        }) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(spice.name)
+                        .foregroundColor(spice.isSelected ? .blue : .black)
+                    
+                    Spacer()
+                    
+                    // Display container number
+                    Text("Container: \(spice.containerNumber)")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                }
+                .padding()
+                
+                Spacer()
+                
+                // Fullness indicator resembling a spice bottle
+                ZStack(alignment: .bottom) {
+                    Capsule()
+                        .frame(width: 20, height: 60)
+                        .foregroundColor(Color.gray.opacity(0.3))
+                    Capsule()
+                        .frame(width: 20, height: 60 * CGFloat(spice.spiceAmount))
+                        .foregroundColor(Color.blue)
+                }
+                .padding(.trailing, 10)
             }
-            .sheet(isPresented: $isShowingPopup) {
-                SpicePopupView(spice: spice, isPresented: $isShowingPopup)
-            }
-            
-            Spacer()
-            
-            // Display container number
-            Text("Container: \(spice.containerNumber)")
-                .font(.caption)
-                .foregroundColor(.black)
+            .background(
+                RoundedRectangle(cornerRadius: 8) // Rounded rectangle shape
+                    .fill(Color.white) // Background color of the rounded rectangle
+                    .shadow(color: .gray, radius: 2, x: 0, y: 2)
+            )
+            .padding(.vertical, 4)
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 8) // Rounded rectangle shape
-                .fill(Color.blue.opacity(0.1)) // Background color of the rounded rectangle
-                .overlay(
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            // Blue gradient representing the amount of spice left
-                            LinearGradient(gradient: Gradient(colors: [.blue, .blue.opacity(0.5)]), startPoint: .leading, endPoint: .trailing) // Blue gradient
-                                .frame(width: geometry.size.width * CGFloat(spice.spiceAmount), height: geometry.size.height)
-                        }
-                    }
-                )
-        )
-        .padding(.vertical, 4)
+        .sheet(isPresented: $isShowingPopup) {
+            SpicePopupView(spice: spice, recipes: recipes, isPresented: $isShowingPopup)
+        }
     }
 }

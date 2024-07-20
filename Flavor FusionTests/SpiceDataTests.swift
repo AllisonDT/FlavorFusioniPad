@@ -14,15 +14,15 @@ class SpiceDataTests: XCTestCase {
     
     // Test if all spices are initialized properly
     func testAllSpicesInitialization() {
-        XCTAssertEqual(spicesData.count, 10)
+        XCTAssertEqual(spiceData.count, 10)
         
-        let firstSpice = spicesData[0]
+        let firstSpice = spiceData[0]
         XCTAssertEqual(firstSpice.name, "Spice 1")
         XCTAssertEqual(firstSpice.spiceAmount, 1.0)
         XCTAssertEqual(firstSpice.selectedAmount, 0.0)
         XCTAssertEqual(firstSpice.containerNumber, 101)
         
-        let lastSpice = spicesData[spicesData.count - 1]
+        let lastSpice = spiceData[spiceData.count - 1]
         XCTAssertEqual(lastSpice.name, "Spice 10")
         XCTAssertEqual(lastSpice.spiceAmount, 0.7)
         XCTAssertEqual(lastSpice.selectedAmount, 0.0)

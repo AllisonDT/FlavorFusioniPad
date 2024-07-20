@@ -21,13 +21,15 @@ struct BlendingNewExistingView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-                
+
                 // Display content based on selection
                 if selectedOption == 0 {
                     NewBlendView()
                 } else {
                     ExistingBlendView()
                 }
+                
+                Spacer() // Push content to the top
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity) // Set a fixed frame size
         }
@@ -36,4 +38,11 @@ struct BlendingNewExistingView: View {
 
 #Preview {
     BlendingNewExistingView()
+}
+
+struct NewBlendView2: View {
+    var body: some View {
+        Text("New Blend View")
+            .padding()
+    }
 }

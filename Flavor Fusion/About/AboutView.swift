@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-// This struct represents the About view.
 struct AboutView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                VStack {
-                    // Navigation links to different sections of the about view
+                Text("About Flavor Fusion")
+                    .font(.title)
+                    .padding(.bottom, 10)
+                
+                VStack(spacing: 15) {
                     NavigationLink(destination: ProjectOverviewView()) {
                         CustomListItem(title: "Project Overview")
                     }
@@ -27,42 +29,48 @@ struct AboutView: View {
                         CustomListItem(title: "Meet the Team")
                     }
                 }
-                // Displaying an image as a decorative element
+                .padding(.horizontal)
+                
+                Spacer()
+                
                 Image(systemName: "exclamationmark.circle.fill")
-                    .font(.system(size: 300))
+                    .font(.system(size: 100))
                     .foregroundColor(.blue.opacity(0.5))
-                    .padding()
+                    .padding(.bottom, 20)
+                
+                Spacer()
             }
+            .padding()
+            .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
         }
     }
 }
 
-// This struct represents a custom list item used in the About view.
 struct CustomListItem: View {
     var title: String
     
     var body: some View {
         HStack {
-            // Displaying the title of the list item
             Text(title)
                 .padding(.horizontal)
                 .foregroundColor(.primary)
                 .padding(.vertical, 15)
             Spacer()
-            // Displaying a chevron icon for navigation
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
                 .padding(.trailing)
                 .padding(.vertical, 15)
         }
         .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.1))
+        .background(Color.white)
         .cornerRadius(10)
-        .padding(.horizontal)
+        .shadow(color: .gray.opacity(0.3), radius: 2, x: 0, y: 2)
+        .padding(.vertical, 4)
     }
 }
 
-// Preview Provider for the AboutView
-#Preview {
-    AboutView()
+struct AboutView_Previews: PreviewProvider {
+    static var previews: some View {
+        AboutView()
+    }
 }

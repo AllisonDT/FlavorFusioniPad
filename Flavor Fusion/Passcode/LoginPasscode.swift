@@ -22,15 +22,28 @@ struct LoginPasscode: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // Title
                 Text("Enter Passcode")
-                    .font(.title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding(.top, 50)
+                
+                Spacer()
+                
+                // Secure text field for passcode input
+                SecureField("Passcode", text: $passcode)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 40)
+                    .padding(.bottom, 30)
                 
                 // Grid of passcode buttons
-                LazyVGrid(columns: gridLayout, spacing: 10) {
+                LazyVGrid(columns: gridLayout, spacing: 20) {
                     ForEach(1...9, id: \.self) { number in
                         PasscodeButton(number: "\(number)") {
                             addToPasscode(number: "\(number)")
@@ -41,28 +54,31 @@ struct LoginPasscode: View {
                         deleteLast()
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 40)
                 
-                // Secure text field for passcode input
-                SecureField("Passcode", text: $passcode)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                Spacer()
                 
                 // Login button
                 Button(action: login) {
                     Text("Login")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
                 }
-                .padding()
-                
-                // Navigation link to ListTabView upon successful login
-                NavigationLink(destination: ListTabView().navigationBarBackButtonHidden(true), isActive: $isLoginSuccessful) {
-                    EmptyView()
-                }
+                .padding(.bottom, 40)
             }
-            .padding()
-            // Alert to show incorrect passcode message
+            .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .alert(isPresented: $showIncorrectPasscodeMessage) {
                 Alert(title: Text("Incorrect Passcode"), message: Text("Please try again."), dismissButton: .default(Text("OK")))
+            }
+            .navigationDestination(isPresented: $isLoginSuccessful) {
+                ListTabView()
+                    .navigationBarBackButtonHidden(true)
             }
         }
     }

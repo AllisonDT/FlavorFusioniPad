@@ -19,7 +19,7 @@ struct ExistingBlendView: View {
                 ScrollView {
                     // Display each recipe in a VStack
                     ForEach(recipeStore.recipes) { recipe in
-                        RecipeRow(recipe: recipe, recipeStore: recipeStore)
+                        ExistingRecipesRows(recipe: recipe)
                             .onTapGesture {
                                 // Set the selected recipe when a recipe is tapped
                                 self.selectedRecipe = recipe
@@ -85,11 +85,5 @@ struct RecipeDetails: View {
         .padding()
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(10)
-    }
-}
-
-struct ExistingBlendView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExistingBlendView()
     }
 }

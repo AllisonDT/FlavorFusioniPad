@@ -10,16 +10,18 @@ import SwiftUI
 struct SpiceRowView: View {
     let spice: Spice
     let isSelecting: Bool
+    let recipes: [Recipe]
     let onSelect: (Bool) -> Void
     
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                // Overlay the Rectangle and the SpiceRow
+                // Simple background color
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Color.blue.opacity(Double(spice.spiceAmount))) // Adjust opacity based on spiceAmount
+                    .foregroundColor(spice.isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
                     .frame(width: geometry.size.width) // Stretch the rectangle to match width
-                SpiceRow(spice: spice, isSelecting: isSelecting) { selected in
+                
+                SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipes) { selected in
                     onSelect(selected)
                 }
             }

@@ -25,7 +25,7 @@ public struct Spice: Identifiable, Equatable, Hashable {
 }
 
 // Array of Spice Data
-public var spicesData = [
+public var spiceData = [
     Spice(name: "Spice 1", spiceAmount: 1.0, selectedAmount: 0.0, containerNumber: 1),
     Spice(name: "Spice 2", spiceAmount: 0.5, selectedAmount: 0.0, containerNumber: 2),
     Spice(name: "Spice 3", spiceAmount: 0.25, selectedAmount: 0.0, containerNumber: 3),
