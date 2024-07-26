@@ -51,6 +51,8 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 7/15 updated BlendConfirmationView to include the ingredients that are in the blend, updated the BlendExistingView to have the confirmation, loading, and complete views, redesigned main list, added setting for changing display name
 - 7/16 added list of recipes in SpicePopupView
 - 7/20 fixed bug where user could only click on name not entire box on home list, redesigned style of SpicePopupView, styled NewBlendView to match home list, created ExistingRecipesRows file, added alerts
+- 7/22 fixed functionality of MixRecipePreview
+- 7/24 changed search bar style, added alert for blending, added images for team members to about view
        
 
 

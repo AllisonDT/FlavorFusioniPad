@@ -18,7 +18,7 @@ struct ListTabView: View {
                 }
                 .tag(0)
                 
-            RecipeBook()
+            RecipeList()
                 .tabItem {
                     Label("Recipe Book", systemImage: "book")
                 }

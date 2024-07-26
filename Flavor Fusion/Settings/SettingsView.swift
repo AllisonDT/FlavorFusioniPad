@@ -19,25 +19,66 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Change Passcode")) {
-                    SecureField("Current Passcode", text: $currentPasscode)
-                    SecureField("New Passcode", text: $newPasscode)
-                    SecureField("Confirm Passcode", text: $confirmPasscode)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Group {
+                        Text("Change Passcode")
+                            .font(.headline)
+                            .bold()
+                            .padding(.bottom, 5)
+                        
+                        SecureField("Current Passcode", text: $currentPasscode)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        SecureField("New Passcode", text: $newPasscode)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        SecureField("Confirm Passcode", text: $confirmPasscode)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Button(action: changePasscode) {
+                            Text("Change Passcode")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        }
+                        .padding(.top, 10)
+                    }
+                    .padding(.horizontal)
+                    
+                    Divider()
+                        .padding(.vertical, 10)
+                    
+                    Group {
+                        Text("Change Display Name")
+                            .font(.headline)
+                            .bold()
+                            .padding(.bottom, 5)
+                        
+                        TextField("Display Name", text: $displayName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Button(action: changeDisplayName) {
+                            Text("Change Display Name")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        }
+                        .padding(.top, 10)
+                    }
+                    .padding(.horizontal)
                 }
-                
-                Button(action: changePasscode) {
-                    Text("Change Passcode")
-                }
-                
-                Section(header: Text("Change Display Name")) {
-                    TextField("Display Name", text: $displayName)
-                }
-                
-                Button(action: changeDisplayName) {
-                    Text("Change Display Name")
-                }
+                .padding()
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Settings")
             .alert(isPresented: $showIncorrectPasscodeMessage) {
                 Alert(title: Text("Incorrect Passcode"), message: Text("Please enter the correct current passcode."), dismissButton: .default(Text("OK")))

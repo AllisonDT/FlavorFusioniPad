@@ -23,44 +23,67 @@ struct BlendConfirmationView: View {
     let ingredients: [String]
     let onConfirm: () -> Void
 
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
-        VStack {
-            Text("Blend Created")
-                .font(.largeTitle)
-                .padding(.top)
-
-            Text("Spice Name: \(spiceName)")
-                .font(.title2)
-                .padding(.top)
-
-            Text("Servings: \(servings)")
-                .font(.title2)
-                .padding(.top)
-
-            Text("Ingredients:")
-                .font(.title2)
-                .padding(.top)
-            
-            ForEach(ingredients, id: \.self) { ingredient in
-                Text(ingredient)
-                    .font(.body)
-                    .padding(.top, 2)
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Blend Created")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.top)
+                    
+                    Group {
+                        Text("Spice Name")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                        Text(spiceName)
+                            .font(.title2)
+                            .padding(.bottom)
+                        
+                        Text("Servings")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                        Text("\(servings)")
+                            .font(.title2)
+                            .padding(.bottom)
+                        
+                        Text("Ingredients")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(ingredients, id: \.self) { ingredient in
+                            Text(ingredient)
+                                .font(.body)
+                                .padding(.leading, 10)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: onConfirm) {
+                            Text("Confirm")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        }
+                        .padding(.horizontal)
+                        Spacer()
+                    }
+                }
+                .padding()
             }
-
-            Spacer()
-
-            Button(action: onConfirm) {
-                Text("Confirm")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-            }
-            .padding()
+            .background(Color(.systemGroupedBackground))
         }
-        .padding()
     }
 }
 

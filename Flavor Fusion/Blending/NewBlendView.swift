@@ -15,6 +15,7 @@ struct NewBlendView: View {
     @State private var showPopup = false // State variable to control the popup presentation
     @State private var showBlending = false // State variable to control the blending view
     @State private var showCompletion = false // State variable to control the completion view
+    @State private var showAlert = false // State variable to control the alert presentation
 
     let servingOptions = Array(1...10) // Array of serving options
 
@@ -66,7 +67,11 @@ struct NewBlendView: View {
             VStack {
                 Spacer()
                 Button(action: {
-                    showPopup = true // Show the popup when the button is pressed
+                    if spiceName.isEmpty || selectedIngredients.isEmpty {
+                        showAlert = true
+                    } else {
+                        showPopup = true // Show the popup when the button is pressed
+                    }
                 }) {
                     Text("BLEND")
                         .font(.headline)
@@ -78,6 +83,13 @@ struct NewBlendView: View {
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                 }
                 .padding(.horizontal)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Incomplete Blend"),
+                        message: Text("Please enter a spice blend name and select at least one ingredient."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
                 .sheet(isPresented: $showPopup) {
                     BlendConfirmationView(spiceName: spiceName, servings: servings, ingredients: selectedIngredients, onConfirm: {
                         showPopup = false

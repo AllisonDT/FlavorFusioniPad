@@ -1,5 +1,41 @@
 import SwiftUI
 
+struct SearchBar: UIViewRepresentable {
+    @Binding var searchText: String
+
+    class Coordinator: NSObject, UISearchBarDelegate {
+        @Binding var searchText: String
+
+        init(searchText: Binding<String>) {
+            _searchText = searchText
+        }
+
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            self.searchText = searchText
+        }
+
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.resignFirstResponder()
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(searchText: $searchText)
+    }
+
+    func makeUIView(context: Context) -> UISearchBar {
+        let searchBar = UISearchBar(frame: .zero)
+        searchBar.delegate = context.coordinator
+        searchBar.placeholder = "Search Recipes"
+        searchBar.searchBarStyle = .minimal
+        return searchBar
+    }
+
+    func updateUIView(_ uiView: UISearchBar, context: Context) {
+        uiView.text = searchText
+    }
+}
+
 struct RecipeList: View {
     @ObservedObject var recipeStore = RecipeStore()
     
@@ -18,15 +54,15 @@ struct RecipeList: View {
         NavigationView {
             VStack {
                 HStack {
-                    Spacer()
                     SearchBar(searchText: $searchText)
-                    FiltersButton()
+                    Spacer()
                     Button(action: {
                         isAddRecipeViewPresented.toggle()
                     }) {
                         Image(systemName: "plus.circle")
                             .font(.system(size: 24))
                             .padding()
+                            .foregroundColor(.blue)
                     }
                 }
                 .padding([.leading, .trailing, .top])
@@ -35,11 +71,13 @@ struct RecipeList: View {
                     VStack(spacing: 10) {
                         ForEach(filteredRecipes) { recipe in
                             RecipeRow(recipe: recipe, recipeStore: recipeStore)
+                                .padding(.horizontal)
                         }
                     }
-                    .padding(.horizontal)
                 }
             }
+            .background(Color(.systemGroupedBackground))
+            .navigationBarTitle("Recipes", displayMode: .inline)
         }
         .sheet(isPresented: $isAddRecipeViewPresented) {
             AddRecipeView(isPresented: $isAddRecipeViewPresented, recipeStore: recipeStore)
@@ -55,6 +93,7 @@ struct FiltersButton: View {
             Image(systemName: "line.horizontal.3.decrease.circle")
                 .font(.system(size: 24))
                 .padding()
+                .foregroundColor(.blue)
         }
     }
 }

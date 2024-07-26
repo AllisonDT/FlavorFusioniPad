@@ -13,6 +13,7 @@ struct LoginPasscode: View {
     @State private var passcode: String = ""
     @State private var isLoginSuccessful: Bool = false
     @State private var showIncorrectPasscodeMessage: Bool = false
+    @State private var isPasscodeVisible: Bool = false
 
     // Layout for the passcode buttons
     let gridLayout = [
@@ -33,12 +34,27 @@ struct LoginPasscode: View {
                 
                 Spacer()
                 
-                // Secure text field for passcode input
-                SecureField("Passcode", text: $passcode)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
+                // Passcode input field
+                if isPasscodeVisible {
+                    TextField("Passcode", text: $passcode)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
+                } else {
+                    SecureField("Passcode", text: $passcode)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
+                }
+                
+                // Show Passcode Toggle
+                Toggle("Show Passcode", isOn: $isPasscodeVisible)
                     .padding(.horizontal, 40)
                     .padding(.bottom, 30)
                 

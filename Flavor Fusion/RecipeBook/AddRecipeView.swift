@@ -30,6 +30,12 @@ struct AddRecipeView: View {
     var body: some View {
         ZStack {
             VStack {
+                // Header
+                Text("Create Recipe")
+                    .font(.largeTitle)
+//                    .fontWeight(.bold)
+                    .padding(.top)
+                
                 TextField("Recipe Name", text: $recipeName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
@@ -79,7 +85,7 @@ struct AddRecipeView: View {
                         return
                     }
 
-                    let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: $0.value) }
+                    let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value)) }
                     let newRecipe = Recipe(
                         name: recipeName,
                         ingredients: ingredients,
