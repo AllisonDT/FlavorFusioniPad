@@ -14,11 +14,11 @@ struct PrivacyInfoView: View {
                 Text("Privacy and Security")
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 
                 Text("Flavor Fusion utilizes Bluetooth technology to connect with your mobile device. Your privacy and security are important to us. Here's how we handle Bluetooth data:")
                     .font(.body)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 
                 SectionViewPrivacy(title: "Data Collection") {
                     BulletPointPrivacy(text: "Flavor Fusion collects and processes Bluetooth signals for the purpose of establishing a connection with your mobile device.")
@@ -54,7 +54,7 @@ struct SectionViewPrivacy<Content: View>: View {
             Text(title)
                 .font(.headline)
                 .fontWeight(.bold)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
             content
         }
     }
@@ -68,7 +68,7 @@ struct BulletPointPrivacy: View {
             Text("•")
             Text(text)
                 .font(.body)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
         }
     }
 }

@@ -33,7 +33,6 @@ struct AddRecipeView: View {
                 // Header
                 Text("Create Recipe")
                     .font(.largeTitle)
-//                    .fontWeight(.bold)
                     .padding(.top)
                 
                 TextField("Recipe Name", text: $recipeName)
@@ -119,43 +118,52 @@ struct AddRecipeSpiceView: View {
     let spiceQuantities = Array(1...10)
 
     var body: some View {
-        HStack {
-            Button(action: {
-                if self.selectedSpices.keys.contains(spice) {
-                    self.selectedSpices.removeValue(forKey: spice)
-                } else {
-                    self.selectedSpices[spice] = 1
+        VStack {
+            HStack {
+                Button(action: {
+                    if self.selectedSpices.keys.contains(spice) {
+                        self.selectedSpices.removeValue(forKey: spice)
+                    } else {
+                        self.selectedSpices[spice] = 1
+                    }
+                }) {
+                    Image(systemName: self.selectedSpices.keys.contains(spice) ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(self.selectedSpices.keys.contains(spice) ? .green : .gray)
                 }
-            }) {
-                Image(systemName: self.selectedSpices.keys.contains(spice) ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(self.selectedSpices.keys.contains(spice) ? .green : .gray)
+                .buttonStyle(PlainButtonStyle())
+
+                Text(spice.name)
+                    .foregroundColor(.primary)
+                    .font(.body)
+
+                Spacer()
             }
-            .buttonStyle(PlainButtonStyle())
-
-            Text(spice.name)
-                .foregroundColor(.black)
-                .font(.body)
-
-            Spacer()
 
             if self.selectedSpices.keys.contains(spice) {
-                Picker("Quantity", selection: Binding(
-                    get: { self.selectedSpices[spice] ?? 1 },
-                    set: { self.selectedSpices[spice] = $0 }
-                )) {
-                    ForEach(spiceQuantities, id: \.self) { quantity in
-                        Text("\(quantity)")
+                HStack {
+                    Text("Amount")
+                        .foregroundColor(.primary)
+                        .font(.body)
+
+                    Picker("Quantity", selection: Binding(
+                        get: { self.selectedSpices[spice] ?? 1 },
+                        set: { self.selectedSpices[spice] = $0 }
+                    )) {
+                        ForEach(spiceQuantities, id: \.self) { quantity in
+                            Text("\(quantity)")
+                        }
                     }
+                    .pickerStyle(MenuPickerStyle())
+                    .frame(width: 70)
                 }
-                .pickerStyle(MenuPickerStyle())
-                .frame(width: 70)
+                .padding(.top, 5)
             }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
+                .fill(Color(UIColor.systemBackground))
                 .shadow(color: .gray, radius: 2, x: 0, y: 2)
         )
         .padding(.vertical, 5)

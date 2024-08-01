@@ -84,11 +84,11 @@ struct TeamMemberView: View {
                 .font(.headline)
             Text(member.position)
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .padding()
-        .background(Color.white)
+        .background(Color(UIColor.systemBackground))
         .cornerRadius(10)
         .shadow(radius: 5)
     }
@@ -122,7 +122,7 @@ struct BiographyView: View {
                 .padding(.bottom, 5)
             Text(member.position)
                 .font(.title)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
                 .padding(.bottom, 20)
             Text(member.biography)
                 .font(.body)
@@ -131,6 +131,7 @@ struct BiographyView: View {
         }
         .padding()
         .padding(.top, 20)
+        .background(Color(UIColor.systemBackground))
     }
 }
 

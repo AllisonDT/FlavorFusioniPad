@@ -35,7 +35,7 @@ struct ExistingRecipesRows: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
+                .fill(Color(UIColor.systemBackground))
                 .shadow(color: .gray, radius: 2, x: 0, y: 2)
         )
         .padding(.vertical, 4)

@@ -47,7 +47,7 @@ struct SectionView<Content: View>: View {
             Text(title)
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
             content
         }
     }
@@ -61,7 +61,7 @@ struct BulletPoint: View {
             Text("•")
             Text(text)
                 .font(.body)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
         }
     }
 }

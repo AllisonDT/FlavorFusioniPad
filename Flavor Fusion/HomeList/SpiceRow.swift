@@ -22,14 +22,14 @@ struct SpiceRow: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(spice.name)
-                        .foregroundColor(spice.isSelected ? .blue : .black)
+                        .foregroundColor(spice.isSelected ? .blue : .primary)
                     
                     Spacer()
                     
                     // Display container number
                     Text("Container: \(spice.containerNumber)")
                         .font(.caption)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
                 .padding()
                 
@@ -48,7 +48,7 @@ struct SpiceRow: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 8) // Rounded rectangle shape
-                    .fill(Color.white) // Background color of the rounded rectangle
+                    .fill(Color(UIColor.systemBackground)) // Background color of the rounded rectangle
                     .shadow(color: .gray, radius: 2, x: 0, y: 2)
             )
             .padding(.vertical, 4)

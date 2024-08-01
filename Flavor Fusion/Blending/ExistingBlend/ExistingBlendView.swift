@@ -55,7 +55,7 @@ struct RecipeDetails: View {
                     self.isPresented = false
                 }) {
                     Image(systemName: "xmark")
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
                 .padding()
             }
@@ -76,7 +76,7 @@ struct RecipeDetails: View {
                 self.isPresented = false
             }) {
                 Text("Mix Recipe!")
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(8)

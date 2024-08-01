@@ -20,42 +20,43 @@ struct NewBlendSpiceView: View {
                 Button(action: {
                     onSelect(!spice.isSelected) // Toggle isSelected state
                 }) {
-                    Circle()
-                        .stroke(spice.isSelected ? Color.green : Color.gray, lineWidth: 2)
-                        .background(Circle().foregroundColor(spice.isSelected ? Color.green : Color.clear))
-                        .frame(width: 24, height: 24)
-                        .padding(.leading, 8)
+                    Image(systemName: spice.isSelected ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(spice.isSelected ? .green : .gray)
+                                .frame(width: 24, height: 24)
+                                .padding(.leading, 8)
                 }
 
                 Text(spice.name)
                     .font(.headline)
-                    .foregroundColor(spice.isSelected ? .green : .black)
+                    .foregroundColor(.primary)
                     .padding(.leading, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 6)
             .padding(.trailing, 8)
 
-            // Spice amount picker
-            HStack {
-                Text("Amount:")
-                    .font(.subheadline)
-                    .padding(.leading, 8)
-                
-                Picker("Amount", selection: $spiceAmount) {
-                    ForEach(spiceAmounts, id: \.self) { amount in
-                        Text("\(amount)")
-                            .tag(amount)
+            // Show spice amount picker only when the spice is selected
+            if spice.isSelected {
+                HStack {
+                    Text("Amount:")
+                        .font(.subheadline)
+                        .padding(.leading, 8)
+                    
+                    Picker("Amount", selection: $spiceAmount) {
+                        ForEach(spiceAmounts, id: \.self) { amount in
+                            Text("\(amount)")
+                                .tag(amount)
+                        }
                     }
+                    .pickerStyle(MenuPickerStyle())
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 4)
                 }
-                .pickerStyle(MenuPickerStyle())
-                .padding(.horizontal, 8)
-                .padding(.bottom, 4)
             }
         }
         .background(
             RoundedRectangle(cornerRadius: 8) // Matching corner radius
-                .fill(Color.white) // Matching background color
+                .fill(Color(UIColor.systemBackground))
                 .shadow(color: .gray, radius: 2, x: 0, y: 2) // Matching shadow
         )
         .padding(.vertical, 4)

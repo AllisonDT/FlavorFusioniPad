@@ -41,7 +41,7 @@ struct AboutView: View {
                 Spacer()
             }
             .padding()
-            .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+            .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
         }
     }
 }
@@ -62,9 +62,9 @@ struct CustomListItem: View {
                 .padding(.vertical, 15)
         }
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(10)
-        .shadow(color: .gray.opacity(0.3), radius: 2, x: 0, y: 2)
+        .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2)
         .padding(.vertical, 4)
     }
 }
