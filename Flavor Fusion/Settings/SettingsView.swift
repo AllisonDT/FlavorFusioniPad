@@ -79,7 +79,7 @@ struct SettingsView: View {
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Settings")
+            .navigationBarTitle("Settings", displayMode: .inline)
             .alert(isPresented: $showIncorrectPasscodeMessage) {
                 Alert(title: Text("Incorrect Passcode"), message: Text("Please enter the correct current passcode."), dismissButton: .default(Text("OK")))
             }

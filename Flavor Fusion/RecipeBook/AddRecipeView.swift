@@ -28,85 +28,89 @@ struct AddRecipeView: View {
     }
 
     var body: some View {
-        ZStack {
-            VStack {
-                // Header
-                Text("Create Recipe")
-                    .font(.largeTitle)
-                    .padding(.top)
-                
-                TextField("Recipe Name", text: $recipeName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
+        NavigationView {
+            ZStack {
+                VStack {
+                    TextField("Recipe Name", text: $recipeName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
 
-                HStack {
-                    Text("Servings:")
-                    Picker(selection: $servings, label: Text("Servings")) {
-                        ForEach(servingOptions, id: \.self) { option in
-                            Text("\(option)")
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding(.horizontal)
-                }
-
-                ScrollView {
-                    HStack(alignment: .top) {
-                        // First column
-                        VStack {
-                            ForEach(spicesData.indices.filter { $0 < spicesData.count / 2 }, id: \.self) { index in
-                                AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                    HStack {
+                        Text("Servings:")
+                        Picker(selection: $servings, label: Text("Servings")) {
+                            ForEach(servingOptions, id: \.self) { option in
+                                Text("\(option)")
                             }
                         }
-                        // Second column
-                        VStack {
-                            ForEach(spicesData.indices.filter { $0 >= spicesData.count / 2 }, id: \.self) { index in
-                                AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                        .pickerStyle(MenuPickerStyle())
+                        .padding(.horizontal)
+                    }
+
+                    ScrollView {
+                        HStack(alignment: .top) {
+                            // First column
+                            VStack {
+                                ForEach(spicesData.indices.filter { $0 < spicesData.count / 2 }, id: \.self) { index in
+                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                                }
+                            }
+                            // Second column
+                            VStack {
+                                ForEach(spicesData.indices.filter { $0 >= spicesData.count / 2 }, id: \.self) { index in
+                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                                }
                             }
                         }
+                        .padding(.horizontal)
+                    }
+                }
+
+                VStack {
+                    Spacer()
+                    Button(action: {
+                        if recipeName.isEmpty {
+                            alertMessage = "Please enter a recipe name."
+                            showAlert = true
+                            return
+                        }
+
+                        if selectedSpices.isEmpty {
+                            alertMessage = "Please select at least one spice."
+                            showAlert = true
+                            return
+                        }
+
+                        let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value)) }
+                        let newRecipe = Recipe(
+                            name: recipeName,
+                            ingredients: ingredients,
+                            servings: servings
+                        )
+                        recipeStore.addRecipe(newRecipe)
+                        isPresented = false
+                    }) {
+                        Text("SAVE")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.green)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
                     .padding(.horizontal)
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
                 }
             }
-
-            VStack {
-                Spacer()
-                Button(action: {
-                    if recipeName.isEmpty {
-                        alertMessage = "Please enter a recipe name."
-                        showAlert = true
-                        return
-                    }
-
-                    if selectedSpices.isEmpty {
-                        alertMessage = "Please select at least one spice."
-                        showAlert = true
-                        return
-                    }
-
-                    let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value)) }
-                    let newRecipe = Recipe(
-                        name: recipeName,
-                        ingredients: ingredients,
-                        servings: servings
-                    )
-                    recipeStore.addRecipe(newRecipe)
-                    isPresented = false
-                }) {
-                    Text("SAVE")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .cornerRadius(10)
-                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                }
-                .padding(.horizontal)
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                }
-            }
+            .navigationBarTitle("Create Recipe", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                isPresented = false
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.primary)
+            })
         }
     }
 }

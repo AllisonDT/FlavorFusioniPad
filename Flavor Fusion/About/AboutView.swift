@@ -9,12 +9,8 @@ import SwiftUI
 
 struct AboutView: View {
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
-                Text("About Flavor Fusion")
-                    .font(.title)
-                    .padding(.bottom, 10)
-                
                 VStack(spacing: 15) {
                     NavigationLink(destination: ProjectOverviewView()) {
                         CustomListItem(title: "Project Overview")
@@ -30,7 +26,6 @@ struct AboutView: View {
                     }
                 }
                 .padding(.horizontal)
-                
                 Spacer()
                 
                 Image(systemName: "exclamationmark.circle.fill")
@@ -38,10 +33,9 @@ struct AboutView: View {
                     .foregroundColor(.blue.opacity(0.5))
                     .padding(.bottom, 20)
                 
-                Spacer()
             }
-            .padding()
             .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+            .navigationBarTitle("About Flavor Fusion", displayMode: .inline)
         }
     }
 }
@@ -52,19 +46,18 @@ struct CustomListItem: View {
     var body: some View {
         HStack {
             Text(title)
+                .foregroundColor(.primary) // Ensure the text color is set
                 .padding(.horizontal)
-                .foregroundColor(.primary)
                 .padding(.vertical, 15)
             Spacer()
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
                 .padding(.trailing)
-                .padding(.vertical, 15)
         }
         .frame(maxWidth: .infinity)
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2)
+        .shadow(color: .gray, radius: 2, x: 0, y: 2)
         .padding(.vertical, 4)
     }
 }

@@ -53,23 +53,23 @@ struct SpicePopupView: View {
                 
                 Spacer()
                 
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Text("Close")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                    }
-                    .padding(.horizontal)
-                    Spacer()
-                }
+//                HStack {
+//                    Spacer()
+//                    Button(action: {
+//                        isPresented = false
+//                    }) {
+//                        Text("Close")
+//                            .font(.headline)
+//                            .foregroundColor(.white)
+//                            .padding()
+//                            .frame(maxWidth: .infinity)
+//                            .background(Color.blue)
+//                            .cornerRadius(10)
+//                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+//                    }
+//                    .padding(.horizontal)
+//                    Spacer()
+//                }
             }
             .padding()
             .background(Color(.systemGroupedBackground))

@@ -27,33 +27,33 @@ struct BlendConfirmationView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Blend Created")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.top)
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Blend Created")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top)
+                
+                Group {
+                    Text("Spice Name")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    Text(spiceName)
+                        .font(.title2)
+                        .padding(.bottom)
                     
-                    Group {
-                        Text("Spice Name")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        Text(spiceName)
-                            .font(.title2)
-                            .padding(.bottom)
-                        
-                        Text("Servings")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        Text("\(servings)")
-                            .font(.title2)
-                            .padding(.bottom)
-                        
-                        Text("Ingredients")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                    }
+                    Text("Servings")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    Text("\(servings)")
+                        .font(.title2)
+                        .padding(.bottom)
                     
+                    Text("Ingredients")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                }
+                
+                ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(ingredients, id: \.self) { ingredient in
                             Text(ingredient)
@@ -61,28 +61,35 @@ struct BlendConfirmationView: View {
                                 .padding(.leading, 10)
                         }
                     }
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: onConfirm) {
-                            Text("Confirm")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                        }
-                        .padding(.horizontal)
-                        Spacer()
-                    }
                 }
-                .padding()
+                .frame(maxHeight: 200) // Set max height for the scrollable area
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: onConfirm) {
+                        Text("Confirm")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                    }
+                    .padding(.horizontal)
+                }
+                .padding(.bottom) // Padding for better spacing at the bottom
             }
+            .padding()
             .background(Color(.systemGroupedBackground))
+            .navigationBarTitle("Confirmation", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.primary)
+            })
         }
     }
 }

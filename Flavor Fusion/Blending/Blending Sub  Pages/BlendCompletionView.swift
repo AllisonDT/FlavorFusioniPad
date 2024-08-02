@@ -1,21 +1,21 @@
-//
-//  BlendCompletionView.swift
-//  Flavor Fusion
-//
-//  Created by Allison Turner on 7/13/24.
-//
-
 import SwiftUI
 
-/// A view that displays the completion message and a button to return to the home page.
-///
-/// `BlendCompletionView` shows a large "Complete!" text, a green checkmark, and a custom message.
-/// Below the message, a "Done" button allows the user to navigate back to the home page.
-///
-/// - Parameters:
-///   - onDone: A closure that is called when the "Done" button is pressed.
 struct BlendCompletionView: View {
     let onDone: () -> Void
+
+    // Array of fun complete messages
+    let completeMessages = [
+        "Have a spicy day!",
+        "You're on fire!",
+        "Spice up your life!",
+        "Blend it like it's hot!",
+        "Keep it spicy!"
+    ]
+
+    // Randomly select a message from the array
+    var randomMessage: String {
+        completeMessages.randomElement() ?? "Have a spicy day!"
+    }
 
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct BlendCompletionView: View {
                 .foregroundColor(.green)
                 .padding()
 
-            Text("Have a spicy day!")
+            Text(randomMessage)
                 .font(.title2)
                 .padding(.top)
 
@@ -37,19 +37,27 @@ struct BlendCompletionView: View {
 
             Button(action: onDone) {
                 Text("Done")
-                    .font(.headline)
-                    .foregroundColor(.white)
+                    .font(.title3)
                     .padding()
+                    .frame(maxWidth: .infinity)
                     .background(Color.blue)
+                    .foregroundColor(.white)
                     .cornerRadius(10)
-                    .shadow(radius: 10)
             }
             .padding()
         }
-        .padding()
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarItems(trailing: Button(action: onDone) {
+            Image(systemName: "xmark")
+                .foregroundColor(.primary)
+        })
     }
 }
 
-#Preview {
-    BlendCompletionView(onDone: {})
+struct BlendCompletionView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            BlendCompletionView(onDone: {})
+        }
+    }
 }

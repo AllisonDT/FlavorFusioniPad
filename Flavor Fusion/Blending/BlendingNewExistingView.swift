@@ -1,15 +1,10 @@
-//
-//  BlendingNewExistingView.swift
-//  Flavor Fusion
-//
-//  Created by Allison Turner on 3/24/24.
-//
 import SwiftUI
 
 struct BlendingNewExistingView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var isNewBlendPopupVisible = false
     @State private var selectedOption = 0 // 0 for New, 1 for Existing
+    @Binding var isPresented: Bool
     
     var body: some View {
         NavigationView {
@@ -28,21 +23,22 @@ struct BlendingNewExistingView: View {
                 } else {
                     ExistingBlendView()
                 }
-                
-                Spacer() // Push content to the top
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Set a fixed frame size
+            .navigationBarTitle("Blend", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                isPresented = false
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.primary)
+            })
         }
     }
 }
 
-#Preview {
-    BlendingNewExistingView()
-}
-
-struct NewBlendView2: View {
-    var body: some View {
-        Text("New Blend View")
-            .padding()
+struct BlendingNewExistingView_Previews: PreviewProvider {
+    @State static var isPresented = true
+    
+    static var previews: some View {
+        BlendingNewExistingView(isPresented: $isPresented)
     }
 }

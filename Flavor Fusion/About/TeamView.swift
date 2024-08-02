@@ -90,7 +90,7 @@ struct TeamMemberView: View {
         .padding()
         .background(Color(UIColor.systemBackground))
         .cornerRadius(10)
-        .shadow(radius: 5)
+        .shadow(color: .gray, radius: 2, x: 0, y: 2)
     }
 }
 
