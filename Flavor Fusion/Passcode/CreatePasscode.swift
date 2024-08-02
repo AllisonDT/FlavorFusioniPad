@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// A view for creating a passcode.
+///
+/// The `CreatePasscode` view allows users to input and create a passcode.
+/// It provides a secure text field for entering the passcode and a grid of
+/// buttons for passcode input. It also includes validation and error handling
+/// for passcode creation.
 struct CreatePasscode: View {
     // State variables to manage passcode creation process
     @State private var passcode: String = ""
@@ -89,19 +95,24 @@ struct CreatePasscode: View {
         }
     }
     
-    // Function to add a digit to the passcode
+    /// Adds a digit to the passcode.
+    ///
+    /// - Parameter number: The digit to be added.
     func addToPasscode(number: String) {
         passcode += number
     }
     
-    // Function to delete the last digit from the passcode
+    /// Deletes the last digit from the passcode.
     func deleteLast() {
         if !passcode.isEmpty {
             passcode.removeLast()
         }
     }
     
-    // Function to create passcode
+    /// Creates the passcode and validates its length.
+    ///
+    /// If the passcode is less than 4 characters, an error message is shown.
+    /// Otherwise, the passcode is saved and the creation process is completed.
     func createPasscode() {
         if passcode.count < 4 {
             showPasscodeError = true

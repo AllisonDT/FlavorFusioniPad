@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+/// A view that displays detailed information about a selected spice.
+///
+/// `SpicePopupView` shows the name, container number, and recipes containing the selected spice.
+/// It provides a close button to dismiss the view.
+///
+/// - Parameters:
+///   - spice: The selected spice to display details for.
+///   - recipes: A list of recipes that may contain the selected spice.
+///   - isPresented: A binding to control the presentation of the popup.
 struct SpicePopupView: View {
     let spice: Spice
     let recipes: [Recipe]
@@ -52,24 +61,6 @@ struct SpicePopupView: View {
                 }
                 
                 Spacer()
-                
-//                HStack {
-//                    Spacer()
-//                    Button(action: {
-//                        isPresented = false
-//                    }) {
-//                        Text("Close")
-//                            .font(.headline)
-//                            .foregroundColor(.white)
-//                            .padding()
-//                            .frame(maxWidth: .infinity)
-//                            .background(Color.blue)
-//                            .cornerRadius(10)
-//                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-//                    }
-//                    .padding(.horizontal)
-//                    Spacer()
-//                }
             }
             .padding()
             .background(Color(.systemGroupedBackground))

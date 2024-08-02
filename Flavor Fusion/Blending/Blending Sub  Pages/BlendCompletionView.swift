@@ -1,5 +1,19 @@
+//
+//  BlendCompletionView.swift
+//  Flavor Fusion
+//
+//  Created by Allison Turner on 7/13/24.
+//
+
 import SwiftUI
 
+/// A view that displays the completion message after blending.
+///
+/// `BlendCompletionView` shows a "Complete!" message, an image, a randomly selected
+/// fun message, and a "Done" button. When the button is pressed, it calls the `onDone` closure.
+///
+/// - Parameters:
+///   - onDone: A closure that is called when the "Done" button is pressed.
 struct BlendCompletionView: View {
     let onDone: () -> Void
 

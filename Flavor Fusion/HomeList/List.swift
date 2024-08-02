@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// A view that displays a list of spices and provides options for blending.
+///
+/// `List` displays a list of spices in two columns and includes buttons for blending.
+/// Tapping on a spice presents a detailed view in a popup. The blending process
+/// can be initiated from the main view.
 struct List: View {
     @State private var isSelecting: Bool = false
     @State private var isBlendPopupVisible: Bool = false

@@ -7,8 +7,15 @@
 
 import SwiftUI
 
+/// A view representing a button used for entering passcode digits.
+///
+/// The `PasscodeButton` view displays a button with a number or label that
+/// users can tap to enter a digit in the passcode input field.
 struct PasscodeButton: View {
+    /// The number or label displayed on the button.
     var number: String
+    
+    /// The action to be performed when the button is tapped.
     var action: () -> Void
     
     var body: some View {
@@ -21,5 +28,11 @@ struct PasscodeButton: View {
                 .background(Color(.systemGray5))
                 .cornerRadius(40)
         }
+    }
+}
+
+struct PasscodeButton_Previews: PreviewProvider {
+    static var previews: some View {
+        PasscodeButton(number: "1", action: {})
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RecipeModel.swift
+//  AddRecipeView.swift
 //  Flavor Fusion
 //
 //  Created by Allison Turner on 7/20/24.
@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/// A view for creating a new recipe.
+///
+/// `AddRecipeView` allows users to enter a recipe name, select servings, and choose spices
+/// for the recipe. It validates the input and adds the new recipe to the `RecipeStore`.
+///
+/// - Parameters:
+///   - isPresented: A binding to control the presentation of the view.
+///   - recipeStore: An observed object that manages the collection of recipes.
 struct AddRecipeView: View {
     @Binding var isPresented: Bool
     @ObservedObject var recipeStore: RecipeStore
@@ -15,17 +23,10 @@ struct AddRecipeView: View {
     @State private var servings = 1
     @State private var spicesData = spiceData
     @State private var selectedSpices: [Spice: Int] = [:]
-    @State private var showPopup = false
-    @State private var showBlending = false
-    @State private var showCompletion = false
     @State private var showAlert = false
     @State private var alertMessage = ""
 
     let servingOptions = Array(1...10)
-
-    var selectedIngredients: [String] {
-        spicesData.filter { $0.isSelected }.map { $0.name }
-    }
 
     var body: some View {
         NavigationView {
@@ -115,6 +116,13 @@ struct AddRecipeView: View {
     }
 }
 
+/// A view that displays a spice row with selection capability for adding to a recipe.
+///
+/// `AddRecipeSpiceView` allows users to select a spice and specify the amount for the recipe.
+///
+/// - Parameters:
+///   - spice: A binding to the spice to display in the row.
+///   - selectedSpices: A binding to a dictionary of selected spices and their amounts.
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice
     @Binding var selectedSpices: [Spice: Int]
@@ -174,8 +182,7 @@ struct AddRecipeSpiceView: View {
     }
 }
 
-struct AddRecipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddRecipeView(isPresented: .constant(false), recipeStore: RecipeStore())
-    }
+// Preview Provider for the AddRecipeView
+#Preview {
+    AddRecipeView(isPresented: .constant(false), recipeStore: RecipeStore())
 }

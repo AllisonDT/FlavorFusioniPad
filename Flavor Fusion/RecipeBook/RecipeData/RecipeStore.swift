@@ -7,21 +7,32 @@
 
 import Foundation
 
+/// A class that manages a collection of recipes.
+///
+/// `RecipeStore` conforms to `ObservableObject` to support SwiftUI data binding.
+/// It provides functions to add, remove, load, and save recipes.
 class RecipeStore: ObservableObject {
+    /// An array of recipes managed by the store.
     @Published var recipes: [Recipe] = []
 
+    /// Initializes a new `RecipeStore` instance.
+    ///
+    /// This initializer loads recipes from storage if available, or initializes with sample data.
     init() {
-        // Load recipes from storage if available, or initialize with sample data
         self.loadRecipes()
     }
 
-    // Function to add a recipe to the store
+    /// Adds a recipe to the store and saves the updated list to storage.
+    ///
+    /// - Parameter recipe: The recipe to add.
     func addRecipe(_ recipe: Recipe) {
         recipes.append(recipe)
         saveRecipes()
     }
 
-    // Function to remove a recipe from the store
+    /// Removes a recipe from the store and saves the updated list to storage.
+    ///
+    /// - Parameter recipe: The recipe to remove.
     func removeRecipe(_ recipe: Recipe) {
         if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
             recipes.remove(at: index)
@@ -29,7 +40,9 @@ class RecipeStore: ObservableObject {
         }
     }
 
-    // Function to load recipes from storage (UserDefaults)
+    /// Loads recipes from storage (UserDefaults).
+    ///
+    /// If no recipes are found in storage, initializes the store with sample data.
     private func loadRecipes() {
         if let data = UserDefaults.standard.data(forKey: "recipes") {
             let decoder = JSONDecoder()
@@ -82,7 +95,7 @@ class RecipeStore: ObservableObject {
         ]
     }
 
-    // Function to save recipes to storage (UserDefaults)
+    /// Saves recipes to storage (UserDefaults).
     private func saveRecipes() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(recipes) {

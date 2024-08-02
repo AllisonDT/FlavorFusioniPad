@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+/// A view that displays a row representing a spice.
+///
+/// `SpiceRow` shows the spice's name, container number, and a fullness indicator.
+/// Tapping on the row presents a detailed view in a popup.
+///
+/// - Parameters:
+///   - spice: The spice to display in the row.
+///   - isSelecting: A boolean indicating if the selection mode is active.
+///   - recipes: A list of recipes that may contain the spice.
+///   - onTap: A closure that is called when the spice row is tapped.
 struct SpiceRow: View {
     let spice: Spice
     let isSelecting: Bool

@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+/// A view that displays a row representing a spice with selection capability.
+///
+/// `SpiceRowView` shows a spice and allows users to select or deselect it.
+/// The background color changes based on the selection state.
+///
+/// - Parameters:
+///   - spice: The spice to display in the row.
+///   - isSelecting: A boolean indicating if the selection mode is active.
+///   - recipes: A list of recipes that may contain the spice.
+///   - onSelect: A closure that is called when the spice is selected or deselected.
 struct SpiceRowView: View {
     let spice: Spice
     let isSelecting: Bool

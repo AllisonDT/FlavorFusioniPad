@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+/// A view that provides a preview of a recipe with options to adjust servings and start the blending process.
+///
+/// `MixRecipePreview` shows the recipe details, allows users to adjust the number of servings, and initiate the blending process.
+///
+/// - Parameters:
+///   - recipe: The recipe to preview.
+///   - isPresented: A binding to control the presentation of the view.
 struct MixRecipePreview: View {
     var recipe: Recipe
     @Binding var isPresented: Bool
@@ -15,6 +22,11 @@ struct MixRecipePreview: View {
     @State private var showCompletion: Bool = false
     @State private var selectedServings: Int
 
+    /// Initializes a new `MixRecipePreview` instance.
+    ///
+    /// - Parameters:
+    ///   - recipe: The recipe to preview.
+    ///   - isPresented: A binding to control the presentation of the view.
     init(recipe: Recipe, isPresented: Binding<Bool>) {
         self.recipe = recipe
         self._isPresented = isPresented
@@ -128,4 +140,9 @@ struct MixRecipePreview: View {
             })
         }
     }
+}
+
+// Preview Provider for the MixRecipePreview
+#Preview {
+    MixRecipePreview(recipe: Recipe(name: "Sample Recipe", ingredients: [Ingredient(name: "Spice 1", amount: 1)], servings: 2), isPresented: .constant(true))
 }

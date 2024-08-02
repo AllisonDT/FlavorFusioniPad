@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// A view that provides the user manual for the Flavor Fusion device.
+///
+/// `UserManualView` displays sections with instructions on getting started, using the device,
+/// and troubleshooting common issues.
 struct UserManualView: View {
     var body: some View {
         ScrollView {
@@ -33,6 +37,13 @@ struct UserManualView: View {
     }
 }
 
+/// A view that represents a section in the user manual.
+///
+/// `SectionView` displays a section title and a list of bullet points with instructions or information.
+///
+/// - Parameters:
+///   - title: The title of the section.
+///   - content: The content of the section.
 struct SectionView<Content: View>: View {
     var title: String
     var content: Content
@@ -53,6 +64,12 @@ struct SectionView<Content: View>: View {
     }
 }
 
+/// A view that represents a bullet point in the user manual.
+///
+/// `BulletPoint` displays a bullet point with the provided text.
+///
+/// - Parameters:
+///   - text: The text of the bullet point.
 struct BulletPoint: View {
     var text: String
     
@@ -66,6 +83,7 @@ struct BulletPoint: View {
     }
 }
 
+// Preview Provider for the UserManualView
 #Preview {
     UserManualView()
 }

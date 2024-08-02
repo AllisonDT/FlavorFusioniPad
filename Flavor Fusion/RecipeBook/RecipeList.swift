@@ -1,8 +1,20 @@
+//
+//  SearchBar.swift
+//  Flavor Fusion
+//
+//  Created by Allison Turner on 7/20/24.
+//
+
 import SwiftUI
 
+/// A search bar view for filtering recipes.
+///
+/// `SearchBar` is a `UIViewRepresentable` that integrates a `UISearchBar` into SwiftUI.
+/// It updates the search text as the user types.
 struct SearchBar: UIViewRepresentable {
     @Binding var searchText: String
 
+    /// Coordinator class to handle `UISearchBar` delegate methods.
     class Coordinator: NSObject, UISearchBarDelegate {
         @Binding var searchText: String
 
@@ -36,12 +48,17 @@ struct SearchBar: UIViewRepresentable {
     }
 }
 
+/// A view that displays a list of recipes with search and add functionality.
+///
+/// `RecipeList` shows a searchable list of recipes and a button to add new recipes.
+/// It filters recipes based on the search text.
 struct RecipeList: View {
     @ObservedObject var recipeStore = RecipeStore()
     
     @State private var searchText: String = ""
     @State private var isAddRecipeViewPresented = false
     
+    /// Filters the recipes based on the search text.
     var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
             return recipeStore.recipes
@@ -85,6 +102,9 @@ struct RecipeList: View {
     }
 }
 
+/// A button view for filters functionality.
+///
+/// `FiltersButton` displays a button that can be used to apply filters.
 struct FiltersButton: View {
     var body: some View {
         Button(action: {
@@ -98,6 +118,9 @@ struct FiltersButton: View {
     }
 }
 
+/// A view that displays a row representing a recipe.
+///
+/// `RecipeRow` shows the recipe's name, servings, and provides options to preview or delete the recipe.
 struct RecipeRow: View {
     var recipe: Recipe
     var recipeStore: RecipeStore
@@ -153,8 +176,7 @@ struct RecipeRow: View {
     }
 }
 
-struct RecipeList_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeList()
-    }
+// Preview Provider for the RecipeList
+#Preview {
+    RecipeList()
 }

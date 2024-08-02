@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// A view that provides information about the Flavor Fusion app.
+///
+/// `AboutView` displays navigation links to various sections such as Project Overview,
+/// User Manual, Privacy Information, and Meet the Team. It also includes an icon
+/// at the bottom of the view.
 struct AboutView: View {
     var body: some View {
         NavigationView {
@@ -40,6 +45,12 @@ struct AboutView: View {
     }
 }
 
+/// A custom list item view used in the AboutView.
+///
+/// `CustomListItem` displays a title and a chevron icon, and is used for navigation links in the AboutView.
+///
+/// - Parameters:
+///   - title: The title of the list item.
 struct CustomListItem: View {
     var title: String
     

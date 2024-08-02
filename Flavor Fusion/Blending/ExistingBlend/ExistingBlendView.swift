@@ -7,10 +7,21 @@
 
 import SwiftUI
 
+/// A view that displays a list of existing recipes and allows the user to select one.
+///
+/// `ExistingBlendView` provides a scrollable list of recipes. When a recipe is tapped,
+/// it presents a detailed view of the selected recipe in a popover.
+///
+/// - Parameters:
+///   - recipeStore: An observed object that manages the list of recipes.
 struct ExistingBlendView: View {
-    // Properties
+    /// The currently selected recipe.
     @State private var selectedRecipe: Recipe?
+    
+    /// A flag indicating whether the recipe details popover is presented.
     @State private var isRecipeDetailsPresented = false
+    
+    /// The store object that manages the list of recipes.
     @ObservedObject var recipeStore = RecipeStore()
     
     var body: some View {
@@ -41,7 +52,14 @@ struct ExistingBlendView: View {
     }
 }
 
-// Recipe details view
+/// A view that displays the details of a selected recipe.
+///
+/// `RecipeDetails` shows the name and servings of the selected recipe.
+/// It also includes a button to send the recipe to an Arduino device.
+///
+/// - Parameters:
+///   - recipe: The selected recipe.
+///   - isPresented: A binding to control whether the popover is presented.
 struct RecipeDetails: View {
     var recipe: Recipe
     @Binding var isPresented: Bool
@@ -86,4 +104,8 @@ struct RecipeDetails: View {
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(10)
     }
+}
+
+#Preview {
+    ExistingBlendView(recipeStore: RecipeStore())
 }

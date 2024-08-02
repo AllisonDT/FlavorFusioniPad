@@ -7,8 +7,18 @@
 
 import SwiftUI
 
+/// A view that displays a row representing an existing recipe.
+///
+/// `ExistingRecipesRows` shows the recipe name and servings. It includes a button
+/// to present a preview of the recipe mix in a sheet.
+///
+/// - Parameters:
+///   - recipe: The recipe to be displayed in the row.
 struct ExistingRecipesRows: View {
+    /// The recipe to be displayed in the row.
     var recipe: Recipe
+    
+    /// A flag indicating whether the mix preview sheet is presented.
     @State private var isMixPreviewPresented = false
 
     var body: some View {

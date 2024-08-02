@@ -7,7 +7,10 @@
 
 import Foundation
 
-// Splitting spicesData into two arrays for two columns
+/// Splits the `spiceData` array into two arrays for displaying in two columns.
+///
+/// `firstColumnSpices` contains the first half of the `spiceData` array.
+/// `secondColumnSpices` contains the second half of the `spiceData` array.
 public var firstColumnSpices: [Spice] {
     Array(spiceData.prefix(spiceData.count / 2))
 }

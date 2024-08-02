@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+/// A view that provides a tabbed interface for the main sections of the app.
+///
+/// `ListTabView` displays a tab bar with four tabs: Home, Recipe Book, Settings, and About.
+/// Each tab presents a different view when selected.
+///
+/// - Parameters:
+///   - tabSelection: A state variable that tracks the selected tab.
 struct ListTabView: View {
     @State private var tabSelection = 0
     

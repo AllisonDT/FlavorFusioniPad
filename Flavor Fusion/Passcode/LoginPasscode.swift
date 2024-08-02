@@ -8,6 +8,12 @@
 import SwiftUI
 import CryptoKit
 
+/// A view for logging in using a passcode.
+///
+/// The `LoginPasscode` view allows users to input a passcode to log in.
+/// It provides a secure text field for entering the passcode and a grid of
+/// buttons for passcode input. It also includes validation and error handling
+/// for incorrect passcodes.
 struct LoginPasscode: View {
     // State variables to manage passcode input and login status
     @State private var passcode: String = ""
@@ -99,19 +105,25 @@ struct LoginPasscode: View {
         }
     }
     
-    // Function to add a digit to the passcode
+    /// Adds a digit to the passcode.
+    ///
+    /// - Parameter number: The digit to be added.
     func addToPasscode(number: String) {
         passcode += number
     }
     
-    // Function to delete the last digit from the passcode
+    /// Deletes the last digit from the passcode.
     func deleteLast() {
         if !passcode.isEmpty {
             passcode.removeLast()
         }
     }
     
-    // Function to handle login attempt
+    /// Handles the login attempt.
+    ///
+    /// Retrieves the stored passcode and compares it with the entered passcode.
+    /// If the passcode is correct, sets the login success flag to true.
+    /// If the passcode is incorrect, shows an error message.
     func login() {
         // Retrieve the stored passcode from UserDefaults
         guard let storedPasscode = UserDefaults.standard.string(forKey: "passcode") else {

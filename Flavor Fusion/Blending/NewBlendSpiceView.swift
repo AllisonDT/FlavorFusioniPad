@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/// A view that displays a spice item for selection in a new blend.
+///
+/// `NewBlendSpiceView` shows the spice name and allows users to select the spice
+/// and choose an amount if selected. It reflects changes immediately using a binding.
+///
+/// - Parameters:
+///   - spice: A binding to the spice item being displayed.
+///   - onSelect: A closure that is called when the spice is selected or deselected.
 struct NewBlendSpiceView: View {
     @Binding var spice: Spice // Use Binding to reflect changes immediately
     let onSelect: (Bool) -> Void
@@ -21,9 +29,9 @@ struct NewBlendSpiceView: View {
                     onSelect(!spice.isSelected) // Toggle isSelected state
                 }) {
                     Image(systemName: spice.isSelected ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(spice.isSelected ? .green : .gray)
-                                .frame(width: 24, height: 24)
-                                .padding(.leading, 8)
+                        .foregroundColor(spice.isSelected ? .green : .gray)
+                        .frame(width: 24, height: 24)
+                        .padding(.leading, 8)
                 }
 
                 Text(spice.name)

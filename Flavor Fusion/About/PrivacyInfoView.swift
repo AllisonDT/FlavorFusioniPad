@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// A view that provides information about privacy and security for the Flavor Fusion app.
+///
+/// `PrivacyInfoView` displays details about data collection, usage, and security
+/// related to the app's use of Bluetooth technology.
 struct PrivacyInfoView: View {
     var body: some View {
         ScrollView {
@@ -40,6 +44,13 @@ struct PrivacyInfoView: View {
     }
 }
 
+/// A view that represents a section in the privacy information view.
+///
+/// `SectionViewPrivacy` displays a section title and a list of bullet points.
+///
+/// - Parameters:
+///   - title: The title of the section.
+///   - content: The content of the section.
 struct SectionViewPrivacy<Content: View>: View {
     var title: String
     var content: Content
@@ -60,6 +71,12 @@ struct SectionViewPrivacy<Content: View>: View {
     }
 }
 
+/// A view that represents a bullet point in the privacy information view.
+///
+/// `BulletPointPrivacy` displays a bullet point with the provided text.
+///
+/// - Parameters:
+///   - text: The text of the bullet point.
 struct BulletPointPrivacy: View {
     var text: String
     
@@ -73,6 +90,7 @@ struct BulletPointPrivacy: View {
     }
 }
 
+// Preview Provider for the PrivacyInfoView
 #Preview {
     PrivacyInfoView()
 }

@@ -7,6 +7,21 @@
 
 import SwiftUI
 
+/// A view for creating a new spice blend.
+///
+/// `NewBlendView` allows users to enter a spice blend name, select the number of servings,
+/// and choose ingredients from a list. It includes a button to start the blending process,
+/// which triggers a sequence of views for confirmation, blending, and completion.
+///
+/// - Parameters:
+///   - spiceName: The name of the spice blend.
+///   - servings: The number of servings.
+///   - spicesData: The list of spices available for selection.
+///   - isSelecting: A flag indicating if spices are being selected.
+///   - showPopup: A flag indicating if the confirmation popup is visible.
+///   - showBlending: A flag indicating if the blending view is visible.
+///   - showCompletion: A flag indicating if the completion view is visible.
+///   - showAlert: A flag indicating if the alert for incomplete blend is visible.
 struct NewBlendView: View {
     @State private var spiceName = ""
     @State private var servings = 1
@@ -19,6 +34,7 @@ struct NewBlendView: View {
 
     let servingOptions = Array(1...10) // Array of serving options
 
+    /// An array of selected ingredient names.
     var selectedIngredients: [String] {
         spicesData.filter { $0.isSelected }.map { $0.name }
     }

@@ -18,12 +18,10 @@
 		BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */; };
 		BE1C9D802BB8680000D597FC /* SpiceColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */; };
 		BE1C9D822BB8D3A400D597FC /* SpiceBlendSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D812BB8D3A400D597FC /* SpiceBlendSelections.swift */; };
-		BE1C9D852BBA469800D597FC /* FavoriteRecipeCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D842BBA469800D597FC /* FavoriteRecipeCircle.swift */; };
 		BE1C9D882BBA487D00D597FC /* RecipeBookBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D872BBA487D00D597FC /* RecipeBookBackground.swift */; };
 		BE1C9D8A2BBA488F00D597FC /* ListBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1C9D892BBA488F00D597FC /* ListBackground.swift */; };
 		BE2431D62BF04CE400B77990 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2431D52BF04CE400B77990 /* BLEManager.swift */; };
 		BE2431D82BF051DB00B77990 /* ExistingBlendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */; };
-		BE35352C2B86B64000806E7D /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352B2B86B64000806E7D /* RecipeDetail.swift */; };
 		BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352D2B86B69100806E7D /* AddRecipeView.swift */; };
 		BE3535302B8707E300806E7D /* SpiceDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352F2B8707E300806E7D /* SpiceDataTests.swift */; };
 		BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3535312B87080B00806E7D /* SpiceRowTests.swift */; };
@@ -88,12 +86,10 @@
 		BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlendView.swift; sourceTree = "<group>"; };
 		BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceColumns.swift; sourceTree = "<group>"; };
 		BE1C9D812BB8D3A400D597FC /* SpiceBlendSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceBlendSelections.swift; sourceTree = "<group>"; };
-		BE1C9D842BBA469800D597FC /* FavoriteRecipeCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeCircle.swift; sourceTree = "<group>"; };
 		BE1C9D872BBA487D00D597FC /* RecipeBookBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeBookBackground.swift; sourceTree = "<group>"; };
 		BE1C9D892BBA488F00D597FC /* ListBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBackground.swift; sourceTree = "<group>"; };
 		BE2431D52BF04CE400B77990 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingBlendView.swift; sourceTree = "<group>"; };
-		BE35352B2B86B64000806E7D /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 		BE35352D2B86B69100806E7D /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		BE35352F2B8707E300806E7D /* SpiceDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceDataTests.swift; sourceTree = "<group>"; };
 		BE3535312B87080B00806E7D /* SpiceRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRowTests.swift; sourceTree = "<group>"; };
@@ -219,14 +215,6 @@
 			path = "Flavor FusionUITests";
 			sourceTree = "<group>";
 		};
-		BE1C9D832BBA467800D597FC /* RecipeBookElements */ = {
-			isa = PBXGroup;
-			children = (
-				BE1C9D842BBA469800D597FC /* FavoriteRecipeCircle.swift */,
-			);
-			path = RecipeBookElements;
-			sourceTree = "<group>";
-		};
 		BE1C9D862BBA485C00D597FC /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				BEA819422C4C6DC60073606B /* ExistingBlend */,
-				BEA819412C4C6DBB0073606B /* NewBlend */,
 				BEA819382C4319D30073606B /* Blending Sub  Pages */,
 				BE7098982BB0F54600E04F11 /* BlendingNewExistingView.swift */,
 				BE1C9D7D2BB8667200D597FC /* NewBlendView.swift */,
@@ -310,9 +297,7 @@
 		BE8D1CF42B73FE1000A71CE9 /* RecipeBook */ = {
 			isa = PBXGroup;
 			children = (
-				BE1C9D832BBA467800D597FC /* RecipeBookElements */,
 				BEDFF4012BB102F300EF4F56 /* RecipeData */,
-				BE35352B2B86B64000806E7D /* RecipeDetail.swift */,
 				BE35352D2B86B69100806E7D /* AddRecipeView.swift */,
 				BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */,
 				BEAAB0B22C33755F008A11E9 /* MixRecipePreview.swift */,
@@ -338,13 +323,6 @@
 				BEA8193D2C431A530073606B /* BlendCompletionView.swift */,
 			);
 			path = "Blending Sub  Pages";
-			sourceTree = "<group>";
-		};
-		BEA819412C4C6DBB0073606B /* NewBlend */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NewBlend;
 			sourceTree = "<group>";
 		};
 		BEA819422C4C6DC60073606B /* ExistingBlend */ = {
@@ -495,10 +473,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE1C9D852BBA469800D597FC /* FavoriteRecipeCircle.swift in Sources */,
 				BE8D1CED2B71A2DD00A71CE9 /* SpiceData.swift in Sources */,
 				BE95D8222BB1D2FD00A2E59C /* LoginPasscode.swift in Sources */,
-				BE35352C2B86B64000806E7D /* RecipeDetail.swift in Sources */,
 				BE1C9D882BBA487D00D597FC /* RecipeBookBackground.swift in Sources */,
 				BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */,
 				BE7098912BB0E98F00E04F11 /* SpiceRowView.swift in Sources */,

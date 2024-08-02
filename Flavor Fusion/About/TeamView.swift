@@ -1,6 +1,13 @@
+//
+//  TeamView.swift
+//  Flavor Fusion
+//
+//  Created by Allison Turner on 3/24/24.
+//
+
 import SwiftUI
 
-// Define a TeamMember struct conforming to Identifiable
+/// A struct representing a team member.
 struct TeamMember: Identifiable {
     let id = UUID()
     let name: String
@@ -9,9 +16,12 @@ struct TeamMember: Identifiable {
     let imageName: String?
 }
 
-// This struct represents the Team View.
+/// A view that displays the team members of Flavor Fusion.
+///
+/// `TeamView` shows a grid of team members with their pictures, names, and positions.
+/// Tapping on a team member presents their biography in a modal sheet.
 struct TeamView: View {
-    // Array containing team members and their positions and biographies
+    /// An array containing the team members, their positions, and biographies.
     let teamMembers = [
         TeamMember(name: "Ryan Latterell", position: "Project Manager", biography: "Ryan's Biography", imageName: "ryan"),
         TeamMember(name: "Allison Turner", position: "Developer", biography: "Allison's Biography", imageName: "allison"),
@@ -49,14 +59,24 @@ struct TeamView: View {
         }
     }
 
-    // Function to calculate index for team members array
+    /// Calculates the index for the team members array based on the row and column.
+    ///
+    /// - Parameters:
+    ///   - row: The row index.
+    ///   - column: The column index.
+    /// - Returns: The index for the team members array or nil if out of bounds.
     func indexFor(row: Int, column: Int) -> Int? {
         let index = row * 2 + column
         return index < teamMembers.count ? index : nil
     }
 }
 
-// This struct represents the view for an individual team member.
+/// A view that displays an individual team member.
+///
+/// `TeamMemberView` shows the team member's picture or a default silhouette, name, and position.
+///
+/// - Parameters:
+///   - member: The team member to be displayed.
 struct TeamMemberView: View {
     let member: TeamMember
 
@@ -94,7 +114,12 @@ struct TeamMemberView: View {
     }
 }
 
-// This struct represents the biography view for a team member.
+/// A view that displays the biography of a team member.
+///
+/// `BiographyView` shows the team member's picture or a default silhouette, name, position, and biography.
+///
+/// - Parameters:
+///   - member: The team member whose biography is displayed.
 struct BiographyView: View {
     let member: TeamMember
 

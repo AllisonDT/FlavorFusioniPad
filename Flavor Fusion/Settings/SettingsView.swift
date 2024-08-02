@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// A view that provides settings options for the Flavor Fusion app.
+///
+/// `SettingsView` allows users to change their passcode and display name. It provides
+/// input fields for the current passcode, new passcode, and confirmation of the new passcode,
+/// as well as an input field for changing the display name.
 struct SettingsView: View {
     @State private var currentPasscode: String = ""
     @State private var newPasscode: String = ""
@@ -92,6 +97,7 @@ struct SettingsView: View {
         }
     }
     
+    /// Changes the passcode after validating the current passcode and confirming the new passcode.
     func changePasscode() {
         guard let storedPasscode = UserDefaults.standard.string(forKey: "passcode") else {
             print("No passcode saved.")
@@ -113,12 +119,14 @@ struct SettingsView: View {
         }
     }
     
+    /// Changes the display name and saves it to UserDefaults.
     func changeDisplayName() {
         UserDefaults.standard.set(displayName, forKey: "displayName")
         isDisplayNameChangeSuccessful = true
     }
 }
 
+// Preview Provider for the SettingsView
 #Preview {
     SettingsView()
 }

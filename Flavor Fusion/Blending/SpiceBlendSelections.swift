@@ -7,9 +7,20 @@
 
 import SwiftUI
 
+/// A view that displays a spice blend selection button.
+///
+/// The `SpiceBlendSelections` view presents a button for a spice blend,
+/// allowing users to select or deselect the spice. The appearance of the
+/// button changes based on the selection state of the spice.
 struct SpiceBlendSelections: View {
+    /// The spice data model.
     let spice: Spice
+
+    /// A flag indicating whether the spice is being selected.
     let isSelecting: Bool
+
+    /// A closure called when the selection state changes.
+    /// - Parameter isSelected: A boolean indicating the new selection state.
     let onSelect: (Bool) -> Void
 
     var body: some View {
@@ -17,14 +28,14 @@ struct SpiceBlendSelections: View {
             onSelect(!spice.isSelected)
         }) {
             Text(spice.name)
-                .font(.headline) // Adjust font size as needed
+                .font(.headline)
                 .foregroundColor(spice.isSelected ? .blue : .black)
-                .padding(40) // Adjust padding as needed
+                .padding(40) 
                 .frame(maxWidth: .infinity)
         }
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(Color.blue.opacity(0.1)) // Adjust color and opacity as needed
+                .foregroundColor(Color.blue.opacity(0.1))
         )
     }
 }
