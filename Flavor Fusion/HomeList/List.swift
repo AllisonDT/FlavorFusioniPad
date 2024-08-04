@@ -22,51 +22,53 @@ struct List: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                Button(action: {
-                    isBlendPopupVisible.toggle()
-                }) {
-                    Text("BLEND")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    VStack {
-                        ForEach(firstColumnSpices) { spice in
-                            SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
-                                if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
-                                    spiceData[index].isSelected = selected
-                                }
-                            }
-                            .onTapGesture {
-                                selectedSpice = spice
-                                isSpicePopupVisible = true
-                            }
-                        }
+            ScrollView {
+                VStack {
+                    Button(action: {
+                        isBlendPopupVisible.toggle()
+                    }) {
+                        Text("BLEND")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
+                    .padding(.horizontal)
                     
-                    VStack {
-                        ForEach(secondColumnSpices) { spice in
-                            SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
-                                if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
-                                    spiceData[index].isSelected = selected
+                    HStack {
+                        VStack {
+                            ForEach(firstColumnSpices) { spice in
+                                SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                                    if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
+                                        spiceData[index].isSelected = selected
+                                    }
+                                }
+                                .onTapGesture {
+                                    selectedSpice = spice
+                                    isSpicePopupVisible = true
                                 }
                             }
-                            .onTapGesture {
-                                selectedSpice = spice
-                                isSpicePopupVisible = true
+                        }
+                        
+                        VStack {
+                            ForEach(secondColumnSpices) { spice in
+                                SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                                    if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
+                                        spiceData[index].isSelected = selected
+                                    }
+                                }
+                                .onTapGesture {
+                                    selectedSpice = spice
+                                    isSpicePopupVisible = true
+                                }
                             }
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
             .sheet(isPresented: $isBlendPopupVisible) {
                 BlendingNewExistingView(isPresented: $isBlendPopupVisible)

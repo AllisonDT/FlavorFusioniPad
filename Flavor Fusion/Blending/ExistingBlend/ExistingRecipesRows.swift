@@ -22,32 +22,35 @@ struct ExistingRecipesRows: View {
     @State private var isMixPreviewPresented = false
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Button(action: {
-                    isMixPreviewPresented.toggle()
-                }) {
+        Button(action: {
+            isMixPreviewPresented.toggle()
+        }) {
+            HStack {
+                VStack(alignment: .leading) {
                     Text(recipe.name)
                         .font(.headline)
                         .foregroundColor(.blue)
+                    
+                    Text("Servings: \(recipe.servings)")
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
-                .sheet(isPresented: $isMixPreviewPresented) {
-                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
-                }
+                .padding()
                 
-                Text("Servings: \(recipe.servings)")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                Spacer()
             }
-            .padding()
-            
-            Spacer()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(UIColor.systemBackground))
+                    .shadow(color: .gray, radius: 2, x: 0, y: 2)
+            )
+            .padding(.vertical, 4)
+            .padding(.horizontal, 4)  // Add padding to the edges
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color(UIColor.systemBackground))
-                .shadow(color: .gray, radius: 2, x: 0, y: 2)
-        )
-        .padding(.vertical, 4)
+        .sheet(isPresented: $isMixPreviewPresented) {
+            MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
+        }
+        .buttonStyle(PlainButtonStyle())  // Ensure the button does not change the visual style
     }
 }

@@ -15,29 +15,27 @@ import SwiftUI
 struct AboutView: View {
     var body: some View {
         NavigationView {
-            VStack {
-                VStack(spacing: 15) {
-                    NavigationLink(destination: ProjectOverviewView()) {
-                        CustomListItem(title: "Project Overview")
+            ScrollView {
+                VStack {
+                    VStack(spacing: 15) {
+                        NavigationLink(destination: ProjectOverviewView()) {
+                            CustomListItem(title: "Project Overview")
+                        }
+                        NavigationLink(destination: UserManualView()) {
+                            CustomListItem(title: "User Manual")
+                        }
+                        NavigationLink(destination: PrivacyInfoView()) {
+                            CustomListItem(title: "Privacy Information")
+                        }
+                        NavigationLink(destination: TeamView()) {
+                            CustomListItem(title: "Meet the Team")
+                        }
                     }
-                    NavigationLink(destination: UserManualView()) {
-                        CustomListItem(title: "User Manual")
-                    }
-                    NavigationLink(destination: PrivacyInfoView()) {
-                        CustomListItem(title: "Privacy Information")
-                    }
-                    NavigationLink(destination: TeamView()) {
-                        CustomListItem(title: "Meet the Team")
-                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
                 }
-                .padding(.horizontal)
-                Spacer()
-                
-                Image(systemName: "exclamationmark.circle.fill")
-                    .font(.system(size: 100))
-                    .foregroundColor(.blue.opacity(0.5))
-                    .padding(.bottom, 20)
-                
+                .padding(.top)
             }
             .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .navigationBarTitle("About Flavor Fusion", displayMode: .inline)
@@ -59,7 +57,7 @@ struct CustomListItem: View {
             Text(title)
                 .foregroundColor(.primary) // Ensure the text color is set
                 .padding(.horizontal)
-                .padding(.vertical, 15)
+                .padding(.vertical, 35)
             Spacer()
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)

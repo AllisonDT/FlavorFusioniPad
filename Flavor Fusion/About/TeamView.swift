@@ -34,28 +34,32 @@ struct TeamView: View {
     @State private var selectedMember: TeamMember? = nil
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Iterating through rows
-            ForEach(0..<3) { row in
-                HStack(spacing: 20) {
-                    // Iterating through columns
-                    ForEach(0..<2) { column in
-                        if let index = self.indexFor(row: row, column: column) {
-                            // Displaying team member view
-                            TeamMemberView(member: self.teamMembers[index])
-                                .onTapGesture {
-                                    self.selectedMember = self.teamMembers[index]
-                                }
-                        } else {
-                            Spacer()
+        GeometryReader { geometry in
+            let isLandscape = geometry.size.width > geometry.size.height
+            
+            VStack(spacing: 20) {
+                // Iterating through rows
+                ForEach(0..<3) { row in
+                    HStack(spacing: 20) {
+                        // Iterating through columns
+                        ForEach(0..<2) { column in
+                            if let index = self.indexFor(row: row, column: column) {
+                                // Displaying team member view
+                                TeamMemberView(member: self.teamMembers[index], showImage: !isLandscape)
+                                    .onTapGesture {
+                                        self.selectedMember = self.teamMembers[index]
+                                    }
+                            } else {
+                                Spacer()
+                            }
                         }
                     }
                 }
             }
-        }
-        .padding()
-        .sheet(item: $selectedMember) { member in
-            BiographyView(member: member)
+            .padding()
+            .sheet(item: $selectedMember) { member in
+                BiographyView(member: member)
+            }
         }
     }
 
@@ -77,28 +81,32 @@ struct TeamView: View {
 ///
 /// - Parameters:
 ///   - member: The team member to be displayed.
+///   - showImage: A Boolean value indicating whether to show the image.
 struct TeamMemberView: View {
     let member: TeamMember
+    let showImage: Bool
 
     var body: some View {
         VStack {
-            // Display team member's picture or silhouette
-            if let imageName = member.imageName, let uiImage = UIImage(named: imageName) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .clipShape(Circle())
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 60, height: 60)
-                    .padding(.bottom, 5)
-            } else {
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .clipShape(Circle())
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                    .padding(.bottom, 5)
+            // Display team member's picture or silhouette if showImage is true
+            if showImage {
+                if let imageName = member.imageName, let uiImage = UIImage(named: imageName) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 60, height: 60)
+                        .padding(.bottom, 5)
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 40, height: 40)
+                        .padding(.bottom, 5)
+                }
             }
-            
+
             // Displaying team member's name and position
             Text(member.name)
                 .font(.headline)
@@ -122,41 +130,50 @@ struct TeamMemberView: View {
 ///   - member: The team member whose biography is displayed.
 struct BiographyView: View {
     let member: TeamMember
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
-            // Display team member's picture or silhouette
-            if let imageName = member.imageName, let uiImage = UIImage(named: imageName) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .clipShape(Circle())
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
-                    .padding(.bottom, 20)
-            } else {
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .clipShape(Circle())
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
-                    .padding(.bottom, 20)
-            }
+        NavigationView {
+            VStack {
+                // Display team member's picture or silhouette
+                if let imageName = member.imageName, let uiImage = UIImage(named: imageName) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 100, height: 100)
+                        .padding(.bottom, 20)
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100, height: 100)
+                        .padding(.bottom, 20)
+                }
 
-            Text(member.name)
-                .font(.largeTitle)
-                .padding(.bottom, 5)
-            Text(member.position)
-                .font(.title)
-                .foregroundColor(.secondary)
-                .padding(.bottom, 20)
-            Text(member.biography)
-                .font(.body)
-                .padding()
-            Spacer()
+                Text(member.name)
+                    .font(.largeTitle)
+                    .padding(.bottom, 5)
+                Text(member.position)
+                    .font(.title)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 20)
+                Text(member.biography)
+                    .font(.body)
+                    .padding()
+                Spacer()
+            }
+            .padding()
+            .padding(.top, 20)
+            .background(Color(UIColor.systemBackground))
+            .navigationBarItems(trailing: Button(action: {
+                dismiss()
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.primary)
+            })
         }
-        .padding()
-        .padding(.top, 20)
-        .background(Color(UIColor.systemBackground))
     }
 }
 
