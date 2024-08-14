@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CryptoKit
+import LocalAuthentication
 
 /// A view for logging in using a passcode.
 ///
@@ -20,7 +21,7 @@ struct LoginPasscode: View {
     @State private var isLoginSuccessful: Bool = false
     @State private var showIncorrectPasscodeMessage: Bool = false
     @State private var isPasscodeVisible: Bool = false
-
+    
     // Layout for the passcode buttons
     let gridLayout = [
         GridItem(.flexible()),
@@ -71,12 +72,24 @@ struct LoginPasscode: View {
                             addToPasscode(number: "\(number)")
                         }
                     }
+                    
                     Spacer()
-                    PasscodeButton(number: "Del") {
-                        deleteLast()
+                    
+                    // Add the 0 button at the bottom left
+                    PasscodeButton(number: "0") {
+                        addToPasscode(number: "0")
+                    }
+                    
+                    // Add a custom backspace button at the bottom right
+                    Button(action: deleteLast) {
+                        Image(systemName: "delete.left")
+                            .font(.title)
+                            .foregroundColor(.primary)
+                            .frame(width: 60, height: 60)
                     }
                 }
                 .padding(.horizontal, 40)
+
                 
                 Spacer()
                 
@@ -102,6 +115,7 @@ struct LoginPasscode: View {
                 ListTabView()
                     .navigationBarBackButtonHidden(true)
             }
+            .onAppear(perform: authenticateWithFaceID)
         }
     }
     
@@ -143,6 +157,39 @@ struct LoginPasscode: View {
             showIncorrectPasscodeMessage = true // Set flag to show the incorrect passcode message
         }
     }
+    
+    /// Authenticates the user using Face ID or Touch ID.
+    ///
+    /// If authentication is successful, automatically fills in the passcode.
+    func authenticateWithFaceID() {
+        let context = LAContext()
+        var error: NSError?
+
+        // Check if the device can use Face ID or Touch ID
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Authenticate to access your passcode."
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                if success {
+                    DispatchQueue.main.async {
+                        // Retrieve the stored passcode from UserDefaults
+                        if let storedPasscode = UserDefaults.standard.string(forKey: "passcode") {
+                            self.passcode = storedPasscode
+                            self.isPasscodeVisible = true // Make sure the passcode is visible in the text field
+                            self.isLoginSuccessful = true // Navigate to ListTabView automatically
+                        }
+                    }
+                } else {
+                    // Handle authentication failure
+                    print("Authentication failed")
+                }
+            }
+        } else {
+            // No biometrics available
+            print("Biometrics not available")
+        }
+    }
+
 }
 
 struct LoginPasscode_Previews: PreviewProvider {
