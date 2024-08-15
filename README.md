@@ -54,7 +54,12 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 7/22 fixed functionality of MixRecipePreview
 - 7/24 changed search bar style, added alert for blending, added images for team members to about view
 - 7/31 fixed styling on the boxes for adding recipe and blend new recipe
+
+**August 2024**
 - 8/1 changed colors for dark mode for more accessibility
+- 8/2 set up test flight for beta testing
+- 8/10 fixed passcode backspace button
+- 8/14 fixed alert for change passcode and implemented face id
        
 
 
