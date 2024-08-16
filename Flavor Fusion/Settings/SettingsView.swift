@@ -11,13 +11,17 @@ import SwiftUI
 ///
 /// `SettingsView` allows users to change their passcode and display name. It provides
 /// input fields for the current passcode, new passcode, and confirmation of the new passcode,
-/// as well as an input field for changing the display name.
+/// as well as an input field for changing the display name. It also includes an option to toggle
+/// whether the passcode screen is required when the app opens.
+import SwiftUI
+
 struct SettingsView: View {
     @State private var currentPasscode: String = ""
     @State private var newPasscode: String = ""
     @State private var confirmPasscode: String = ""
     
     @State private var displayName: String = UserDefaults.standard.string(forKey: "displayName") ?? ""
+    @State private var requiresPasscode: Bool = UserDefaults.standard.bool(forKey: "requiresPasscode")
     
     @State private var alertType: AlertType? = nil
     
@@ -109,6 +113,25 @@ struct SettingsView: View {
                         .padding(.top, 10)
                     }
                     .padding(.horizontal)
+                    
+                    Divider()
+                        .padding(.vertical, 10)
+                    
+                    Group {
+                        Text("Require Passcode at Startup")
+                            .font(.headline)
+                            .bold()
+                            .padding(.bottom, 5)
+                        
+                        Toggle(isOn: $requiresPasscode) {
+                            Text("Require Passcode")
+                        }
+                        .padding(.horizontal)
+                        .onChange(of: requiresPasscode) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "requiresPasscode")
+                        }
+                    }
+                    .padding(.horizontal)
                 }
                 .padding()
             }
@@ -120,7 +143,6 @@ struct SettingsView: View {
         }
     }
     
-    /// Changes the passcode after validating the current passcode and confirming the new passcode.
     func changePasscode() {
         guard let storedPasscode = UserDefaults.standard.string(forKey: "passcode") else {
             print("No passcode saved.")
@@ -132,6 +154,7 @@ struct SettingsView: View {
                 UserDefaults.standard.set(newPasscode, forKey: "passcode")
                 print("Passcode changed successfully!")
                 alertType = .passcodeChanged
+                clearPasscodeFields() // Clear the fields after a successful change
             } else {
                 print("New passcode and confirm passcode do not match.")
                 alertType = .incorrectPasscode
@@ -142,14 +165,19 @@ struct SettingsView: View {
         }
     }
     
-    /// Changes the display name and saves it to UserDefaults.
+    func clearPasscodeFields() {
+        currentPasscode = ""
+        newPasscode = ""
+        confirmPasscode = ""
+    }
+    
     func changeDisplayName() {
         UserDefaults.standard.set(displayName, forKey: "displayName")
         alertType = .displayNameChanged
     }
 }
 
-// Preview Provider for the SettingsView
 #Preview {
     SettingsView()
 }
+

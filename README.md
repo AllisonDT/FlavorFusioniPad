@@ -60,8 +60,5 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 8/2 set up test flight for beta testing
 - 8/10 fixed passcode backspace button
 - 8/14 fixed alert for change passcode and implemented face id
-       
-
-
-
+- 8/15 added toggle for requiring passcode, cleared SecureField in settings change passcode after clicking change passcode, added "save to recipe book" feature when creating a new blend, fixed ability to have duplicate recipes.
 

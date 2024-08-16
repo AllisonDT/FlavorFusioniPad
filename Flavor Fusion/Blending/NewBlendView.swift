@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+/// Enum to handle different alert types
+enum BlendAlertType {
+    case incompleteBlend
+    case saveToRecipeBook
+    case duplicateBlendName
+}
+
 /// A view for creating a new spice blend.
 ///
 /// `NewBlendView` allows users to enter a spice blend name, select the number of servings,
@@ -31,6 +38,9 @@ struct NewBlendView: View {
     @State private var showBlending = false // State variable to control the blending view
     @State private var showCompletion = false // State variable to control the completion view
     @State private var showAlert = false // State variable to control the alert presentation
+    @State private var alertType: BlendAlertType? = nil // State variable to manage the alert type
+
+    @ObservedObject var recipeStore: RecipeStore
 
     let servingOptions = Array(1...10) // Array of serving options
 
@@ -84,9 +94,11 @@ struct NewBlendView: View {
                 Spacer()
                 Button(action: {
                     if spiceName.isEmpty || selectedIngredients.isEmpty {
+                        alertType = .incompleteBlend
                         showAlert = true
                     } else {
-                        showPopup = true // Show the popup when the button is pressed
+                        alertType = .saveToRecipeBook
+                        showAlert = true
                     }
                 }) {
                     Text("BLEND")
@@ -100,11 +112,53 @@ struct NewBlendView: View {
                 }
                 .padding(.horizontal)
                 .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Incomplete Blend"),
-                        message: Text("Please enter a spice blend name and select at least one ingredient."),
-                        dismissButton: .default(Text("OK"))
-                    )
+                    switch alertType {
+                    case .incompleteBlend:
+                        return Alert(
+                            title: Text("Incomplete Blend"),
+                            message: Text("Please enter a spice blend name and select at least one ingredient."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    case .saveToRecipeBook:
+                        return Alert(
+                            title: Text("Save Blend"),
+                            message: Text("Do you want to save this blend to your recipe book?"),
+                            primaryButton: .default(Text("Yes"), action: {
+                                if recipeStore.recipes.contains(where: { $0.name.lowercased() == spiceName.lowercased() }) {
+                                    // Trigger duplicate blend name alert
+                                    alertType = .duplicateBlendName
+                                    DispatchQueue.main.async {
+                                        showAlert = true
+                                    }
+                                } else {
+                                    // Save the blend to the recipe store
+                                    let ingredients = spicesData.filter { $0.isSelected }.map {
+                                        Ingredient(name: $0.name, amount: 1.0) // Assuming 1 unit per selected spice
+                                    }
+                                    let newRecipe = Recipe(
+                                        name: spiceName,
+                                        ingredients: ingredients,
+                                        servings: servings
+                                    )
+                                    recipeStore.addRecipe(newRecipe)
+                                    
+                                    // Continue with the blending process
+                                    showPopup = true
+                                }
+                            }),
+                            secondaryButton: .cancel(Text("No"), action: {
+                                showPopup = true
+                            })
+                        )
+                    case .duplicateBlendName:
+                        return Alert(
+                            title: Text("Error"),
+                            message: Text("A recipe with this name already exists."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    case .none:
+                        return Alert(title: Text("Unknown Alert"))
+                    }
                 }
                 .sheet(isPresented: $showPopup) {
                     BlendConfirmationView(spiceName: spiceName, servings: servings, ingredients: selectedIngredients, onConfirm: {
@@ -130,5 +184,5 @@ struct NewBlendView: View {
 }
 
 #Preview {
-    NewBlendView()
+    NewBlendView(recipeStore: RecipeStore())
 }

@@ -15,6 +15,7 @@ import SwiftUI
 /// - Parameters:
 ///   - isPresented: A binding to control the presentation of the view.
 ///   - recipeStore: An observed object that manages the collection of recipes.
+
 struct AddRecipeView: View {
     @Binding var isPresented: Bool
     @ObservedObject var recipeStore: RecipeStore
@@ -75,6 +76,12 @@ struct AddRecipeView: View {
                             return
                         }
 
+                        if recipeStore.recipes.contains(where: { $0.name.lowercased() == recipeName.lowercased() }) {
+                            alertMessage = "A recipe with this name already exists."
+                            showAlert = true
+                            return
+                        }
+
                         if selectedSpices.isEmpty {
                             alertMessage = "Please select at least one spice."
                             showAlert = true
@@ -116,13 +123,6 @@ struct AddRecipeView: View {
     }
 }
 
-/// A view that displays a spice row with selection capability for adding to a recipe.
-///
-/// `AddRecipeSpiceView` allows users to select a spice and specify the amount for the recipe.
-///
-/// - Parameters:
-///   - spice: A binding to the spice to display in the row.
-///   - selectedSpices: A binding to a dictionary of selected spices and their amounts.
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice
     @Binding var selectedSpices: [Spice: Int]
@@ -182,7 +182,6 @@ struct AddRecipeSpiceView: View {
     }
 }
 
-// Preview Provider for the AddRecipeView
 #Preview {
     AddRecipeView(isPresented: .constant(false), recipeStore: RecipeStore())
 }

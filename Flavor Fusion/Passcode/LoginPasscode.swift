@@ -115,7 +115,9 @@ struct LoginPasscode: View {
                 ListTabView()
                     .navigationBarBackButtonHidden(true)
             }
-            .onAppear(perform: authenticateWithFaceID)
+            .onAppear {
+                checkPasscodeRequirement()
+            }
         }
     }
     
@@ -158,6 +160,16 @@ struct LoginPasscode: View {
         }
     }
     
+    /// Checks if the passcode screen is required. If not, bypasses the login screen.
+    func checkPasscodeRequirement() {
+        let requiresPasscode = UserDefaults.standard.bool(forKey: "requiresPasscode")
+        if !requiresPasscode {
+            isLoginSuccessful = true // Skip the login screen if passcode is not required
+        } else {
+            authenticateWithFaceID() // Proceed with Face ID authentication if passcode is required
+        }
+    }
+    
     /// Authenticates the user using Face ID or Touch ID.
     ///
     /// If authentication is successful, automatically fills in the passcode.
@@ -189,7 +201,6 @@ struct LoginPasscode: View {
             print("Biometrics not available")
         }
     }
-
 }
 
 struct LoginPasscode_Previews: PreviewProvider {

@@ -26,6 +26,8 @@ struct BlendingNewExistingView: View {
     /// A binding to control whether the view is presented.
     @Binding var isPresented: Bool
     
+    @ObservedObject var recipeStore = RecipeStore()
+
     var body: some View {
         NavigationView {
             VStack {
@@ -39,7 +41,7 @@ struct BlendingNewExistingView: View {
 
                 // Display content based on selection
                 if selectedOption == 0 {
-                    NewBlendView()
+                    NewBlendView(recipeStore: recipeStore)
                 } else {
                     ExistingBlendView()
                 }
