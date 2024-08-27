@@ -34,19 +34,18 @@ struct NewBlendView: View {
     @State private var servings = 1
     @State private var spicesData = spiceData
     @State private var isSelecting: Bool = false
-    @State private var showPopup = false // State variable to control the popup presentation
-    @State private var showBlending = false // State variable to control the blending view
-    @State private var showCompletion = false // State variable to control the completion view
-    @State private var showAlert = false // State variable to control the alert presentation
-    @State private var alertType: BlendAlertType? = nil // State variable to manage the alert type
+    @State private var showPopup = false
+    @State private var showBlending = false
+    @State private var showCompletion = false
+    @State private var showAlert = false
+    @State private var alertType: BlendAlertType? = nil
 
     @ObservedObject var recipeStore: RecipeStore
 
-    let servingOptions = Array(1...10) // Array of serving options
+    let servingOptions = Array(1...10)
 
-    /// An array of selected ingredient names.
-    var selectedIngredients: [String] {
-        spicesData.filter { $0.isSelected }.map { $0.name }
+    var selectedIngredients: [Ingredient] {
+        spicesData.filter { $0.isSelected }.map { Ingredient(name: $0.name, amount: $0.selectedAmount, unit: $0.unit) }
     }
 
     var body: some View {
@@ -57,7 +56,7 @@ struct NewBlendView: View {
                     .padding(.horizontal)
 
                 HStack {
-                    Text("Servings:") // Title next to the Picker
+                    Text("Servings:")
                     Picker(selection: $servings, label: Text("Servings")) {
                         ForEach(servingOptions, id: \.self) { option in
                             Text("\(option)")
@@ -69,7 +68,6 @@ struct NewBlendView: View {
 
                 ScrollView {
                     HStack(alignment: .top) {
-                        // First column
                         VStack {
                             ForEach(spicesData.indices.filter { $0 < spicesData.count / 2 }, id: \.self) { index in
                                 NewBlendSpiceView(spice: $spicesData[index], onSelect: { selected in
@@ -77,7 +75,6 @@ struct NewBlendView: View {
                                 })
                             }
                         }
-                        // Second column
                         VStack {
                             ForEach(spicesData.indices.filter { $0 >= spicesData.count / 2 }, id: \.self) { index in
                                 NewBlendSpiceView(spice: $spicesData[index], onSelect: { selected in
@@ -125,24 +122,18 @@ struct NewBlendView: View {
                             message: Text("Do you want to save this blend to your recipe book?"),
                             primaryButton: .default(Text("Yes"), action: {
                                 if recipeStore.recipes.contains(where: { $0.name.lowercased() == spiceName.lowercased() }) {
-                                    // Trigger duplicate blend name alert
                                     alertType = .duplicateBlendName
                                     DispatchQueue.main.async {
                                         showAlert = true
                                     }
                                 } else {
-                                    // Save the blend to the recipe store
-                                    let ingredients = spicesData.filter { $0.isSelected }.map {
-                                        Ingredient(name: $0.name, amount: 1.0) // Assuming 1 unit per selected spice
-                                    }
+                                    let ingredients = selectedIngredients
                                     let newRecipe = Recipe(
                                         name: spiceName,
                                         ingredients: ingredients,
                                         servings: servings
                                     )
                                     recipeStore.addRecipe(newRecipe)
-                                    
-                                    // Continue with the blending process
                                     showPopup = true
                                 }
                             }),
@@ -167,14 +158,13 @@ struct NewBlendView: View {
                     })
                 }
                 .sheet(isPresented: $showBlending) {
-                    BlendingView(onComplete: {
+                    BlendingView(spiceName: spiceName, servings: servings, ingredients: selectedIngredients, onComplete: {
                         showBlending = false
                         showCompletion = true
                     })
                 }
                 .sheet(isPresented: $showCompletion) {
                     BlendCompletionView(onDone: {
-                        // Navigate back to home page logic here
                         showCompletion = false
                     })
                 }

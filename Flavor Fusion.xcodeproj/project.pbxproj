@@ -23,7 +23,6 @@
 		BE2431D62BF04CE400B77990 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2431D52BF04CE400B77990 /* BLEManager.swift */; };
 		BE2431D82BF051DB00B77990 /* ExistingBlendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */; };
 		BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352D2B86B69100806E7D /* AddRecipeView.swift */; };
-		BE3535302B8707E300806E7D /* SpiceDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352F2B8707E300806E7D /* SpiceDataTests.swift */; };
 		BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3535312B87080B00806E7D /* SpiceRowTests.swift */; };
 		BE70987E2BB0DDEA00E04F11 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987D2BB0DDEA00E04F11 /* List.swift */; };
 		BE7098802BB0DE9400E04F11 /* SpicePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */; };
@@ -91,7 +90,6 @@
 		BE2431D52BF04CE400B77990 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingBlendView.swift; sourceTree = "<group>"; };
 		BE35352D2B86B69100806E7D /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
-		BE35352F2B8707E300806E7D /* SpiceDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceDataTests.swift; sourceTree = "<group>"; };
 		BE3535312B87080B00806E7D /* SpiceRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRowTests.swift; sourceTree = "<group>"; };
 		BE70987D2BB0DDEA00E04F11 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpicePopupView.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */,
-				BE35352F2B8707E300806E7D /* SpiceDataTests.swift */,
 				BE3535312B87080B00806E7D /* SpiceRowTests.swift */,
 			);
 			path = "Flavor FusionTests";
@@ -516,7 +513,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE3535302B8707E300806E7D /* SpiceDataTests.swift in Sources */,
 				BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */,
 				BE02B8082B719AA10093AA4F /* Flavor_FusionTests.swift in Sources */,
 			);
@@ -681,6 +677,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -696,10 +693,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				RUN_DOCUMENTATION_COMPILER = YES;
+				RUN_DOCUMENTATION_COMPILER = NO;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -723,6 +720,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -738,10 +736,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				RUN_DOCUMENTATION_COMPILER = YES;
+				RUN_DOCUMENTATION_COMPILER = NO;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;

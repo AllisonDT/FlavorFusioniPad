@@ -8,112 +8,162 @@
 import Foundation
 import CoreBluetooth
 
-// BLEManager class responsible for managing Bluetooth Low Energy (BLE) communication with Arduino
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    // Properties
-    var centralManager: CBCentralManager! // Central manager responsible for scanning and connecting to peripherals
-    var peripheral: CBPeripheral! // Peripheral device (Arduino)
-    var motorControlCharacteristic: CBCharacteristic! // Characteristic for controlling the motor
-    var recipeDoneCharacteristic: CBCharacteristic! // Characteristic indicating the recipe is done
-    @Published var isConnected = false // Published property to track connection status
+    @Published var isDataRetrievedViaBluetooth: Bool = false
+    var centralManager: CBCentralManager!
+    var connectedPeripheral: CBPeripheral?
     
-    // Initialization
+    // Define your service and characteristic UUIDs
+    let spiceServiceUUID = CBUUID(string: "180C")
+    let containerNumberCharacteristicUUID = CBUUID(string: "2A56")
+    let spiceAmountCharacteristicUUID = CBUUID(string: "2A57")
+    
+    private var currentContainerNumber: Int?
+    private var expectedNumberOfContainers: Int = 10 // Adjust this according to your setup
+    private var receivedContainersCount: Int = 0
+    
     override init() {
         super.init()
-        centralManager = CBCentralManager(delegate: self, queue: nil) // Initialize central manager
-        centralManager.delegate = self
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+        print("Central Manager initialized.")
     }
     
-    // CBCentralManagerDelegate method called when Bluetooth state changes
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        print("Central Manager did update state: \(central.state.rawValue)")
+        
         if central.state == .poweredOn {
-            centralManager.scanForPeripherals(withServices: nil, options: nil) // Start scanning for peripherals
+            print("Bluetooth is powered on. Starting scan for peripherals...")
+            centralManager.scanForPeripherals(withServices: [spiceServiceUUID], options: nil)
         } else {
-            print("Bluetooth is not available")
+            print("Bluetooth is not available.")
+            useExampleDataIfNeeded()
         }
     }
     
-    // CBCentralManagerDelegate method called when a peripheral is discovered
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        self.peripheral = peripheral
-        self.peripheral.delegate = self
-        centralManager.stopScan() // Stop scanning
-        centralManager.connect(peripheral, options: nil) // Connect to the discovered peripheral
+        print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
+        connectedPeripheral = peripheral
+        centralManager.stopScan()
+        print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
+        centralManager.connect(peripheral, options: nil)
     }
     
-    // CBCentralManagerDelegate method called when peripheral is connected
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        isConnected = true // Update connection status
-        peripheral.discoverServices(nil) // Discover services of the connected peripheral
+        print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
+        peripheral.delegate = self
+        peripheral.discoverServices([spiceServiceUUID])
     }
     
-    // CBPeripheralDelegate method called when services are discovered
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let error = error {
+            print("Error discovering services: \(error.localizedDescription)")
+            return
+        }
+        
+        print("Discovered services for peripheral: \(peripheral.name ?? "Unknown").")
         if let services = peripheral.services {
             for service in services {
-                peripheral.discoverCharacteristics(nil, for: service) // Discover characteristics of each service
-            }
-        }
-    }
-    
-    // CBPeripheralDelegate method called when characteristics are discovered
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let characteristics = service.characteristics {
-            for characteristic in characteristics {
-                print("Discovered characteristic: \(characteristic.uuid)")
-                // Check for specific characteristics
-                if characteristic.uuid == CBUUID(string: "19B10001-E8F2-537E-4F6C-D104768A1214") {
-                    motorControlCharacteristic = characteristic // Assign motor control characteristic
-                    print("Motor control characteristic found")
-                } else if characteristic.uuid == CBUUID(string: "YourRecipeDoneCharacteristicUUID") {
-                    recipeDoneCharacteristic = characteristic // Assign recipe done characteristic
-                    peripheral.setNotifyValue(true, for: characteristic) // Subscribe to notifications
-                    print("Recipe done characteristic found")
+                print("Service UUID: \(service.uuid)")
+                if service.uuid == spiceServiceUUID {
+                    print("Found spice service. Discovering characteristics...")
+                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID], for: service)
                 }
             }
-        } else {
-            print("Error discovering characteristics: \(error?.localizedDescription ?? "Unknown error")")
         }
     }
     
-    // CBPeripheralDelegate method called when characteristic value is updated
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let error = error {
+            print("Error discovering characteristics: \(error.localizedDescription)")
+            return
+        }
+        
+        print("Discovered characteristics for service: \(service.uuid).")
+        if let characteristics = service.characteristics {
+            for characteristic in characteristics {
+                print("Characteristic UUID: \(characteristic.uuid)")
+                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID {
+                    print("Enabling notifications for characteristic: \(characteristic.uuid)")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                }
+            }
+        }
+    }
+    
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if characteristic == recipeDoneCharacteristic {
-            // Handle recipe done signal received from Arduino
-            if let data = characteristic.value {
-                // Decode the received data, if needed
-                // Example: let signal = String(data: data, encoding: .utf8)
-                
-                // Call the function to handle the recipe done signal
-                handleRecipeDoneSignal()
-            }
+        if let error = error {
+            print("Error updating value for characteristic: \(error.localizedDescription)")
+            return
+        }
+        
+        print("Received update for characteristic: \(characteristic.uuid).")
+        if let data = characteristic.value {
+            print("Data received: \(data as NSData)")
+            isDataRetrievedViaBluetooth = true
+            processData(characteristic: characteristic, data: data)
+        } else {
+            print("No data received. Using example data.")
+            useExampleDataIfNeeded()
         }
     }
     
-    // Send recipe to Arduino
-    func sendRecipe(_ recipe: Recipe) {
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(recipe)
-            if let characteristic = motorControlCharacteristic {
-                peripheral.writeValue(data, for: characteristic, type: .withResponse)
-                print("Sent recipe to Arduino")
-            } else {
-                print("Error: Motor control characteristic is nil.")
+    private func processData(characteristic: CBCharacteristic, data: Data) {
+        if characteristic.uuid == containerNumberCharacteristicUUID {
+            let containerNumber = Int(data[0])
+            print("Processed container number: \(containerNumber)")
+            currentContainerNumber = containerNumber
+        } else if characteristic.uuid == spiceAmountCharacteristicUUID, let containerNumber = currentContainerNumber {
+            let spiceAmount = data.withUnsafeBytes { $0.load(as: Float.self) }
+            print("Processed spice amount: \(spiceAmount)")
+            updateSpiceData(containerNumber: containerNumber, spiceAmount: Double(spiceAmount))
+            receivedContainersCount += 1
+            currentContainerNumber = nil
+            
+            if receivedContainersCount == expectedNumberOfContainers {
+                print("All data received for \(expectedNumberOfContainers) containers.")
+                completeDataTransfer()
             }
-        } catch {
-            print("Error encoding recipe: \(error.localizedDescription)")
         }
     }
-    
-    // Save recipe to device (to be implemented)
-    func saveRecipeToDevice() {
-        // To be implemented
+
+    private func updateSpiceData(containerNumber: Int, spiceAmount: Double) {
+        print("Updating spice data for container number: \(containerNumber) with amount: \(spiceAmount) grams.")
+        if let index = spiceData.firstIndex(where: { $0.containerNumber == containerNumber }) {
+            spiceData[index].amountInGrams = spiceAmount
+            spiceData[index].spiceAmount = Spice.convertGramsToUnit(grams: spiceAmount, unit: spiceData[index].unit)
+            print("Updated \(spiceData[index].name) with spiceAmount: \(spiceData[index].spiceAmount) \(spiceData[index].unit) from Bluetooth.")
+            
+            // Manually trigger UI refresh by updating the array
+            spiceData = spiceData.map { $0 } // This triggers the UI to re-render
+        } else {
+            print("Spice with containerNumber \(containerNumber) not found.")
+        }
     }
-    
-    // Handle recipe done signal received from Arduino
-    func handleRecipeDoneSignal() {
-        print("Recipe done signal received from Arduino")
-        // Add any actions you want to perform when the recipe is done being mixed
+
+    private func completeDataTransfer() {
+        // Stop notifications
+        if let peripheral = connectedPeripheral {
+            if let characteristics = peripheral.services?.first(where: { $0.uuid == spiceServiceUUID })?.characteristics {
+                for characteristic in characteristics {
+                    if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID {
+                        print("Disabling notifications for characteristic: \(characteristic.uuid)")
+                        peripheral.setNotifyValue(false, for: characteristic)
+                    }
+                }
+            }
+            // Disconnect from the peripheral
+            centralManager.cancelPeripheralConnection(peripheral)
+            print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
+        }
+        
+        // Update UI or trigger any further processing needed after all data is received
+        print("All data processed. UI should be updated accordingly.")
+    }
+
+    private func useExampleDataIfNeeded() {
+        if !isDataRetrievedViaBluetooth {
+            print("Using example data as no Bluetooth data was retrieved.")
+            // You could do any additional processing or UI updates here if needed
+        }
     }
 }

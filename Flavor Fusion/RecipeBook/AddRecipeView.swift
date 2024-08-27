@@ -15,7 +15,6 @@ import SwiftUI
 /// - Parameters:
 ///   - isPresented: A binding to control the presentation of the view.
 ///   - recipeStore: An observed object that manages the collection of recipes.
-
 struct AddRecipeView: View {
     @Binding var isPresented: Bool
     @ObservedObject var recipeStore: RecipeStore
@@ -23,11 +22,12 @@ struct AddRecipeView: View {
     @State private var recipeName: String = ""
     @State private var servings = 1
     @State private var spicesData = spiceData
-    @State private var selectedSpices: [Spice: Int] = [:]
+    @State private var selectedSpices: [Spice: (Double, String)] = [:] // Updated to Double
     @State private var showAlert = false
     @State private var alertMessage = ""
 
     let servingOptions = Array(1...10)
+    let unitOptions = ["t", "T"] // "t" for teaspoons, "T" for tablespoons
 
     var body: some View {
         NavigationView {
@@ -53,13 +53,13 @@ struct AddRecipeView: View {
                             // First column
                             VStack {
                                 ForEach(spicesData.indices.filter { $0 < spicesData.count / 2 }, id: \.self) { index in
-                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices, unitOptions: unitOptions)
                                 }
                             }
                             // Second column
                             VStack {
                                 ForEach(spicesData.indices.filter { $0 >= spicesData.count / 2 }, id: \.self) { index in
-                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices)
+                                    AddRecipeSpiceView(spice: $spicesData[index], selectedSpices: $selectedSpices, unitOptions: unitOptions)
                                 }
                             }
                         }
@@ -88,7 +88,7 @@ struct AddRecipeView: View {
                             return
                         }
 
-                        let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value)) }
+                        let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value.0), unit: $0.value.1) }
                         let newRecipe = Recipe(
                             name: recipeName,
                             ingredients: ingredients,
@@ -123,11 +123,18 @@ struct AddRecipeView: View {
     }
 }
 
+
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice
-    @Binding var selectedSpices: [Spice: Int]
+    @Binding var selectedSpices: [Spice: (Double, String)] // Update to Double to handle fractional values
 
-    let spiceQuantities = Array(1...10)
+    @State private var wholeAmount = 1
+    @State private var fractionalAmount = ""
+    
+    let spiceQuantities = Array(0...9)
+    let fractions = ["", "½", "¼", "⅛"]
+    let fractionValues: [String: Double] = ["½": 0.5, "¼": 0.25, "⅛": 0.125, "": 0]
+    let unitOptions: [String]
 
     var body: some View {
         VStack {
@@ -136,7 +143,7 @@ struct AddRecipeSpiceView: View {
                     if self.selectedSpices.keys.contains(spice) {
                         self.selectedSpices.removeValue(forKey: spice)
                     } else {
-                        self.selectedSpices[spice] = 1
+                        self.selectedSpices[spice] = (1, unitOptions.first ?? "t")
                     }
                 }) {
                     Image(systemName: self.selectedSpices.keys.contains(spice) ? "checkmark.circle.fill" : "circle")
@@ -153,22 +160,44 @@ struct AddRecipeSpiceView: View {
 
             if self.selectedSpices.keys.contains(spice) {
                 HStack {
-                    Text("Amount")
-                        .foregroundColor(.primary)
-                        .font(.body)
-
-                    Picker("Quantity", selection: Binding(
-                        get: { self.selectedSpices[spice] ?? 1 },
-                        set: { self.selectedSpices[spice] = $0 }
-                    )) {
+                    Picker(selection: $wholeAmount, label: Text("Whole Amount")) {
                         ForEach(spiceQuantities, id: \.self) { quantity in
                             Text("\(quantity)")
                         }
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .frame(width: 70)
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(height: 100)
+                    .clipped()
+
+                    Picker(selection: $fractionalAmount, label: Text("Fractional Amount")) {
+                        ForEach(fractions, id: \.self) { fraction in
+                            Text("\(fraction)")
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(height: 100)
+                    .clipped()
+
+                    Picker(selection: Binding(
+                        get: { self.selectedSpices[spice]?.1 ?? "t" },
+                        set: { self.selectedSpices[spice]?.1 = $0 }
+                    ), label: Text("Unit")) {
+                        ForEach(unitOptions, id: \.self) { unit in
+                            Text(unit == "t" ? "tsp" : "tbsp")
+                                .font(.caption)
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(height: 100)
+                    .clipped()
+                    .labelsHidden()
                 }
-                .padding(.top, 5)
+                .onChange(of: wholeAmount) {
+                    updateSelectedSpiceAmount()
+                }
+                .onChange(of: fractionalAmount) {
+                    updateSelectedSpiceAmount()
+                }
             }
         }
         .padding(.horizontal)
@@ -179,6 +208,12 @@ struct AddRecipeSpiceView: View {
                 .shadow(color: .gray, radius: 2, x: 0, y: 2)
         )
         .padding(.vertical, 5)
+    }
+
+    private func updateSelectedSpiceAmount() {
+        let fractionValue = fractionValues[fractionalAmount] ?? 0
+        let totalAmount = Double(wholeAmount) + fractionValue
+        selectedSpices[spice]?.0 = totalAmount
     }
 }
 

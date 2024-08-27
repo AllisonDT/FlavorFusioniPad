@@ -9,16 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("isFirstTimeOpen") private var isFirstTimeOpen: Bool = true
+    @StateObject private var bleManager = BLEManager() // Initialize BLEManager
     
     var body: some View {
-        if isFirstTimeOpen {
-            CreatePasscode()
-                .onDisappear {
-                    // Update the flag to indicate the app has been opened before
-                    isFirstTimeOpen = false
-                }
-        } else {
-            LoginPasscode()
+        Group {
+            if isFirstTimeOpen {
+                CreatePasscode()
+                    .onDisappear {
+                        // Update the flag to indicate the app has been opened before
+                        isFirstTimeOpen = false
+                    }
+            } else {
+                LoginPasscode()
+            }
+        }
+        .onAppear {
+            // Start Bluetooth scanning when the view appears
+            print("ContentView appeared. Starting BLE scanning...")
+            bleManager.centralManagerDidUpdateState(bleManager.centralManager)
         }
     }
 }

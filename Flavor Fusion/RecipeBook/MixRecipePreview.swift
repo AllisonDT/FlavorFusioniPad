@@ -22,11 +22,6 @@ struct MixRecipePreview: View {
     @State private var showCompletion: Bool = false
     @State private var selectedServings: Int
 
-    /// Initializes a new `MixRecipePreview` instance.
-    ///
-    /// - Parameters:
-    ///   - recipe: The recipe to preview.
-    ///   - isPresented: A binding to control the presentation of the view.
     init(recipe: Recipe, isPresented: Binding<Bool>) {
         self.recipe = recipe
         self._isPresented = isPresented
@@ -76,7 +71,7 @@ struct MixRecipePreview: View {
                                     .font(.body)
                                     .foregroundColor(.secondary)
                                 Spacer()
-                                Text("\(amount, specifier: "%.2f")")
+                                Text("\(formatAmount(amount: amount, unit: ingredient.unit))")
                                     .font(.body)
                                     .foregroundColor(.primary)
                             }
@@ -112,7 +107,7 @@ struct MixRecipePreview: View {
                 BlendConfirmationView(
                     spiceName: recipe.name,
                     servings: selectedServings,
-                    ingredients: recipe.ingredients.map { $0.name },
+                    ingredients: recipe.ingredients,
                     onConfirm: {
                         isBlendConfirmationViewPresented = false
                         showBlending = true
@@ -120,10 +115,15 @@ struct MixRecipePreview: View {
                 )
             }
             .sheet(isPresented: $showBlending) {
-                BlendingView(onComplete: {
-                    showBlending = false
-                    showCompletion = true
-                })
+                BlendingView(
+                    spiceName: recipe.name,
+                    servings: selectedServings,
+                    ingredients: recipe.ingredients,
+                    onComplete: {
+                        showBlending = false
+                        showCompletion = true
+                    }
+                )
             }
             .sheet(isPresented: $showCompletion) {
                 BlendCompletionView(onDone: {
@@ -140,9 +140,49 @@ struct MixRecipePreview: View {
             })
         }
     }
+    
+    private func formatAmount(amount: Double, unit: String) -> String {
+        let fraction = convertToFraction(amount: amount)
+        return "\(fraction) \(unit == "t" ? "tsp" : "tbsp")"
+    }
+    
+    private func convertToFraction(amount: Double) -> String {
+        let tolerance = 1.0 / 64.0 // To account for rounding errors
+        let number = amount
+        var lowerNumerator = 0
+        var lowerDenominator = 1
+        var upperNumerator = 1
+        var upperDenominator = 0
+        var middleNumerator = 1
+        var middleDenominator = 1
+        
+        while true {
+            let middle = Double(middleNumerator) / Double(middleDenominator)
+            if abs(middle - number) < tolerance {
+                break
+            } else if middle < number {
+                lowerNumerator = middleNumerator
+                lowerDenominator = middleDenominator
+            } else {
+                upperNumerator = middleNumerator
+                upperDenominator = middleDenominator
+            }
+            middleNumerator = lowerNumerator + upperNumerator
+            middleDenominator = lowerDenominator + upperDenominator
+        }
+
+        let wholeNumber = Int(amount)
+        let remainderNumerator = middleNumerator - wholeNumber * middleDenominator
+
+        if wholeNumber > 0 {
+            return remainderNumerator > 0 ? "\(wholeNumber) \(remainderNumerator)/\(middleDenominator)" : "\(wholeNumber)"
+        } else {
+            return "\(middleNumerator)/\(middleDenominator)"
+        }
+    }
 }
 
 // Preview Provider for the MixRecipePreview
 #Preview {
-    MixRecipePreview(recipe: Recipe(name: "Sample Recipe", ingredients: [Ingredient(name: "Spice 1", amount: 1)], servings: 2), isPresented: .constant(true))
+    MixRecipePreview(recipe: Recipe(name: "Sample Recipe", ingredients: [Ingredient(name: "Spice 1", amount: 1, unit: "T")], servings: 2), isPresented: .constant(true))
 }

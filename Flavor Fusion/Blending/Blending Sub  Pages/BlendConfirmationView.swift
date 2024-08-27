@@ -20,7 +20,7 @@ import SwiftUI
 struct BlendConfirmationView: View {
     let spiceName: String
     let servings: Int
-    let ingredients: [String]
+    let ingredients: [Ingredient]
     let onConfirm: () -> Void
 
     @Environment(\.presentationMode) var presentationMode
@@ -55,14 +55,19 @@ struct BlendConfirmationView: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(ingredients, id: \.self) { ingredient in
-                            Text(ingredient)
-                                .font(.body)
-                                .padding(.leading, 10)
+                        ForEach(ingredients, id: \.name) { ingredient in
+                            HStack {
+                                Text("\(ingredient.name):")
+                                    .font(.body)
+                                Spacer()
+                                Text("\(formatAmount(amount: ingredient.amount, unit: ingredient.unit))")
+                                    .font(.body)
+                            }
+                            .padding(.leading, 10)
                         }
                     }
                 }
-                .frame(maxHeight: 200) // Set max height for the scrollable area
+                .frame(maxHeight: 200)
                 
                 Spacer()
                 
@@ -79,7 +84,7 @@ struct BlendConfirmationView: View {
                     }
                     .padding(.horizontal)
                 }
-                .padding(.bottom) // Padding for better spacing at the bottom
+                .padding(.bottom)
             }
             .padding()
             .background(Color(.systemGroupedBackground))
@@ -92,8 +97,52 @@ struct BlendConfirmationView: View {
             })
         }
     }
+
+    private func formatAmount(amount: Double, unit: String) -> String {
+        let fraction = convertToFraction(amount: amount)
+        return "\(fraction) \(unit == "t" ? "tsp" : "tbsp")"
+    }
+
+    private func convertToFraction(amount: Double) -> String {
+        let tolerance = 1.0 / 64.0 // To account for rounding errors
+        let number = amount
+        var lowerNumerator = 0
+        var lowerDenominator = 1
+        var upperNumerator = 1
+        var upperDenominator = 0
+        var middleNumerator = 1
+        var middleDenominator = 1
+        
+        while true {
+            let middle = Double(middleNumerator) / Double(middleDenominator)
+            if abs(middle - number) < tolerance {
+                break
+            } else if middle < number {
+                lowerNumerator = middleNumerator
+                lowerDenominator = middleDenominator
+            } else {
+                upperNumerator = middleNumerator
+                upperDenominator = middleDenominator
+            }
+            middleNumerator = lowerNumerator + upperNumerator
+            middleDenominator = lowerDenominator + upperDenominator
+        }
+
+        let wholeNumber = Int(amount)
+        let remainderNumerator = middleNumerator - wholeNumber * middleDenominator
+
+        if wholeNumber > 0 {
+            return remainderNumerator > 0 ? "\(wholeNumber) \(remainderNumerator)/\(middleDenominator)" : "\(wholeNumber)"
+        } else {
+            return "\(middleNumerator)/\(middleDenominator)"
+        }
+    }
 }
 
 #Preview {
-    BlendConfirmationView(spiceName: "Example Spice", servings: 1, ingredients: ["Salt", "Pepper", "Garlic Powder"], onConfirm: {})
+    BlendConfirmationView(spiceName: "Example Spice", servings: 1, ingredients: [
+        Ingredient(name: "Salt", amount: 1.0, unit: "T"),
+        Ingredient(name: "Pepper", amount: 0.5, unit: "t"),
+        Ingredient(name: "Garlic Powder", amount: 0.25, unit: "T")
+    ], onConfirm: {})
 }

@@ -14,6 +14,7 @@ import Foundation
 struct Ingredient: Codable {
     let name: String
     let amount: Double
+    let unit: String
 }
 
 /// A struct representing a recipe.

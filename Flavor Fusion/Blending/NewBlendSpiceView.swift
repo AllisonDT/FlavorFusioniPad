@@ -16,17 +16,26 @@ import SwiftUI
 ///   - spice: A binding to the spice item being displayed.
 ///   - onSelect: A closure that is called when the spice is selected or deselected.
 struct NewBlendSpiceView: View {
-    @Binding var spice: Spice // Use Binding to reflect changes immediately
+    @Binding var spice: Spice
     let onSelect: (Bool) -> Void
 
-    @State private var spiceAmount: Int = 1
-    private let spiceAmounts = Array(1...10)
+    @State private var wholeAmount: Int = 1
+    @State private var fraction: String = ""
+    @State private var unit: String = "Tsp"
+    
+    private let wholeAmounts = Array(0...9)
+    private let fractions = ["", "½", "¼", "⅛"]
+    private let units = ["Tsp", "Tbsp"]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Button(action: {
-                    onSelect(!spice.isSelected) // Toggle isSelected state
+                    spice.isSelected.toggle()
+                    onSelect(spice.isSelected)
+                    if spice.isSelected {
+                        updateSpice() // Update spice amount and unit when selected
+                    }
                 }) {
                     Image(systemName: spice.isSelected ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(spice.isSelected ? .green : .gray)
@@ -43,30 +52,79 @@ struct NewBlendSpiceView: View {
             .padding(.vertical, 6)
             .padding(.trailing, 8)
 
-            // Show spice amount picker only when the spice is selected
             if spice.isSelected {
-                HStack {
-                    Text("Amount:")
-                        .font(.subheadline)
-                        .padding(.leading, 8)
-                    
-                    Picker("Amount", selection: $spiceAmount) {
-                        ForEach(spiceAmounts, id: \.self) { amount in
-                            Text("\(amount)")
-                                .tag(amount)
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 0) {
+                        Picker("Whole Amount", selection: $wholeAmount) {
+                            ForEach(wholeAmounts, id: \.self) { amount in
+                                Text("\(amount)")
+                                    .tag(amount)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        .frame(height: 100)
+                        .clipped()
+                        .onChange(of: wholeAmount) {
+                            updateSpice()
+                        }
+                        
+                        Picker("Fractional Amount", selection: $fraction) {
+                            ForEach(fractions, id: \.self) { fraction in
+                                Text(fraction)
+                                    .tag(fraction)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        .frame(height: 100)
+                        .clipped()
+                        .onChange(of: fraction) {
+                            updateSpice()
+                        }
+                        
+                        Picker("Unit", selection: $unit) {
+                            ForEach(units, id: \.self) { unit in
+                                Text(unit)
+                                    .font(.caption) // Make the font smaller
+                                    .tag(unit)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        .frame(height: 100)
+                        .clipped()
+                        .labelsHidden() // Hide the picker label
+                        .onChange(of: unit) {
+                            updateSpice()
                         }
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 4)
+                    
                 }
             }
         }
         .background(
-            RoundedRectangle(cornerRadius: 8) // Matching corner radius
+            RoundedRectangle(cornerRadius: 8)
                 .fill(Color(UIColor.systemBackground))
-                .shadow(color: .gray, radius: 2, x: 0, y: 2) // Matching shadow
+                .shadow(color: .gray, radius: 2, x: 0, y: 2)
         )
         .padding(.vertical, 4)
+    }
+    
+    private func updateSpice() {
+        let totalAmount = Double(wholeAmount) + fractionValue(fraction: fraction)
+        let unitSuffix = unit == "Tsp" ? "t" : "T"
+        spice.selectedAmount = totalAmount
+        spice.unit = unitSuffix
+        
+        // Print the selected amount and unit to the console
+        print("Selected amount for \(spice.name): \(totalAmount) \(unitSuffix)")
+    }
+
+    private func fractionValue(fraction: String) -> Double {
+        switch fraction {
+        case "0": return 0
+        case "½": return 0.5
+        case "¼": return 0.25
+        case "⅛": return 0.125
+        default: return 0
+        }
     }
 }
