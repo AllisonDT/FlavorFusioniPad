@@ -46,36 +46,35 @@ public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
 }
 
 // Default spice data array
-public var spiceData = [
-    Spice(name: "Spice 1", amountInGrams: 3.0, containerNumber: 1),
-    Spice(name: "Spice 2", amountInGrams: 2.5, containerNumber: 2),
-    Spice(name: "Spice 3", amountInGrams: 1.25, containerNumber: 3),
-    Spice(name: "Spice 4", amountInGrams: 1.8, containerNumber: 4),
-    Spice(name: "Spice 5", amountInGrams: 1.3, containerNumber: 5),
-    Spice(name: "Spice 6", amountInGrams: 1.6, containerNumber: 6),
-    Spice(name: "Spice 7", amountInGrams: 1.2, containerNumber: 7),
-    Spice(name: "Spice 8", amountInGrams: 0.6, containerNumber: 8),
-    Spice(name: "Spice 9", amountInGrams: 1.4, containerNumber: 9),
-    Spice(name: "Spice 10", amountInGrams: 1.7, containerNumber: 10)
-]
+//public var spiceData = [
+//    Spice(name: "Spice 1", amountInGrams: 3.0, containerNumber: 1),
+//    Spice(name: "Spice 2", amountInGrams: 2.5, containerNumber: 2),
+//    Spice(name: "Spice 3", amountInGrams: 1.25, containerNumber: 3),
+//    Spice(name: "Spice 4", amountInGrams: 1.8, containerNumber: 4),
+//    Spice(name: "Spice 5", amountInGrams: 1.3, containerNumber: 5),
+//    Spice(name: "Spice 6", amountInGrams: 1.6, containerNumber: 6),
+//    Spice(name: "Spice 7", amountInGrams: 1.2, containerNumber: 7),
+//    Spice(name: "Spice 8", amountInGrams: 0.6, containerNumber: 8),
+//    Spice(name: "Spice 9", amountInGrams: 1.4, containerNumber: 9),
+//    Spice(name: "Spice 10", amountInGrams: 1.7, containerNumber: 10)
+//]
 
 // SpiceDataViewModel
 public class SpiceDataViewModel: ObservableObject {
-    @Published public var spices: [Spice] {
-        didSet {
-            saveSpices()
-        }
-    }
+    @Published public var spices: [Spice]
     
-    public init(spices: [Spice] = spiceData) {
-        self.spices = spices
-        loadSpices()
+    public init() {
+        self.spices = []
+        self.loadSpices()
     }
     
     // Save spices array to UserDefaults
     private func saveSpices() {
         if let encoded = try? JSONEncoder().encode(spices) {
             UserDefaults.standard.set(encoded, forKey: "savedSpices")
+            print("Spices saved successfully.")
+        } else {
+            print("Failed to encode and save spices.")
         }
     }
     
@@ -84,9 +83,11 @@ public class SpiceDataViewModel: ObservableObject {
         if let savedSpices = UserDefaults.standard.data(forKey: "savedSpices"),
            let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpices) {
             self.spices = decodedSpices
+            spiceData = decodedSpices // Populate spiceData with the loaded data
+            print("Spices loaded from UserDefaults: \(spices)")
         } else {
-            // Load the default spice data if nothing is saved
-            self.spices = spiceData
+            print("No saved spices found in UserDefaults.")
+            // You might want to initialize spices with an empty array or handle the case where there's no data
         }
     }
     
@@ -114,3 +115,6 @@ public class SpiceDataViewModel: ObservableObject {
         }
     }
 }
+
+// Now you can declare spiceData globally
+public var spiceData: [Spice] = []
