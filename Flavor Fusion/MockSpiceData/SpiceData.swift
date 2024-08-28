@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 // Spice Data Model
-public struct Spice: Identifiable, Equatable, Hashable {
-    public let id = UUID()
+public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
+    public var id = UUID()
     public var name: String
     public var spiceAmount: Double // This will store the amount in the chosen unit (tsp/tbsp)
     public var isSelected: Bool = false
@@ -44,26 +45,72 @@ public struct Spice: Identifiable, Equatable, Hashable {
     }
 }
 
-// Example usage
+// Default spice data array
 public var spiceData = [
-    Spice(name: "Spice 1", amountInGrams: 1.0, containerNumber: 1),
-    Spice(name: "Spice 2", amountInGrams: 0.5, containerNumber: 2),
-    Spice(name: "Spice 3", amountInGrams: 0.25, containerNumber: 3),
-    Spice(name: "Spice 4", amountInGrams: 0.8, containerNumber: 4),
-    Spice(name: "Spice 5", amountInGrams: 0.3, containerNumber: 5),
-    Spice(name: "Spice 6", amountInGrams: 0.6, containerNumber: 6),
-    Spice(name: "Spice 7", amountInGrams: 0.2, containerNumber: 7),
-    Spice(name: "Spice 8", amountInGrams: 0.9, containerNumber: 8),
-    Spice(name: "Spice 9", amountInGrams: 0.4, containerNumber: 9),
-    Spice(name: "Spice 10", amountInGrams: 0.7, containerNumber: 10)
+    Spice(name: "Spice 1", amountInGrams: 3.0, containerNumber: 1),
+    Spice(name: "Spice 2", amountInGrams: 2.5, containerNumber: 2),
+    Spice(name: "Spice 3", amountInGrams: 1.25, containerNumber: 3),
+    Spice(name: "Spice 4", amountInGrams: 1.8, containerNumber: 4),
+    Spice(name: "Spice 5", amountInGrams: 1.3, containerNumber: 5),
+    Spice(name: "Spice 6", amountInGrams: 1.6, containerNumber: 6),
+    Spice(name: "Spice 7", amountInGrams: 1.2, containerNumber: 7),
+    Spice(name: "Spice 8", amountInGrams: 0.6, containerNumber: 8),
+    Spice(name: "Spice 9", amountInGrams: 1.4, containerNumber: 9),
+    Spice(name: "Spice 10", amountInGrams: 1.7, containerNumber: 10)
 ]
 
-//
-//class SpiceDataStore: ObservableObject {
-//    @Published var spiceData: [Spice] = [
-//        Spice(name: "Spice 1", amountInGrams: 1.0, containerNumber: 1),
-//        Spice(name: "Spice 2", amountInGrams: 0.5, containerNumber: 2),
-//        // Add other spices here...
-//        Spice(name: "Spice 10", amountInGrams: 0.7, containerNumber: 10)
-//    ]
-//}
+// SpiceDataViewModel
+public class SpiceDataViewModel: ObservableObject {
+    @Published public var spices: [Spice] {
+        didSet {
+            saveSpices()
+        }
+    }
+    
+    public init(spices: [Spice] = spiceData) {
+        self.spices = spices
+        loadSpices()
+    }
+    
+    // Save spices array to UserDefaults
+    private func saveSpices() {
+        if let encoded = try? JSONEncoder().encode(spices) {
+            UserDefaults.standard.set(encoded, forKey: "savedSpices")
+        }
+    }
+    
+    // Load spices array from UserDefaults
+    private func loadSpices() {
+        if let savedSpices = UserDefaults.standard.data(forKey: "savedSpices"),
+           let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpices) {
+            self.spices = decodedSpices
+        } else {
+            // Load the default spice data if nothing is saved
+            self.spices = spiceData
+        }
+    }
+    
+    // Function to update a spice amount by container number
+    public func updateSpice(containerNumber: Int, newAmountInGrams: Double) {
+        if let index = spices.firstIndex(where: { $0.containerNumber == containerNumber }) {
+            spices[index].amountInGrams = newAmountInGrams
+            spices[index].spiceAmount = Spice.convertGramsToUnit(grams: newAmountInGrams, unit: spices[index].unit)
+            print("Updated \(spices[index].name) with spiceAmount: \(spices[index].spiceAmount) \(spices[index].unit) from Bluetooth.")
+            
+            // Update the spiceData array as well
+            spiceData[index] = spices[index]
+            
+            // Save updated spices to UserDefaults
+            saveSpices()
+        } else {
+            print("Spice with containerNumber \(containerNumber) not found.")
+        }
+    }
+    
+    // Function to handle bulk updates of spice data, e.g., when multiple spices are updated via Bluetooth
+    public func updateAllSpices(newSpiceData: [Spice]) {
+        for newSpice in newSpiceData {
+            updateSpice(containerNumber: newSpice.containerNumber, newAmountInGrams: newSpice.amountInGrams)
+        }
+    }
+}

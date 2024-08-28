@@ -9,7 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("isFirstTimeOpen") private var isFirstTimeOpen: Bool = true
-    @StateObject private var bleManager = BLEManager() // Initialize BLEManager
+    let spiceDataViewModel: SpiceDataViewModel
+    let bleManager: BLEManager
+    
+    // Custom initializer
+    init() {
+        self.spiceDataViewModel = SpiceDataViewModel()
+        self.bleManager = BLEManager(spiceDataViewModel: spiceDataViewModel)
+    }
     
     var body: some View {
         Group {

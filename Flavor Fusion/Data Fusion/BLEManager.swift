@@ -13,6 +13,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     var centralManager: CBCentralManager!
     var connectedPeripheral: CBPeripheral?
     
+    var spiceDataViewModel: SpiceDataViewModel
+
     // Define your service and characteristic UUIDs
     let spiceServiceUUID = CBUUID(string: "180C")
     let containerNumberCharacteristicUUID = CBUUID(string: "2A56")
@@ -22,7 +24,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     private var expectedNumberOfContainers: Int = 10 // Adjust this according to your setup
     private var receivedContainersCount: Int = 0
     
-    override init() {
+    init(spiceDataViewModel: SpiceDataViewModel) {
+        self.spiceDataViewModel = spiceDataViewModel
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
         print("Central Manager initialized.")
@@ -128,16 +131,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     private func updateSpiceData(containerNumber: Int, spiceAmount: Double) {
         print("Updating spice data for container number: \(containerNumber) with amount: \(spiceAmount) grams.")
-        if let index = spiceData.firstIndex(where: { $0.containerNumber == containerNumber }) {
-            spiceData[index].amountInGrams = spiceAmount
-            spiceData[index].spiceAmount = Spice.convertGramsToUnit(grams: spiceAmount, unit: spiceData[index].unit)
-            print("Updated \(spiceData[index].name) with spiceAmount: \(spiceData[index].spiceAmount) \(spiceData[index].unit) from Bluetooth.")
-            
-            // Manually trigger UI refresh by updating the array
-            spiceData = spiceData.map { $0 } // This triggers the UI to re-render
-        } else {
-            print("Spice with containerNumber \(containerNumber) not found.")
-        }
+        spiceDataViewModel.updateSpice(containerNumber: containerNumber, newAmountInGrams: spiceAmount)
     }
 
     private func completeDataTransfer() {

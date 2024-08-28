@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 /// A view that displays a list of spices and provides options for blending.
 ///
@@ -79,6 +80,21 @@ struct List: View {
                 }
             }
             .navigationBarTitle("\(displayName)'s Cabinet", displayMode: .inline)
+            .onAppear {
+                requestNotificationPermission()
+            }
+        }
+    }
+
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Error requesting notification permission: \(error.localizedDescription)")
+            } else if granted {
+                print("Notification permission granted")
+            } else {
+                print("Notification permission denied")
+            }
         }
     }
 }

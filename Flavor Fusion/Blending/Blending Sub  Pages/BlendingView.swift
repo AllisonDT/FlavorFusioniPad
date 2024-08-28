@@ -32,7 +32,11 @@ struct BlendingView: View {
             Spacer()
 
             Button(action: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                // Schedule the notification
+                scheduleBlendCompletionNotification()
+                
+                // Simulate blending process with delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
                     onComplete()
                 }
             }) {
@@ -70,6 +74,25 @@ struct BlendingView: View {
         }
     }
     
+    // Function to schedule the blend completion notification
+    private func scheduleBlendCompletionNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Blend Complete!"
+        content.body = "Your blend is ready. Have a spicy day!"
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 6, repeats: false)
+        let request = UNNotificationRequest(identifier: "BlendCompleteNotification", content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled successfully")
+            }
+        }
+    }
+
     // Function to send data over Bluetooth in chunks
     func sendInChunks(data: Data, chunkSize: Int = 20) {
         var offset = 0

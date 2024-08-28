@@ -63,5 +63,11 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 8/15 added toggle for requiring passcode, cleared SecureField in settings change passcode after clicking change passcode, added "save to recipe book" feature when creating a new blend, fixed ability to have duplicate recipes.
 - 8/16 initial updates to prepare for sending recipe data to flavor fusion device. printing the ingredients and amounts to the console. Researching serializing data as a json and as a string
 - 8/20 added tablespoon, teaspoon, and fractional amounts for spice selection
-- Implemented fractions showing for recipe preview
+- 8/21 Implemented fractions showing for recipe preview
+- 8/26 First round of bluetooth integration
+
+
+TO DO
+- Notification when order is complete.
+- Make spice container names editable??
 
