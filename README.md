@@ -65,7 +65,11 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 8/20 added tablespoon, teaspoon, and fractional amounts for spice selection
 - 8/21 Implemented fractions showing for recipe preview
 - 8/26 First round of bluetooth integration
+- 8/31 Fixed bluetooth delay issue, fixed not being able to see updated data on first launch
 
+
+**September 2024**
+- Handled case where user has never opened the app before so there is no data stored in UserDefaults
 
 TO DO
 - Notification when order is complete.

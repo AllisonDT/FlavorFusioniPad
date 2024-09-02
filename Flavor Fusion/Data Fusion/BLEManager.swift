@@ -19,9 +19,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     let spiceServiceUUID = CBUUID(string: "180C")
     let containerNumberCharacteristicUUID = CBUUID(string: "2A56")
     let spiceAmountCharacteristicUUID = CBUUID(string: "2A57")
+    let serializedIngredientsCharacteristicUUID = CBUUID(string: "2A58")
     
     private var currentContainerNumber: Int?
-    private var expectedNumberOfContainers: Int = 10 // Adjust this according to your setup
+    private var expectedNumberOfContainers: Int = 10
     private var receivedContainersCount: Int = 0
     
     init(spiceDataViewModel: SpiceDataViewModel) {
@@ -69,7 +70,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 print("Service UUID: \(service.uuid)")
                 if service.uuid == spiceServiceUUID {
                     print("Found spice service. Discovering characteristics...")
-                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID], for: service)
+                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID, serializedIngredientsCharacteristicUUID], for: service)
                 }
             }
         }
@@ -146,14 +147,46 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 }
             }
             // Disconnect from the peripheral
-            centralManager.cancelPeripheralConnection(peripheral)
-            print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
+//            centralManager.cancelPeripheralConnection(peripheral)
+//            print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
         }
         
-        // Update UI or trigger any further processing needed after all data is received
         print("All data processed. UI should be updated accordingly.")
     }
 
+    // New method to send data
+    func sendSpiceDataToPeripheral(data: Data) {
+        guard let peripheral = connectedPeripheral else {
+            print("No connected peripheral to send data to.")
+            return
+        }
+        
+        if let serializedIngredientsCharacteristic = getCharacteristic(peripheral: peripheral, uuid: serializedIngredientsCharacteristicUUID) {
+            let chunkSize = 20  // Adjust as necessary for your Bluetooth characteristic size
+            var offset = 0
+            
+            while offset < data.count {
+                let chunkLength = min(chunkSize, data.count - offset)
+                let chunk = data.subdata(in: offset..<offset + chunkLength)
+                
+                // Send this chunk over Bluetooth
+                peripheral.writeValue(chunk, for: serializedIngredientsCharacteristic, type: .withResponse)
+                print("Sending chunk: \(String(data: chunk, encoding: .utf8) ?? "Error")")
+                
+                offset += chunkLength
+            }
+            
+            print("All data has been sent.")
+            
+        } else {
+            print("Could not find characteristic to send serialized ingredients data.")
+        }
+    }
+    
+    private func getCharacteristic(peripheral: CBPeripheral, uuid: CBUUID) -> CBCharacteristic? {
+        return peripheral.services?.first(where: { $0.uuid == spiceServiceUUID })?.characteristics?.first(where: { $0.uuid == uuid })
+    }
+    
     private func useExampleDataIfNeeded() {
         if !isDataRetrievedViaBluetooth {
             print("Using example data as no Bluetooth data was retrieved.")

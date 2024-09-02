@@ -11,10 +11,14 @@ import UserNotifications
 @main
 struct FlavorFusionApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    // Initialize your BLEManager
+    @StateObject private var bleManager = BLEManager(spiceDataViewModel: SpiceDataViewModel())
 
     var body: some Scene {
         WindowGroup {
-            ContentView() // Replace with your root view
+            ContentView()
+                .environmentObject(bleManager)
         }
     }
 }

@@ -43,18 +43,9 @@ struct SpiceRow: View {
                 }
                 .padding()
                 
-                Spacer()
                 
-                // Fullness indicator resembling a spice bottle
-                ZStack(alignment: .bottom) {
-                    Capsule()
-                        .frame(width: 20, height: 60)
-                        .foregroundColor(Color.gray.opacity(0.3))
-                    Capsule()
-                        .frame(width: 20, height: 60 * CGFloat(spice.spiceAmount))
-                        .foregroundColor(Color.blue)
-                }
-                .padding(.trailing, 10)
+
+                ListSpiceIndicator(amount: spice.spiceAmount, isSelected: true).padding(.trailing, 10)
             }
             .background(
                 RoundedRectangle(cornerRadius: 8) // Rounded rectangle shape
@@ -68,3 +59,17 @@ struct SpiceRow: View {
         }
     }
 }
+
+
+
+
+//                // Fullness indicator resembling a spice bottle
+//                ZStack(alignment: .bottom) {
+//                    Capsule()
+//                        .frame(width: 20, height: 60)
+//                        .foregroundColor(Color.gray.opacity(0.3))
+//                    Capsule()
+//                        .frame(width: 20, height: 60 * CGFloat(spice.spiceAmount))
+//                        .foregroundColor(Color.blue)
+//                }
+//                .padding(.trailing, 10)

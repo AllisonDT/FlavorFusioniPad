@@ -41,6 +41,7 @@
 		BEA8193C2C431A200073606B /* BlendConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8193B2C431A200073606B /* BlendConfirmationView.swift */; };
 		BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8193D2C431A530073606B /* BlendCompletionView.swift */; };
 		BEA819442C4C6E160073606B /* ExistingRecipesRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */; };
+		BEA8E2E32C866FB400AB2EB9 /* ListSpiceIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8E2E22C866FB400AB2EB9 /* ListSpiceIndicator.swift */; };
 		BEA9D0F12BC1C17700B57779 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F02BC1C17700B57779 /* TeamView.swift */; };
 		BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */; };
 		BEA9D0F72BC1C1DC00B57779 /* ProjectOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */; };
@@ -108,6 +109,7 @@
 		BEA8193B2C431A200073606B /* BlendConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendConfirmationView.swift; sourceTree = "<group>"; };
 		BEA8193D2C431A530073606B /* BlendCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendCompletionView.swift; sourceTree = "<group>"; };
 		BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingRecipesRows.swift; sourceTree = "<group>"; };
+		BEA8E2E22C866FB400AB2EB9 /* ListSpiceIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpiceIndicator.swift; sourceTree = "<group>"; };
 		BEA9D0F02BC1C17700B57779 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyInfoView.swift; sourceTree = "<group>"; };
 		BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewView.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				BE7098902BB0E98F00E04F11 /* SpiceRowView.swift */,
 				BE7098922BB0E9C200E04F11 /* SpiceRow.swift */,
 				BE1C9D7F2BB8680000D597FC /* SpiceColumns.swift */,
+				BEA8E2E22C866FB400AB2EB9 /* ListSpiceIndicator.swift */,
 			);
 			path = HomeList;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				BE1C9D822BB8D3A400D597FC /* SpiceBlendSelections.swift in Sources */,
 				BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */,
 				BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */,
+				BEA8E2E32C866FB400AB2EB9 /* ListSpiceIndicator.swift in Sources */,
 				BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */,
 				BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */,
 				BEDFF4052BB1034B00EF4F56 /* RecipeStore.swift in Sources */,

@@ -45,20 +45,6 @@ public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
     }
 }
 
-// Default spice data array
-//public var spiceData = [
-//    Spice(name: "Spice 1", amountInGrams: 3.0, containerNumber: 1),
-//    Spice(name: "Spice 2", amountInGrams: 2.5, containerNumber: 2),
-//    Spice(name: "Spice 3", amountInGrams: 1.25, containerNumber: 3),
-//    Spice(name: "Spice 4", amountInGrams: 1.8, containerNumber: 4),
-//    Spice(name: "Spice 5", amountInGrams: 1.3, containerNumber: 5),
-//    Spice(name: "Spice 6", amountInGrams: 1.6, containerNumber: 6),
-//    Spice(name: "Spice 7", amountInGrams: 1.2, containerNumber: 7),
-//    Spice(name: "Spice 8", amountInGrams: 0.6, containerNumber: 8),
-//    Spice(name: "Spice 9", amountInGrams: 1.4, containerNumber: 9),
-//    Spice(name: "Spice 10", amountInGrams: 1.7, containerNumber: 10)
-//]
-
 // SpiceDataViewModel
 public class SpiceDataViewModel: ObservableObject {
     @Published public var spices: [Spice]
@@ -98,15 +84,21 @@ public class SpiceDataViewModel: ObservableObject {
             spices[index].spiceAmount = Spice.convertGramsToUnit(grams: newAmountInGrams, unit: spices[index].unit)
             print("Updated \(spices[index].name) with spiceAmount: \(spices[index].spiceAmount) \(spices[index].unit) from Bluetooth.")
             
-            // Update the spiceData array as well
             spiceData[index] = spices[index]
-            
-            // Save updated spices to UserDefaults
-            saveSpices()
         } else {
-            print("Spice with containerNumber \(containerNumber) not found.")
+            let newSpice = Spice(name: "Spice \(containerNumber)", amountInGrams: newAmountInGrams, containerNumber: containerNumber)
+            spices.append(newSpice)
+            spiceData.append(newSpice)
+            print("Added new spice with containerNumber \(containerNumber) and amountInGrams \(newAmountInGrams).")
         }
+        
+        // Sort the spices by container number
+        spices.sort { $0.containerNumber < $1.containerNumber }
+        spiceData.sort { $0.containerNumber < $1.containerNumber }
+        
+        saveSpices()
     }
+
     
     // Function to handle bulk updates of spice data, e.g., when multiple spices are updated via Bluetooth
     public func updateAllSpices(newSpiceData: [Spice]) {

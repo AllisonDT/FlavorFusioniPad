@@ -19,6 +19,8 @@ struct BlendingView: View {
     let servings: Int
     let ingredients: [Ingredient]
     let onComplete: () -> Void
+    
+    @EnvironmentObject var bleManager: BLEManager  // Access the BLEManager instance
 
     var body: some View {
         VStack {
@@ -65,9 +67,9 @@ struct BlendingView: View {
             print("Serialized Ingredients String: \(serializedIngredients)")
             print("Size of Serialized String in bytes: \(serializedIngredients.lengthOfBytes(using: .utf8))")
             
-            // Send the serialized string over Bluetooth in chunks if necessary
+            // Send the serialized string over Bluetooth using BLEManager
             if let serializedData = serializedIngredients.data(using: .utf8) {
-                sendInChunks(data: serializedData)
+                bleManager.sendSpiceDataToPeripheral(data: serializedData)
             } else {
                 print("Failed to encode ingredients string.")
             }
@@ -92,31 +94,11 @@ struct BlendingView: View {
             }
         }
     }
-
-    // Function to send data over Bluetooth in chunks
-    func sendInChunks(data: Data, chunkSize: Int = 20) {
-        var offset = 0
-        
-        while offset < data.count {
-            let chunkLength = min(chunkSize, data.count - offset)
-            let chunk = data.subdata(in: offset..<offset + chunkLength)
-            
-            // Send this chunk over Bluetooth
-            sendChunkOverBluetooth(chunk)
-            
-            offset += chunkLength
-        }
-    }
-    
-    // Function to simulate sending a chunk over Bluetooth (replace with actual Bluetooth sending code)
-    func sendChunkOverBluetooth(_ chunk: Data) {
-        // Your Bluetooth sending code here
-        print("Sending chunk: \(String(data: chunk, encoding: .utf8) ?? "Error")")
-    }
 }
 
 #Preview {
     BlendingView(spiceName: "Example Spice", servings: 1, ingredients: [
         Ingredient(name: "Salt", amount: 1.0, unit: "T")
     ], onComplete: {})
+        .environmentObject(BLEManager(spiceDataViewModel: SpiceDataViewModel()))  // Provide a BLEManager instance for the preview
 }
