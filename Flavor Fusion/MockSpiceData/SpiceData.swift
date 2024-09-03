@@ -55,7 +55,7 @@ public class SpiceDataViewModel: ObservableObject {
     }
     
     // Save spices array to UserDefaults
-    private func saveSpices() {
+    public func saveSpices() {
         if let encoded = try? JSONEncoder().encode(spices) {
             UserDefaults.standard.set(encoded, forKey: "savedSpices")
             print("Spices saved successfully.")
@@ -65,7 +65,7 @@ public class SpiceDataViewModel: ObservableObject {
     }
     
     // Load spices array from UserDefaults
-    private func loadSpices() {
+    public func loadSpices() {
         if let savedSpices = UserDefaults.standard.data(forKey: "savedSpices"),
            let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpices) {
             self.spices = decodedSpices
@@ -73,7 +73,17 @@ public class SpiceDataViewModel: ObservableObject {
             print("Spices loaded from UserDefaults: \(spices)")
         } else {
             print("No saved spices found in UserDefaults.")
-            // You might want to initialize spices with an empty array or handle the case where there's no data
+            // initialize spices with an empty array or handle the case where there's no data
+        }
+    }
+    
+    // Function to update the spice name
+    public func updateSpiceName(containerNumber: Int, newName: String) {
+        if let index = spices.firstIndex(where: { $0.containerNumber == containerNumber }) {
+            spices[index].name = newName
+            spiceData[index].name = newName
+            saveSpices()
+            print("Updated spice name to \(newName) for containerNumber \(containerNumber).")
         }
     }
     

@@ -17,17 +17,17 @@ struct List: View {
     @State private var displayName: String = UserDefaults.standard.string(forKey: "displayName") ?? "Flavor Fusion"
     @State private var isLoading: Bool = false
     @State private var lastUpdated: Date?
+    @ObservedObject var spiceDataViewModel = SpiceDataViewModel()
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    if let lastUpdated = lastUpdated, isLoading {
-                        Text("Last updated: \(formattedDate(lastUpdated))")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .padding(.bottom, 10)
-                    }
+                    // Always show the last updated date
+                    Text("Last updated: \(formattedDate(lastUpdated ?? Date()))")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 10)
 
                     Button(action: {
                         isBlendPopupVisible.toggle()
@@ -45,10 +45,10 @@ struct List: View {
                     
                     HStack {
                         VStack {
-                            ForEach(firstColumnSpices) { spice in
+                            ForEach(spiceDataViewModel.spices.filter { $0.containerNumber % 2 != 0 }) { spice in
                                 SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
-                                    if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
-                                        spiceData[index].isSelected = selected
+                                    if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
+                                        spiceDataViewModel.spices[index].isSelected = selected
                                     }
                                 }
                                 .onTapGesture {
@@ -59,10 +59,10 @@ struct List: View {
                         }
                         
                         VStack {
-                            ForEach(secondColumnSpices) { spice in
+                            ForEach(spiceDataViewModel.spices.filter { $0.containerNumber % 2 == 0 }) { spice in
                                 SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
-                                    if let index = spiceData.firstIndex(where: { $0.id == spice.id }) {
-                                        spiceData[index].isSelected = selected
+                                    if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
+                                        spiceDataViewModel.spices[index].isSelected = selected
                                     }
                                 }
                                 .onTapGesture {
@@ -83,13 +83,16 @@ struct List: View {
             }
             .sheet(isPresented: $isSpicePopupVisible) {
                 if let selectedSpice = selectedSpice {
-                    SpicePopupView(spice: selectedSpice, recipes: recipeStore.recipes, isPresented: $isSpicePopupVisible)
+                    SpicePopupView(spice: selectedSpice, recipes: recipeStore.recipes, isPresented: $isSpicePopupVisible, spiceDataViewModel: spiceDataViewModel)
                 }
             }
             .navigationBarTitle("\(displayName)'s Cabinet", displayMode: .inline)
             .onAppear {
                 requestNotificationPermission()
                 checkSpiceLevels()
+                if lastUpdated == nil {
+                    lastUpdated = Date()
+                }
             }
         }
     }
@@ -97,30 +100,33 @@ struct List: View {
     private func refreshSpices() {
         isLoading = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if let savedSpiceData = UserDefaults.standard.data(forKey: "spiceData"),
-               let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpiceData) {
-                spiceData = decodedSpices
-            }
-            
+        // Simulate a network or data fetch
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            spiceDataViewModel.loadSpices() // Reload spices from UserDefaults or other source
             lastUpdated = Date()
             isLoading = false
-            checkSpiceLevels() // Re-check spice levels after refreshing
         }
     }
 
     private func checkSpiceLevels() {
-        for spice in spiceData {
+        var lowSpices: [Spice] = []
+        
+        for spice in spiceDataViewModel.spices {
             if spice.spiceAmount < 0.25 {
-                triggerLowSpiceNotification(for: spice)
+                lowSpices.append(spice)
             }
+        }
+        
+        if !lowSpices.isEmpty {
+            triggerLowSpiceNotification(for: lowSpices)
         }
     }
 
-    private func triggerLowSpiceNotification(for spice: Spice) {
+    private func triggerLowSpiceNotification(for lowSpices: [Spice]) {
+        let spiceNames = lowSpices.map { $0.name }.joined(separator: ", ")
         let content = UNMutableNotificationContent()
-        content.title = "Low Spice Alert"
-        content.body = "The spice '\(spice.name)' is running low at \(Int(spice.spiceAmount * 100))%."
+        content.title = "Spices Running Low"
+        content.body = spiceNames
         content.sound = .default
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
@@ -130,7 +136,7 @@ struct List: View {
             if let error = error {
                 print("Error triggering notification: \(error.localizedDescription)")
             } else {
-                print("Low spice notification triggered for \(spice.name).")
+                print("Low spice notification triggered for: \(spiceNames).")
             }
         }
     }

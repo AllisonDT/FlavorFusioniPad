@@ -69,7 +69,8 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 
 
 **September 2024**
-- Handled case where user has never opened the app before so there is no data stored in UserDefaults
+- 9/1 Handled case where user has never opened the app before so there is no data stored in UserDefaults
+- 9/2 Added notification for when spice is running low, worked on bluetooth to send data back to Arduino
 
 TO DO
 - Notification when order is complete.
