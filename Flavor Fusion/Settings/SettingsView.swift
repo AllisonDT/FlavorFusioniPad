@@ -13,15 +13,13 @@ import SwiftUI
 /// input fields for the current passcode, new passcode, and confirmation of the new passcode,
 /// as well as an input field for changing the display name. It also includes an option to toggle
 /// whether the passcode screen is required when the app opens.
-import SwiftUI
-
 struct SettingsView: View {
     @State private var currentPasscode: String = ""
     @State private var newPasscode: String = ""
     @State private var confirmPasscode: String = ""
     
     @State private var displayName: String = UserDefaults.standard.string(forKey: "displayName") ?? ""
-    @State private var requiresPasscode: Bool = UserDefaults.standard.bool(forKey: "requiresPasscode")
+    @State private var requiresPasscode: Bool = UserDefaults.standard.object(forKey: "requiresPasscode") as? Bool ?? true
     
     @State private var alertType: AlertType? = nil
     
@@ -127,8 +125,8 @@ struct SettingsView: View {
                             Text("Require Passcode")
                         }
                         .padding(.horizontal)
-                        .onChange(of: requiresPasscode) { newValue in
-                            UserDefaults.standard.set(newValue, forKey: "requiresPasscode")
+                        .onChange(of: requiresPasscode) {
+                            UserDefaults.standard.set(requiresPasscode, forKey: "requiresPasscode")
                         }
                     }
                     .padding(.horizontal)
@@ -176,6 +174,7 @@ struct SettingsView: View {
         alertType = .displayNameChanged
     }
 }
+
 
 #Preview {
     SettingsView()

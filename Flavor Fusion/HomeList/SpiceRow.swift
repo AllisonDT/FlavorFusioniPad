@@ -23,6 +23,8 @@ struct SpiceRow: View {
                 VStack(alignment: .leading) {
                     Text(spice.name)
                         .foregroundColor(spice.isSelected ? .blue : .primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     
                     Spacer()
                     

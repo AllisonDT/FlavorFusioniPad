@@ -92,14 +92,22 @@ public class SpiceDataViewModel: ObservableObject {
         if let index = spices.firstIndex(where: { $0.containerNumber == containerNumber }) {
             spices[index].amountInGrams = newAmountInGrams
             spices[index].spiceAmount = Spice.convertGramsToUnit(grams: newAmountInGrams, unit: spices[index].unit)
-            print("Updated \(spices[index].name) with spiceAmount: \(spices[index].spiceAmount) \(spices[index].unit) from Bluetooth.")
+            
+            print("Updated spice data from Bluetooth:")
+            print("Container Number: \(containerNumber)")
+            print("Amount in Grams: \(newAmountInGrams)")
+            print("Converted Amount: \(spices[index].spiceAmount) \(spices[index].unit)")
             
             spiceData[index] = spices[index]
         } else {
             let newSpice = Spice(name: "Spice \(containerNumber)", amountInGrams: newAmountInGrams, containerNumber: containerNumber)
             spices.append(newSpice)
             spiceData.append(newSpice)
-            print("Added new spice with containerNumber \(containerNumber) and amountInGrams \(newAmountInGrams).")
+            
+            print("Added new spice from Bluetooth:")
+            print("Container Number: \(containerNumber)")
+            print("Amount in Grams: \(newAmountInGrams)")
+            print("Converted Amount: \(newSpice.spiceAmount) \(newSpice.unit)")
         }
         
         // Sort the spices by container number
@@ -109,7 +117,6 @@ public class SpiceDataViewModel: ObservableObject {
         saveSpices()
     }
 
-    
     // Function to handle bulk updates of spice data, e.g., when multiple spices are updated via Bluetooth
     public func updateAllSpices(newSpiceData: [Spice]) {
         for newSpice in newSpiceData {

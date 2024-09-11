@@ -104,13 +104,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if let data = characteristic.value {
             print("Data received: \(data as NSData)")
             isDataRetrievedViaBluetooth = true
-            processData(characteristic: characteristic, data: data)
+            
+            // Process data on a background thread to avoid UI lag
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.processData(characteristic: characteristic, data: data)
+            }
         } else {
             print("No data received. Using example data.")
             useExampleDataIfNeeded()
         }
     }
-    
+
     private func processData(characteristic: CBCharacteristic, data: Data) {
         if characteristic.uuid == containerNumberCharacteristicUUID {
             let containerNumber = Int(data[0])
@@ -119,13 +123,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         } else if characteristic.uuid == spiceAmountCharacteristicUUID, let containerNumber = currentContainerNumber {
             let spiceAmount = data.withUnsafeBytes { $0.load(as: Float.self) }
             print("Processed spice amount: \(spiceAmount)")
-            updateSpiceData(containerNumber: containerNumber, spiceAmount: Double(spiceAmount))
-            receivedContainersCount += 1
-            currentContainerNumber = nil
             
-            if receivedContainersCount == expectedNumberOfContainers {
-                print("All data received for \(expectedNumberOfContainers) containers.")
-                completeDataTransfer()
+            // Update UI on the main thread
+            DispatchQueue.main.async { [weak self] in
+                self?.updateSpiceData(containerNumber: containerNumber, spiceAmount: Double(spiceAmount))
+                self?.receivedContainersCount += 1
+                self?.currentContainerNumber = nil
+                
+                if self?.receivedContainersCount == self?.expectedNumberOfContainers {
+                    print("All data received for \(self?.expectedNumberOfContainers ?? 0) containers.")
+                    self?.completeDataTransfer()
+                }
             }
         }
     }

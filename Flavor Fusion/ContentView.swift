@@ -27,7 +27,7 @@ struct ContentView: View {
                         isFirstTimeOpen = false
                     }
             } else {
-                LoginPasscode()
+                LoginPasscode() // or your main content view
             }
         }
         .onAppear {
