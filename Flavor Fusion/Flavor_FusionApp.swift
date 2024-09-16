@@ -12,7 +12,6 @@ import UserNotifications
 struct FlavorFusionApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    // Initialize your BLEManager
     @StateObject private var bleManager = BLEManager(spiceDataViewModel: SpiceDataViewModel())
 
     var body: some Scene {

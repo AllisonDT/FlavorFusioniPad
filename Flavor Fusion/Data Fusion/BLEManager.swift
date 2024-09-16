@@ -10,6 +10,7 @@ import CoreBluetooth
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @Published var isDataRetrievedViaBluetooth: Bool = false
+    @Published var isOrderMixed: Bool = false  // New: Track whether the spice blend is done being mixed
     var centralManager: CBCentralManager!
     var connectedPeripheral: CBPeripheral?
     
@@ -20,6 +21,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     let containerNumberCharacteristicUUID = CBUUID(string: "2A56")
     let spiceAmountCharacteristicUUID = CBUUID(string: "2A57")
     let serializedIngredientsCharacteristicUUID = CBUUID(string: "2A58")
+    let spiceMixedCharacteristicUUID = CBUUID(string: "2A59")  // New: UUID for boolean characteristic
     
     private var currentContainerNumber: Int?
     private var expectedNumberOfContainers: Int = 10
@@ -70,7 +72,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 print("Service UUID: \(service.uuid)")
                 if service.uuid == spiceServiceUUID {
                     print("Found spice service. Discovering characteristics...")
-                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID, serializedIngredientsCharacteristicUUID], for: service)
+                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID, serializedIngredientsCharacteristicUUID, spiceMixedCharacteristicUUID], for: service)  // Add spiceMixedCharacteristicUUID
                 }
             }
         }
@@ -86,7 +88,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 print("Characteristic UUID: \(characteristic.uuid)")
-                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID {
+                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID || characteristic.uuid == spiceMixedCharacteristicUUID {  // Enable notifications for spiceMixedCharacteristicUUID
                     print("Enabling notifications for characteristic: \(characteristic.uuid)")
                     peripheral.setNotifyValue(true, for: characteristic)
                 }
@@ -135,6 +137,16 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                     self?.completeDataTransfer()
                 }
             }
+        } else if characteristic.uuid == spiceMixedCharacteristicUUID {
+            // Process the boolean data
+            let isMixed = data[0] != 0
+            print("Processed boolean: is order mixed? \(isMixed)")
+            
+            // Update UI on the main thread
+            DispatchQueue.main.async { [weak self] in
+                self?.isOrderMixed = isMixed
+                print("Order mixed status updated: \(isMixed)")
+            }
         }
     }
 
@@ -155,14 +167,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 }
             }
             // Disconnect from the peripheral
-//            centralManager.cancelPeripheralConnection(peripheral)
-//            print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
+            // centralManager.cancelPeripheralConnection(peripheral)
+            // print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
         }
         
         print("All data processed. UI should be updated accordingly.")
     }
 
-    // New method to send data
     func sendSpiceDataToPeripheral(data: Data) {
         guard let peripheral = connectedPeripheral else {
             print("No connected peripheral to send data to.")
@@ -198,7 +209,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     private func useExampleDataIfNeeded() {
         if !isDataRetrievedViaBluetooth {
             print("Using example data as no Bluetooth data was retrieved.")
-            // You could do any additional processing or UI updates here if needed
         }
     }
 }

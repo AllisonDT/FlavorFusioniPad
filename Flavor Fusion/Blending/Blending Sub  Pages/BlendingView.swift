@@ -9,11 +9,8 @@ import SwiftUI
 
 /// A view that displays a blending progress message and a button to complete the blending process.
 ///
-/// `BlendingView` shows a "Blending..." message, a progress indicator, and a "Complete Blending" button.
-/// When the button is pressed, the blending process is simulated with a delay before calling the `onComplete` closure.
-///
-/// - Parameters:
-///   - onComplete: A closure that is called when the blending process is completed.
+/// `BlendingView` shows a "Blending..." message, a progress indicator, and listens for a boolean from the Arduino
+/// to trigger the blend completion process.
 struct BlendingView: View {
     let spiceName: String
     let servings: Int
@@ -32,25 +29,6 @@ struct BlendingView: View {
                 .padding()
 
             Spacer()
-
-            Button(action: {
-                // Schedule the notification
-                scheduleBlendCompletionNotification()
-                
-                // Simulate blending process with delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                    onComplete()
-                }
-            }) {
-                Text("Complete Blending")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-            }
-            .padding()
         }
         .padding()
         .onAppear {
@@ -74,6 +52,13 @@ struct BlendingView: View {
                 print("Failed to encode ingredients string.")
             }
         }
+        .onChange(of: bleManager.isOrderMixed) { isMixed in
+            if isMixed {
+                // If the boolean becomes true, schedule the blend completion notification and call onComplete()
+                scheduleBlendCompletionNotification()
+                onComplete()
+            }
+        }
     }
     
     // Function to schedule the blend completion notification
@@ -83,7 +68,7 @@ struct BlendingView: View {
         content.body = "Your blend is ready. Have a spicy day!"
         content.sound = .default
 
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 6, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false) // Immediate notification
         let request = UNNotificationRequest(identifier: "BlendCompleteNotification", content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
@@ -100,5 +85,5 @@ struct BlendingView: View {
     BlendingView(spiceName: "Example Spice", servings: 1, ingredients: [
         Ingredient(name: "Salt", amount: 1.0, unit: "T")
     ], onComplete: {})
-        .environmentObject(BLEManager(spiceDataViewModel: SpiceDataViewModel()))  // Provide a BLEManager instance for the preview
+        .environmentObject(BLEManager(spiceDataViewModel: SpiceDataViewModel()))
 }
