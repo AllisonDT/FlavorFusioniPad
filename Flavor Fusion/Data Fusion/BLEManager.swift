@@ -88,7 +88,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 print("Characteristic UUID: \(characteristic.uuid)")
-                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID || characteristic.uuid == spiceMixedCharacteristicUUID {  // Enable notifications for spiceMixedCharacteristicUUID
+                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID || characteristic.uuid == spiceMixedCharacteristicUUID {
                     print("Enabling notifications for characteristic: \(characteristic.uuid)")
                     peripheral.setNotifyValue(true, for: characteristic)
                 }
