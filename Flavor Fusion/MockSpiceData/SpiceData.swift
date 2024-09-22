@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CloudKit
 
 // Spice Data Model
 public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
@@ -48,32 +49,63 @@ public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
 // SpiceDataViewModel
 public class SpiceDataViewModel: ObservableObject {
     @Published public var spices: [Spice]
-    
+    private let iCloudStore = NSUbiquitousKeyValueStore.default
+    private let userDefaultsKey = "savedSpices"
+
     public init() {
         self.spices = []
         self.loadSpices()
+        NotificationCenter.default.addObserver(self, selector: #selector(icloudStoreDidChange), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: iCloudStore)
     }
     
-    // Save spices array to UserDefaults
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func icloudStoreDidChange(notification: NSNotification) {
+        self.loadSpicesFromiCloud()
+    }
+    
+    // Save spices to both UserDefaults and iCloud
     public func saveSpices() {
         if let encoded = try? JSONEncoder().encode(spices) {
-            UserDefaults.standard.set(encoded, forKey: "savedSpices")
-            print("Spices saved successfully.")
+            // Save to UserDefaults
+            UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
+            print("Spices saved successfully to UserDefaults.")
+            
+            // Save to iCloud
+            iCloudStore.set(encoded, forKey: userDefaultsKey)
+            iCloudStore.synchronize()
+            print("Spices saved successfully to iCloud.")
         } else {
             print("Failed to encode and save spices.")
         }
     }
     
-    // Load spices array from UserDefaults
+    // Load spices from UserDefaults first, then iCloud if not available
     public func loadSpices() {
-        if let savedSpices = UserDefaults.standard.data(forKey: "savedSpices"),
+        if let savedSpices = UserDefaults.standard.data(forKey: userDefaultsKey),
            let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpices) {
             self.spices = decodedSpices
-            spiceData = decodedSpices // Populate spiceData with the loaded data
+            spiceData = decodedSpices
             print("Spices loaded from UserDefaults: \(spices)")
         } else {
-            print("No saved spices found in UserDefaults.")
-            // initialize spices with an empty array or handle the case where there's no data
+            print("No saved spices found in UserDefaults. Attempting to load from iCloud.")
+            loadSpicesFromiCloud()
+        }
+    }
+    
+    // Load spices from iCloud
+    public func loadSpicesFromiCloud() {
+        if let savedSpicesData = iCloudStore.data(forKey: userDefaultsKey),
+           let decodedSpices = try? JSONDecoder().decode([Spice].self, from: savedSpicesData) {
+            self.spices = decodedSpices
+            spiceData = decodedSpices
+            print("Spices loaded from iCloud: \(spices)")
+            // Save to UserDefaults for local persistence
+            UserDefaults.standard.set(savedSpicesData, forKey: userDefaultsKey)
+        } else {
+            print("No saved spices found in iCloud.")
         }
     }
     
