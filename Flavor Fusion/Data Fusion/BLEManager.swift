@@ -152,7 +152,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     private func updateSpiceData(containerNumber: Int, spiceAmount: Double) {
         print("Updating spice data for container number: \(containerNumber) with amount: \(spiceAmount) grams.")
-        spiceDataViewModel.updateSpice(containerNumber: containerNumber, newAmountInGrams: spiceAmount)
+        spiceDataViewModel.updateSpice(containerNumber: containerNumber, newAmount: spiceAmount, newUnit: "oz")
     }
 
     private func completeDataTransfer() {

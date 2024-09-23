@@ -1,8 +1,8 @@
 //
-//  SpiceData.swift
-//  Flavor Fusion
+// SpiceData.swift
+// Flavor Fusion
 //
-//  Created by Allison Turner on 2/5/24.
+// Created by Allison Turner on 2/5/24.
 //
 
 import Foundation
@@ -13,42 +13,31 @@ import CloudKit
 public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
     public var id = UUID()
     public var name: String
-    public var spiceAmount: Double // This will store the amount in the chosen unit (tsp/tbsp)
+    public var spiceAmount: Double // This will store the amount in the chosen unit
     public var isSelected: Bool = false
     public var containerNumber: Int
     public var selectedAmount: Double = 0.0
-    public var unit: String = "t" // Default unit is teaspoons
-    public var amountInGrams: Double // This will store the amount in grams
+    public var unit: String = "oz" // Default unit is ounces
+    public var amountInGrams: Double // This field will no longer be used for conversions
 
-    public init(name: String, amountInGrams: Double, containerNumber: Int) {
+    public init(name: String = "Spice", spiceAmount: Double = 0.0, unit: String = "oz", containerNumber: Int) {
         self.name = name
-        self.amountInGrams = amountInGrams
+        self.spiceAmount = spiceAmount
+        self.unit = unit
         self.containerNumber = containerNumber
-        self.spiceAmount = Spice.convertGramsToUnit(grams: amountInGrams, unit: unit)
+        self.amountInGrams = 0.0 // Keeping this field for compatibility but no longer using it for conversions
     }
     
-    // Function to convert grams to the specified unit
-    public static func convertGramsToUnit(grams: Double, unit: String) -> Double {
-        switch unit {
-        case "t": // teaspoons
-            return grams / 4.2 // Example conversion factor, adjust as needed
-        case "T": // tablespoons
-            return grams / 14.3 // Example conversion factor, adjust as needed
-        default:
-            return grams
-        }
-    }
-
-    // Function to update the spice amount when the unit changes
-    public mutating func updateUnit(to newUnit: String) {
-        self.unit = newUnit
-        self.spiceAmount = Spice.convertGramsToUnit(grams: self.amountInGrams, unit: newUnit)
+    // Function to update the spice amount and unit directly
+    public mutating func updateSpiceAmount(amount: Double, unit: String) {
+        self.spiceAmount = amount
+        self.unit = unit
     }
 }
 
 // SpiceDataViewModel
 public class SpiceDataViewModel: ObservableObject {
-    @Published public var spices: [Spice]
+    @Published public var spices: [Spice] = []
     private let iCloudStore = NSUbiquitousKeyValueStore.default
     private let userDefaultsKey = "savedSpices"
 
@@ -93,6 +82,9 @@ public class SpiceDataViewModel: ObservableObject {
             print("No saved spices found in UserDefaults. Attempting to load from iCloud.")
             loadSpicesFromiCloud()
         }
+        
+        // Ensure spices array has container numbers 1-10
+        ensureDefaultSpices()
     }
     
     // Load spices from iCloud
@@ -107,6 +99,24 @@ public class SpiceDataViewModel: ObservableObject {
         } else {
             print("No saved spices found in iCloud.")
         }
+        
+        // Ensure spices array has container numbers 1-10
+        ensureDefaultSpices()
+    }
+    
+    // Function to ensure default spices with container numbers 1-10 exist
+    private func ensureDefaultSpices() {
+        for containerNumber in 1...10 {
+            if !spices.contains(where: { $0.containerNumber == containerNumber }) {
+                let newSpice = Spice(containerNumber: containerNumber)
+                spices.append(newSpice)
+                spiceData.append(newSpice)
+            }
+        }
+        
+        // Sort the spices by container number
+        spices.sort { $0.containerNumber < $1.containerNumber }
+        spiceData.sort { $0.containerNumber < $1.containerNumber }
     }
     
     // Function to update the spice name
@@ -120,26 +130,23 @@ public class SpiceDataViewModel: ObservableObject {
     }
     
     // Function to update a spice amount by container number
-    public func updateSpice(containerNumber: Int, newAmountInGrams: Double) {
+    public func updateSpice(containerNumber: Int, newAmount: Double, newUnit: String) {
         if let index = spices.firstIndex(where: { $0.containerNumber == containerNumber }) {
-            spices[index].amountInGrams = newAmountInGrams
-            spices[index].spiceAmount = Spice.convertGramsToUnit(grams: newAmountInGrams, unit: spices[index].unit)
+            spices[index].updateSpiceAmount(amount: newAmount, unit: newUnit)
             
-            print("Updated spice data from Bluetooth:")
+            print("Updated spice data:")
             print("Container Number: \(containerNumber)")
-            print("Amount in Grams: \(newAmountInGrams)")
-            print("Converted Amount: \(spices[index].spiceAmount) \(spices[index].unit)")
+            print("Amount: \(newAmount) \(newUnit)")
             
             spiceData[index] = spices[index]
         } else {
-            let newSpice = Spice(name: "Spice \(containerNumber)", amountInGrams: newAmountInGrams, containerNumber: containerNumber)
+            let newSpice = Spice(containerNumber: containerNumber)
             spices.append(newSpice)
             spiceData.append(newSpice)
             
-            print("Added new spice from Bluetooth:")
+            print("Added new spice:")
             print("Container Number: \(containerNumber)")
-            print("Amount in Grams: \(newAmountInGrams)")
-            print("Converted Amount: \(newSpice.spiceAmount) \(newSpice.unit)")
+            print("Amount: \(newSpice.spiceAmount) \(newSpice.unit)")
         }
         
         // Sort the spices by container number
@@ -149,10 +156,15 @@ public class SpiceDataViewModel: ObservableObject {
         saveSpices()
     }
 
-    // Function to handle bulk updates of spice data, e.g., when multiple spices are updated via Bluetooth
+    // New function to update a spice amount by container number in ounces
+    public func updateSpiceAmountInOunces(containerNumber: Int, newAmountInOunces: Double) {
+        updateSpice(containerNumber: containerNumber, newAmount: newAmountInOunces, newUnit: "oz")
+    }
+
+    // Function to handle bulk updates of spice data, e.g., when multiple spices are updated
     public func updateAllSpices(newSpiceData: [Spice]) {
         for newSpice in newSpiceData {
-            updateSpice(containerNumber: newSpice.containerNumber, newAmountInGrams: newSpice.amountInGrams)
+            updateSpice(containerNumber: newSpice.containerNumber, newAmount: newSpice.spiceAmount, newUnit: newSpice.unit)
         }
     }
 }

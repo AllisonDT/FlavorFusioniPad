@@ -14,26 +14,27 @@ import SwiftUI
 /// and the raw value when tapped.
 ///
 /// - Parameters:
-///   - amount: The amount of spice as a double between 0 and 1.
+///   - amount: The amount of spice in ounces.
 ///   - isSelected: A boolean indicating if the spice is selected.
 struct SpiceIndicator: View {
-    var amount: Double
+    @Binding var amount: Double
     var isSelected: Bool
     
     @State private var showPercentage: Bool = true
+    private let maxAmount: Double = 16.0
 
     var body: some View {
         ZStack {
             Circle()
                 .stroke(Color.gray, lineWidth: 2)
                 .foregroundColor(isSelected ? .green : .clear)
-            Circle().trim(from: 0.0, to: CGFloat(amount))
-                .stroke(colorForAmount(amount), lineWidth: 4)
+            Circle().trim(from: 0.0, to: CGFloat(amount / maxAmount))
+                .stroke(colorForAmount(amount / maxAmount), lineWidth: 4)
                 .rotationEffect(Angle(degrees: -90))
-            Text(showPercentage ? "\(Int(amount * 100))%" : String(format: "%.2f", amount))
+            Text(showPercentage ? "\(Int((amount / maxAmount) * 100))%" : String(format: "%.2f", amount) + " oz")
                 .font(.system(size: 20))
                 .bold()
-                .foregroundColor(colorForAmount(amount))
+                .foregroundColor(colorForAmount(amount / maxAmount))
         }
         .frame(width: 90, height: 90)
         .onTapGesture {
@@ -41,10 +42,6 @@ struct SpiceIndicator: View {
         }
     }
 
-    /// Determines the color of the indicator based on the amount.
-    ///
-    /// - Parameter amount: The amount of spice as a double.
-    /// - Returns: A color corresponding to the amount.
     func colorForAmount(_ amount: Double) -> Color {
         switch amount {
         case 0...0.25:
@@ -59,9 +56,4 @@ struct SpiceIndicator: View {
             return .gray
         }
     }
-}
-
-// Preview Provider for the SpiceIndicator
-#Preview {
-    SpiceIndicator(amount: 0.2, isSelected: true)
 }

@@ -73,10 +73,6 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 9/2 Added notification for when spice is running low, worked on bluetooth to send data back to Arduino
 - 9/3 Added ability to update spice name
 - 9/11 Did all upgrades so that code should support ios 18
-- 9/16 Implemented automatically change from blending to blend complete view from arduino Boolean.
-
-
-TO DO
-- Notification when order is complete.
-- Make spice container names editable??
-
+- 9/16 Implemented automatically change from blending to blend complete view from arduino Boolean
+- 9/12 Added ability to type in spice amount
+- 9/13 Added update to spice indicator on popup view

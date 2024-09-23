@@ -21,19 +21,20 @@ struct ListSpiceIndicator: View {
     var isSelected: Bool
     
     @State private var showPercentage: Bool = true
+    private let maxAmount: Double = 16.0
 
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.gray, lineWidth: 2)
+                .stroke(Color.gray, lineWidth: 1.5)
                 .foregroundColor(isSelected ? .green : .clear)
-            Circle().trim(from: 0.0, to: CGFloat(amount))
-                .stroke(colorForAmount(amount), lineWidth: 1)
+            Circle().trim(from: 0.0, to: CGFloat(amount / maxAmount))
+                .stroke(colorForAmount(amount / maxAmount), lineWidth: 2)
                 .rotationEffect(Angle(degrees: -90))
-            Text(showPercentage ? "\(Int(amount * 100))%" : String(format: "%.2f", amount))
+            Text(showPercentage ? "\(Int((amount / maxAmount) * 100))%" : String(format: "%.2f", amount) + " oz")
                 .font(.system(size: 10))
                 .bold()
-                .foregroundColor(Color.primary)
+                .foregroundColor(.primary)
         }
         .frame(width: 40, height: 40)
         .onTapGesture {
