@@ -41,11 +41,14 @@ struct NewBlendView: View {
     @State private var alertType: BlendAlertType? = nil
 
     @ObservedObject var recipeStore: RecipeStore
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
 
     let servingOptions = Array(1...10)
 
     var selectedIngredients: [Ingredient] {
-        spicesData.filter { $0.isSelected }.map { Ingredient(name: $0.name, amount: $0.selectedAmount, unit: $0.unit) }
+        spicesData.filter { $0.isSelected }.map { spice in
+            Ingredient(name: spice.name, amount: spice.selectedAmount, unit: spice.unit, containerNumber: spice.containerNumber)
+        }
     }
 
     var body: some View {
@@ -152,16 +155,28 @@ struct NewBlendView: View {
                     }
                 }
                 .sheet(isPresented: $showPopup) {
-                    BlendConfirmationView(spiceName: spiceName, servings: servings, ingredients: selectedIngredients, onConfirm: {
-                        showPopup = false
-                        showBlending = true
-                    })
+                    BlendConfirmationView(
+                        spiceName: spiceName,
+                        servings: servings,
+                        ingredients: selectedIngredients,
+                        onConfirm: {
+                            showPopup = false
+                            showBlending = true
+                        }, spiceDataViewModel: spiceDataViewModel
+                    )
+                    .environmentObject(spiceDataViewModel) // Pass the view model to child views
                 }
                 .sheet(isPresented: $showBlending) {
-                    BlendingView(spiceName: spiceName, servings: servings, ingredients: selectedIngredients, onComplete: {
-                        showBlending = false
-                        showCompletion = true
-                    })
+                    BlendingView(
+                        spiceName: spiceName,
+                        servings: servings,
+                        ingredients: selectedIngredients,
+                        onComplete: {
+                            showBlending = false
+                            showCompletion = true
+                        }
+                    )
+                    .environmentObject(spiceDataViewModel) // Pass the view model to child views
                 }
                 .sheet(isPresented: $showCompletion) {
                     BlendCompletionView(onDone: {
@@ -174,5 +189,5 @@ struct NewBlendView: View {
 }
 
 #Preview {
-    NewBlendView(recipeStore: RecipeStore())
+    NewBlendView(recipeStore: RecipeStore(), spiceDataViewModel: SpiceDataViewModel()) // Provide SpiceDataViewModel instance
 }

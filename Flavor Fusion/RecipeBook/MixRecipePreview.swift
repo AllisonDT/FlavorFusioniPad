@@ -21,11 +21,13 @@ struct MixRecipePreview: View {
     @State private var showBlending: Bool = false
     @State private var showCompletion: Bool = false
     @State private var selectedServings: Int
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
 
-    init(recipe: Recipe, isPresented: Binding<Bool>) {
+    init(recipe: Recipe, isPresented: Binding<Bool>, spiceDataViewModel: SpiceDataViewModel) {
         self.recipe = recipe
         self._isPresented = isPresented
         self._selectedServings = State(initialValue: recipe.servings)
+        self.spiceDataViewModel = spiceDataViewModel
     }
 
     var body: some View {
@@ -107,12 +109,21 @@ struct MixRecipePreview: View {
                 BlendConfirmationView(
                     spiceName: recipe.name,
                     servings: selectedServings,
-                    ingredients: recipe.ingredients,
+                    ingredients: recipe.ingredients.map { ingredient in
+                        Ingredient(
+                            name: ingredient.name,
+                            amount: ingredient.amount * Double(selectedServings) / Double(recipe.servings),
+                            unit: ingredient.unit,
+                            containerNumber: ingredient.containerNumber
+                        )
+                    },
                     onConfirm: {
                         isBlendConfirmationViewPresented = false
                         showBlending = true
-                    }
+                    },
+                    spiceDataViewModel: spiceDataViewModel
                 )
+                .environmentObject(spiceDataViewModel)
             }
             .sheet(isPresented: $showBlending) {
                 BlendingView(
@@ -124,6 +135,7 @@ struct MixRecipePreview: View {
                         showCompletion = true
                     }
                 )
+                .environmentObject(spiceDataViewModel)
             }
             .sheet(isPresented: $showCompletion) {
                 BlendCompletionView(onDone: {
@@ -147,7 +159,7 @@ struct MixRecipePreview: View {
     }
     
     private func convertToFraction(amount: Double) -> String {
-        let tolerance = 1.0 / 64.0 // To account for rounding errors
+        let tolerance = 1.0 / 64.0
         let number = amount
         var lowerNumerator = 0
         var lowerDenominator = 1
@@ -182,7 +194,18 @@ struct MixRecipePreview: View {
     }
 }
 
+
 // Preview Provider for the MixRecipePreview
 #Preview {
-    MixRecipePreview(recipe: Recipe(name: "Sample Recipe", ingredients: [Ingredient(name: "Spice 1", amount: 1, unit: "T")], servings: 2), isPresented: .constant(true))
+    MixRecipePreview(
+        recipe: Recipe(
+            name: "Sample Recipe",
+            ingredients: [
+                Ingredient(name: "Spice 1", amount: 1, unit: "T", containerNumber: 2)
+            ],
+            servings: 2
+        ),
+        isPresented: .constant(true),
+        spiceDataViewModel: SpiceDataViewModel() // Pass an instance of SpiceDataViewModel
+    )
 }

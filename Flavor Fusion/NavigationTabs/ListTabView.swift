@@ -16,28 +16,29 @@ import SwiftUI
 ///   - tabSelection: A state variable that tracks the selected tab.
 struct ListTabView: View {
     @State private var tabSelection = 0
-    
+    @StateObject private var spiceDataViewModel = SpiceDataViewModel() // Create the view model here
+
     var body: some View {
         TabView(selection: $tabSelection) {
-            List()
+            List() // Assuming this is a placeholder for a real view
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
                 .tag(0)
                 
-            RecipeList()
+            RecipeList(spiceDataViewModel: spiceDataViewModel) // Pass the view model
                 .tabItem {
                     Label("Recipe Book", systemImage: "book")
                 }
                 .tag(1)
             
-            SettingsView()
+            SettingsView() // Assuming SettingsView doesn't need SpiceDataViewModel
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(2)
             
-            AboutView()
+            AboutView() // Assuming AboutView doesn't need SpiceDataViewModel
                 .tabItem {
                     Label("About", systemImage: "info.circle")
                 }

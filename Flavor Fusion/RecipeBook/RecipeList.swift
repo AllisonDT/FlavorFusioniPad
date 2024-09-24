@@ -54,10 +54,11 @@ struct SearchBar: UIViewRepresentable {
 /// It filters recipes based on the search text.
 struct RecipeList: View {
     @ObservedObject var recipeStore = RecipeStore()
-    
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
+
     @State private var searchText: String = ""
     @State private var isAddRecipeViewPresented = false
-    
+
     /// Filters the recipes based on the search text.
     var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
@@ -83,11 +84,11 @@ struct RecipeList: View {
                     }
                 }
                 .padding([.leading, .trailing, .top])
-                
+
                 ScrollView {
                     VStack(spacing: 10) {
                         ForEach(filteredRecipes) { recipe in
-                            RecipeRow(recipe: recipe, recipeStore: recipeStore)
+                            RecipeRow(recipe: recipe, recipeStore: recipeStore, spiceDataViewModel: spiceDataViewModel)
                                 .padding(.horizontal)
                         }
                     }
@@ -101,6 +102,7 @@ struct RecipeList: View {
         }
     }
 }
+
 
 /// A button view for filters functionality.
 ///
@@ -124,6 +126,8 @@ struct FiltersButton: View {
 struct RecipeRow: View {
     var recipe: Recipe
     var recipeStore: RecipeStore
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
+
     @State private var isMixPreviewPresented = false
     @State private var isDeleteAlertPresented = false
 
@@ -138,17 +142,17 @@ struct RecipeRow: View {
                         .foregroundColor(.blue)
                 }
                 .sheet(isPresented: $isMixPreviewPresented) {
-                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
+                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
                 }
-                
+
                 Text("Servings: \(recipe.servings)")
                     .font(.caption)
                     .foregroundColor(.gray)
             }
             .padding()
-            
+
             Spacer()
-            
+
             Button(action: {
                 isDeleteAlertPresented = true
             }) {
@@ -174,9 +178,4 @@ struct RecipeRow: View {
         )
         .padding(.vertical, 4)
     }
-}
-
-// Preview Provider for the RecipeList
-#Preview {
-    RecipeList()
 }

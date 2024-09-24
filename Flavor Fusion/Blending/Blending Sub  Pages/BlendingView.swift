@@ -40,7 +40,7 @@ struct BlendingView: View {
             }
             
             // Serialize the ingredients array to a custom delimited string
-            let serializedIngredients = ingredients.map { "\($0.name):\($0.amount)" }.joined(separator: ";")
+            let serializedIngredients = ingredients.map { "\($0.containerNumber):\($0.amount)" }.joined(separator: ";")
             
             print("Serialized Ingredients String: \(serializedIngredients)")
             print("Size of Serialized String in bytes: \(serializedIngredients.lengthOfBytes(using: .utf8))")
@@ -83,7 +83,7 @@ struct BlendingView: View {
 
 #Preview {
     BlendingView(spiceName: "Example Spice", servings: 1, ingredients: [
-        Ingredient(name: "Salt", amount: 1.0, unit: "T")
+        Ingredient(name: "Salt", amount: 1.0, unit: "T", containerNumber: 1)
     ], onComplete: {})
         .environmentObject(BLEManager(spiceDataViewModel: SpiceDataViewModel()))
 }

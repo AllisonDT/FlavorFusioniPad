@@ -88,7 +88,14 @@ struct AddRecipeView: View {
                             return
                         }
 
-                        let ingredients = selectedSpices.map { Ingredient(name: $0.key.name, amount: Double($0.value.0), unit: $0.value.1) }
+                        let ingredients = selectedSpices.map { (spice, amountAndUnit) in
+                            Ingredient(
+                                name: spice.name,
+                                amount: amountAndUnit.0,
+                                unit: amountAndUnit.1,
+                                containerNumber: spice.containerNumber // Pass the container number here
+                            )
+                        }
                         let newRecipe = Recipe(
                             name: recipeName,
                             ingredients: ingredients,
@@ -122,7 +129,6 @@ struct AddRecipeView: View {
         }
     }
 }
-
 
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice

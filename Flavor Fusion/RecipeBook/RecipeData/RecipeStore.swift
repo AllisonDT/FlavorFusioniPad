@@ -84,32 +84,32 @@ class RecipeStore: ObservableObject {
         } else {
             print("No saved recipes found in iCloud.")
             // Optionally, initialize with sample data
-            recipes += [
-                Recipe(name: "Chili Powder", ingredients: [
-                    Ingredient(name: "Spice 1", amount: 1, unit: "T"),
-                    Ingredient(name: "Spice 2", amount: 1, unit: "t"),
-                    Ingredient(name: "Cumin", amount: 1, unit: "t"),
-                    Ingredient(name: "Oregano", amount: 1, unit: "t"),
-                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Onion powder", amount: 1, unit: "t")
-                ], servings: 1),
-                Recipe(name: "Taco Seasoning", ingredients: [
-                    Ingredient(name: "Chili powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Cumin", amount: 1, unit: "t"),
-                    Ingredient(name: "Paprika", amount: 1, unit: "t"),
-                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Onion powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Red pepper flakes", amount: 1, unit: "t")
-                ], servings: 1),
-                Recipe(name: "Cajun Seasoning", ingredients: [
-                    Ingredient(name: "Paprika", amount: 1, unit: "t"),
-                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Onion powder", amount: 1, unit: "t"),
-                    Ingredient(name: "Cayenne pepper", amount: 1, unit: "t"),
-                    Ingredient(name: "Thyme", amount: 1, unit: "t"),
-                    Ingredient(name: "Oregano", amount: 1, unit: "t")
-                ], servings: 1),
-            ]
+//            recipes += [
+//                Recipe(name: "Chili Powder", ingredients: [
+//                    Ingredient(name: "Spice 1", amount: 1, unit: "T"),
+//                    Ingredient(name: "Spice 2", amount: 1, unit: "t"),
+//                    Ingredient(name: "Cumin", amount: 1, unit: "t"),
+//                    Ingredient(name: "Oregano", amount: 1, unit: "t"),
+//                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Onion powder", amount: 1, unit: "t")
+//                ], servings: 1),
+//                Recipe(name: "Taco Seasoning", ingredients: [
+//                    Ingredient(name: "Chili powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Cumin", amount: 1, unit: "t"),
+//                    Ingredient(name: "Paprika", amount: 1, unit: "t"),
+//                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Onion powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Red pepper flakes", amount: 1, unit: "t")
+//                ], servings: 1),
+//                Recipe(name: "Cajun Seasoning", ingredients: [
+//                    Ingredient(name: "Paprika", amount: 1, unit: "t"),
+//                    Ingredient(name: "Garlic powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Onion powder", amount: 1, unit: "t"),
+//                    Ingredient(name: "Cayenne pepper", amount: 1, unit: "t"),
+//                    Ingredient(name: "Thyme", amount: 1, unit: "t"),
+//                    Ingredient(name: "Oregano", amount: 1, unit: "t")
+//                ], servings: 1),
+//            ]
         }
     }
 }

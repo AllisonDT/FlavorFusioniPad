@@ -79,7 +79,7 @@ struct List: View {
                 refreshSpices()
             }
             .sheet(isPresented: $isBlendPopupVisible) {
-                BlendingNewExistingView(isPresented: $isBlendPopupVisible)
+                BlendingNewExistingView(isPresented: $isBlendPopupVisible, spiceDataViewModel: spiceDataViewModel)
             }
             .sheet(isPresented: $isSpicePopupVisible) {
                 if let selectedSpice = selectedSpice {

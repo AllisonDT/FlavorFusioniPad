@@ -23,6 +23,7 @@ struct ExistingBlendView: View {
     
     /// The store object that manages the list of recipes.
     @ObservedObject var recipeStore = RecipeStore()
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
     
     var body: some View {
         NavigationView {
@@ -30,7 +31,7 @@ struct ExistingBlendView: View {
                 ScrollView {
                     // Display each recipe in a VStack
                     ForEach(recipeStore.recipes) { recipe in
-                        ExistingRecipesRows(recipe: recipe)
+                        ExistingRecipesRows(recipe: recipe, spiceDataViewModel: spiceDataViewModel)
                             .onTapGesture {
                                 // Set the selected recipe when a recipe is tapped
                                 self.selectedRecipe = recipe
@@ -46,6 +47,6 @@ struct ExistingBlendView: View {
     }
 }
 
-#Preview {
-    ExistingBlendView(recipeStore: RecipeStore())
-}
+//#Preview {
+//    ExistingBlendView(recipeStore: RecipeStore())
+//}

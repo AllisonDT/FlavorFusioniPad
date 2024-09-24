@@ -12,9 +12,10 @@ import Foundation
 /// `Ingredient` conforms to `Codable` to support encoding and decoding.
 /// It contains the name and amount of the ingredient.
 struct Ingredient: Codable {
-    let name: String
-    let amount: Double
-    let unit: String
+    var name: String
+    var amount: Double
+    var unit: String
+    var containerNumber: Int
 }
 
 /// A struct representing a recipe.

@@ -27,6 +27,7 @@ struct BlendingNewExistingView: View {
     @Binding var isPresented: Bool
     
     @ObservedObject var recipeStore = RecipeStore()
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
 
     var body: some View {
         NavigationView {
@@ -41,9 +42,9 @@ struct BlendingNewExistingView: View {
 
                 // Display content based on selection
                 if selectedOption == 0 {
-                    NewBlendView(recipeStore: recipeStore)
+                    NewBlendView(recipeStore: recipeStore, spiceDataViewModel: spiceDataViewModel)
                 } else {
-                    ExistingBlendView()
+                    ExistingBlendView( spiceDataViewModel: spiceDataViewModel)
                 }
             }
             .navigationBarTitle("Blend", displayMode: .inline)
@@ -61,6 +62,6 @@ struct BlendingNewExistingView_Previews: PreviewProvider {
     @State static var isPresented = true
     
     static var previews: some View {
-        BlendingNewExistingView(isPresented: $isPresented)
+        BlendingNewExistingView(isPresented: $isPresented, spiceDataViewModel: SpiceDataViewModel())
     }
 }

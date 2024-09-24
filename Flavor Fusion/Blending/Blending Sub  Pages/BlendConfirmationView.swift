@@ -22,9 +22,10 @@ struct BlendConfirmationView: View {
     let servings: Int
     let ingredients: [Ingredient]
     let onConfirm: () -> Void
-
+    
     @Environment(\.presentationMode) var presentationMode
-
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add the view model
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
@@ -72,7 +73,10 @@ struct BlendConfirmationView: View {
                 Spacer()
                 
                 HStack {
-                    Button(action: onConfirm) {
+                    Button(action: {
+                        subtractSpicesInOunces() // Subtract spice amounts in ounces
+                        onConfirm()
+                    }) {
                         Text("Confirm")
                             .font(.headline)
                             .foregroundColor(.white)
@@ -137,12 +141,35 @@ struct BlendConfirmationView: View {
             return "\(middleNumerator)/\(middleDenominator)"
         }
     }
-}
 
-#Preview {
-    BlendConfirmationView(spiceName: "Example Spice", servings: 1, ingredients: [
-        Ingredient(name: "Salt", amount: 1.0, unit: "T"),
-        Ingredient(name: "Pepper", amount: 0.5, unit: "t"),
-        Ingredient(name: "Garlic Powder", amount: 0.25, unit: "T")
-    ], onConfirm: {})
+    private func convertToOunces(amount: Double, unit: String) -> Double {
+        switch unit {
+        case "t":
+            return amount / 6.0 // 1 tsp = 1/6 oz
+        case "T":
+            return amount / 2.0 // 1 tbsp = 1/2 oz
+        default:
+            return amount
+        }
+    }
+
+    private func subtractSpicesInOunces() {
+        for ingredient in ingredients {
+            let amountInOunces = convertToOunces(amount: ingredient.amount, unit: ingredient.unit)
+            
+            if let spiceIndex = spiceDataViewModel.spices.firstIndex(where: { $0.containerNumber == ingredient.containerNumber }) {
+                let currentAmount = spiceDataViewModel.spices[spiceIndex].spiceAmount
+                let updatedAmount = currentAmount - amountInOunces
+                
+                if updatedAmount >= 0 {
+                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: ingredient.containerNumber, newAmountInOunces: updatedAmount)
+                } else {
+                    // Handle case where subtraction would result in a negative amount
+                    // For example, set the amount to 0 or show an error
+                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: ingredient.containerNumber, newAmountInOunces: 0)
+                    print("Error: Attempted to subtract more than available in container \(ingredient.containerNumber). Setting amount to 0.")
+                }
+            }
+        }
+    }
 }

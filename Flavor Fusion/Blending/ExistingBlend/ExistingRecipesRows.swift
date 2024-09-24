@@ -20,6 +20,9 @@ struct ExistingRecipesRows: View {
     
     /// A flag indicating whether the mix preview sheet is presented.
     @State private var isMixPreviewPresented = false
+    
+    /// The view model managing the spice data.
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
 
     var body: some View {
         Button(action: {
@@ -49,7 +52,7 @@ struct ExistingRecipesRows: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .sheet(isPresented: $isMixPreviewPresented) {
-            MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented)
+            MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
         }
         .buttonStyle(PlainButtonStyle())  // Ensure the button does not change the visual style
     }
