@@ -112,7 +112,7 @@ struct List: View {
         var lowSpices: [Spice] = []
         
         for spice in spiceDataViewModel.spices {
-            if spice.spiceAmount < 0.25 {
+            if spice.spiceAmount < 4.0 {
                 lowSpices.append(spice)
             }
         }

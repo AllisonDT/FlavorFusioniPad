@@ -94,6 +94,7 @@ public class SpiceDataViewModel: ObservableObject {
             self.spices = decodedSpices
             spiceData = decodedSpices
             print("Spices loaded from iCloud: \(spices)")
+            
             // Save to UserDefaults for local persistence
             UserDefaults.standard.set(savedSpicesData, forKey: userDefaultsKey)
         } else {
@@ -106,17 +107,23 @@ public class SpiceDataViewModel: ObservableObject {
     
     // Function to ensure default spices with container numbers 1-10 exist
     private func ensureDefaultSpices() {
+        var needsSaving = false
+        
         for containerNumber in 1...10 {
             if !spices.contains(where: { $0.containerNumber == containerNumber }) {
                 let newSpice = Spice(containerNumber: containerNumber)
                 spices.append(newSpice)
                 spiceData.append(newSpice)
+                needsSaving = true // Mark that we need to save the new default spices
             }
         }
         
-        // Sort the spices by container number
-        spices.sort { $0.containerNumber < $1.containerNumber }
-        spiceData.sort { $0.containerNumber < $1.containerNumber }
+        if needsSaving {
+            // Sort the spices by container number and save
+            spices.sort { $0.containerNumber < $1.containerNumber }
+            spiceData.sort { $0.containerNumber < $1.containerNumber }
+            saveSpices()
+        }
     }
     
     // Function to update the spice name
@@ -168,6 +175,7 @@ public class SpiceDataViewModel: ObservableObject {
         }
     }
 }
+
 
 // Now you can declare spiceData globally
 public var spiceData: [Spice] = []

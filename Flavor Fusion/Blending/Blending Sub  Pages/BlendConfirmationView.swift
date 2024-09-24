@@ -157,18 +157,21 @@ struct BlendConfirmationView: View {
         for ingredient in ingredients {
             let amountInOunces = convertToOunces(amount: ingredient.amount, unit: ingredient.unit)
             
-            if let spiceIndex = spiceDataViewModel.spices.firstIndex(where: { $0.containerNumber == ingredient.containerNumber }) {
+            // Find the spice by name instead of container number
+            if let spiceIndex = spiceDataViewModel.spices.firstIndex(where: { $0.name == ingredient.name }) {
                 let currentAmount = spiceDataViewModel.spices[spiceIndex].spiceAmount
                 let updatedAmount = currentAmount - amountInOunces
                 
                 if updatedAmount >= 0 {
-                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: ingredient.containerNumber, newAmountInOunces: updatedAmount)
+                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: updatedAmount)
                 } else {
                     // Handle case where subtraction would result in a negative amount
                     // For example, set the amount to 0 or show an error
-                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: ingredient.containerNumber, newAmountInOunces: 0)
-                    print("Error: Attempted to subtract more than available in container \(ingredient.containerNumber). Setting amount to 0.")
+                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: 0)
+                    print("Error: Attempted to subtract more than available in container \(spiceDataViewModel.spices[spiceIndex].containerNumber). Setting amount to 0.")
                 }
+            } else {
+                print("Error: Spice with name \(ingredient.name) not found.")
             }
         }
     }
