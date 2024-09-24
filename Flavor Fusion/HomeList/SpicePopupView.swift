@@ -100,6 +100,9 @@ struct SpicePopupView: View {
             .navigationBarItems(
                 leading: Button(action: {
                     if isEditing {
+                        // Force the text fields to commit their changes
+                        UIApplication.shared.endEditing()
+                        
                         // Save changes when the user toggles off editing mode
                         spiceDataViewModel.updateSpiceName(containerNumber: spice.containerNumber, newName: editedSpiceName)
                         
@@ -122,5 +125,12 @@ struct SpicePopupView: View {
                 }
             )
         }
+    }
+}
+
+// Extension to handle resigning the first responder
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

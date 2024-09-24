@@ -75,4 +75,4 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 9/11 Did all upgrades so that code should support ios 18
 - 9/16 Implemented automatically change from blending to blend complete view from arduino Boolean
 - 9/12 Added ability to type in spice amount
-- 9/13 Added update to spice indicator on popup view
+- 9/13 Added update to spice indicator on popup view, fixed data not updating on home screen until user refreshes

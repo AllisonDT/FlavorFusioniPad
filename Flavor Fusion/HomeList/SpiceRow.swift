@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SpiceRow: View {
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
     let spice: Spice
     let isSelecting: Bool
     let recipes: [Recipe]
@@ -44,22 +45,7 @@ struct SpiceRow: View {
             .padding(.vertical, 4)
         }
         .sheet(isPresented: $isShowingPopup) {
-            SpicePopupView(spice: spice, recipes: recipes, isPresented: $isShowingPopup, spiceDataViewModel: SpiceDataViewModel())
+            SpicePopupView(spice: spice, recipes: recipes, isPresented: $isShowingPopup, spiceDataViewModel: spiceDataViewModel)
         }
     }
 }
-
-
-
-
-
-//                // Fullness indicator resembling a spice bottle
-//                ZStack(alignment: .bottom) {
-//                    Capsule()
-//                        .frame(width: 20, height: 60)
-//                        .foregroundColor(Color.gray.opacity(0.3))
-//                    Capsule()
-//                        .frame(width: 20, height: 60 * CGFloat(spice.spiceAmount))
-//                        .foregroundColor(Color.blue)
-//                }
-//                .padding(.trailing, 10)

@@ -46,7 +46,7 @@ struct List: View {
                     HStack {
                         VStack {
                             ForEach(spiceDataViewModel.spices.filter { $0.containerNumber % 2 != 0 }) { spice in
-                                SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                                SpiceRow(spiceDataViewModel: spiceDataViewModel, spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
                                     if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
                                         spiceDataViewModel.spices[index].isSelected = selected
                                     }
@@ -60,7 +60,7 @@ struct List: View {
                         
                         VStack {
                             ForEach(spiceDataViewModel.spices.filter { $0.containerNumber % 2 == 0 }) { spice in
-                                SpiceRow(spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
+                                SpiceRow(spiceDataViewModel: spiceDataViewModel, spice: spice, isSelecting: isSelecting, recipes: recipeStore.recipes) { selected in
                                     if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
                                         spiceDataViewModel.spices[index].isSelected = selected
                                     }
