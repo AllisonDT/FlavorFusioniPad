@@ -11,26 +11,30 @@ import CloudKit
 
 // Spice Data Model
 public struct Spice: Identifiable, Equatable, Hashable, Encodable, Decodable {
-    public var id = UUID()
+    public var id: UUID
     public var name: String
-    public var spiceAmount: Double // This will store the amount in the chosen unit
-    public var isSelected: Bool = false
+    public var spiceAmount: Double
+    public var isSelected: Bool
     public var containerNumber: Int
-    public var selectedAmount: Double = 0.0
-    public var unit: String = "oz" // Default unit is ounces
+    public var selectedAmount: Double
+    public var unit: String
     public var amountInGrams: Double // This field will no longer be used for conversions
 
+    // Initialization with default values
     public init(name: String = "Spice", spiceAmount: Double = 0.0, unit: String = "oz", containerNumber: Int) {
+        self.id = UUID()
         self.name = name
-        self.spiceAmount = spiceAmount
-        self.unit = unit
+        self.spiceAmount = (spiceAmount * 100).rounded() / 100 // Round to two decimals
+        self.isSelected = false
         self.containerNumber = containerNumber
-        self.amountInGrams = 0.0 // Keeping this field for compatibility but no longer using it for conversions
+        self.selectedAmount = 0.0
+        self.unit = unit
+        self.amountInGrams = 0.0
     }
     
     // Function to update the spice amount and unit directly
     public mutating func updateSpiceAmount(amount: Double, unit: String) {
-        self.spiceAmount = amount
+        self.spiceAmount = (amount * 100).rounded() / 100 // Round to two decimals
         self.unit = unit
     }
 }

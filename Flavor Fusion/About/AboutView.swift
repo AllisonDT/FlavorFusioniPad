@@ -12,12 +12,14 @@ import SwiftUI
 /// `AboutView` displays navigation links to various sections such as Project Overview,
 /// User Manual, Privacy Information, and Meet the Team. It also includes an icon
 /// at the bottom of the view.
+import SwiftUI
+
 struct AboutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    VStack(spacing: 15) {
+                    VStack(spacing: 10) { // Adjust spacing to match RecipeRow
                         NavigationLink(destination: ProjectOverviewView()) {
                             CustomListItem(title: "Project Overview")
                         }
@@ -37,36 +39,35 @@ struct AboutView: View {
                 }
                 .padding(.top)
             }
-            .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+            .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .navigationBarTitle("About Flavor Fusion", displayMode: .inline)
         }
     }
 }
 
-/// A custom list item view used in the AboutView.
-///
-/// `CustomListItem` displays a title and a chevron icon, and is used for navigation links in the AboutView.
-///
-/// - Parameters:
-///   - title: The title of the list item.
 struct CustomListItem: View {
     var title: String
     
     var body: some View {
         HStack {
-            Text(title)
-                .foregroundColor(.primary) // Ensure the text color is set
-                .padding(.horizontal)
-                .padding(.vertical, 35)
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.headline) // Match RecipeRow's font style
+                    .foregroundColor(.blue) // Set to blue, consistent with RecipeRow
+            }
+            .padding()
+
             Spacer()
+
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
-                .padding(.trailing)
+                .padding()
         }
-        .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(10)
-        .shadow(color: .gray, radius: 2, x: 0, y: 2)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(UIColor.systemBackground))
+                .shadow(color: .gray, radius: 2, x: 0, y: 2)
+        )
         .padding(.vertical, 4)
     }
 }

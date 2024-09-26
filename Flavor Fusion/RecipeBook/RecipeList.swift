@@ -126,10 +126,11 @@ struct FiltersButton: View {
 struct RecipeRow: View {
     var recipe: Recipe
     var recipeStore: RecipeStore
-    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
 
     @State private var isMixPreviewPresented = false
     @State private var isDeleteAlertPresented = false
+    @State private var isEditRecipeViewPresented = false
 
     var body: some View {
         HStack {
@@ -141,7 +142,7 @@ struct RecipeRow: View {
                         .font(.headline)
                         .foregroundColor(.blue)
                 }
-                .sheet(isPresented: $isMixPreviewPresented) {
+                .fullScreenCover(isPresented: $isMixPreviewPresented) {
                     MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
                 }
 
@@ -152,6 +153,17 @@ struct RecipeRow: View {
             .padding()
 
             Spacer()
+
+            Button(action: {
+                isEditRecipeViewPresented.toggle()
+            }) {
+                Image(systemName: "pencil")
+                    .foregroundColor(.blue)
+            }
+            .padding()
+            .sheet(isPresented: $isEditRecipeViewPresented) {
+                EditRecipeView(isPresented: $isEditRecipeViewPresented, recipeStore: recipeStore, recipe: recipe)
+            }
 
             Button(action: {
                 isDeleteAlertPresented = true

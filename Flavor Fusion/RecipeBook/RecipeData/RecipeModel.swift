@@ -29,10 +29,10 @@ struct Ingredient: Codable {
 ///   - ingredients: A list of ingredients required for the recipe.
 ///   - servings: The number of servings the recipe makes.
 struct Recipe: Identifiable, Codable {
-    let id: UUID
-    let name: String
-    let ingredients: [Ingredient]
-    let servings: Int
+    var id: UUID
+    var name: String
+    var ingredients: [Ingredient]
+    var servings: Int
     
     /// Initializes a new recipe with the provided name, ingredients, and servings.
     ///
