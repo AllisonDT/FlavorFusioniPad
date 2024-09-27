@@ -135,16 +135,19 @@ struct RecipeRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Button(action: {
-                    isMixPreviewPresented.toggle()
-                }) {
-                    Text(recipe.name)
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                }
-                .fullScreenCover(isPresented: $isMixPreviewPresented) {
-                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
-                }
+                Text(recipe.name)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+//                Button(action: {
+//                    isMixPreviewPresented.toggle()
+//                }) {
+//                    Text(recipe.name)
+//                        .font(.headline)
+//                        .foregroundColor(.blue)
+//                }
+//                .fullScreenCover(isPresented: $isMixPreviewPresented) {
+//                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
+//                }
 
                 Text("Servings: \(recipe.servings)")
                     .font(.caption)

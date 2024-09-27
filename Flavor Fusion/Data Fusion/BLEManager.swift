@@ -10,7 +10,9 @@ import CoreBluetooth
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @Published var isDataRetrievedViaBluetooth: Bool = false
-    @Published var isOrderMixed: Bool = false  // New: Track whether the spice blend is done being mixed
+    @Published var isOrderMixed: Bool = false  // Track whether the spice blend is done being mixed
+    @Published var isTrayEmpty: Bool = false   // New: Track whether the tray is empty
+    
     var centralManager: CBCentralManager!
     var connectedPeripheral: CBPeripheral?
     
@@ -18,22 +20,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     // Define your service and characteristic UUIDs
     let spiceServiceUUID = CBUUID(string: "180C")
-    let containerNumberCharacteristicUUID = CBUUID(string: "2A56")
-    let spiceAmountCharacteristicUUID = CBUUID(string: "2A57")
     let serializedIngredientsCharacteristicUUID = CBUUID(string: "2A58")
-    let spiceMixedCharacteristicUUID = CBUUID(string: "2A59")  // New: UUID for boolean characteristic
-    
-    private var currentContainerNumber: Int?
-    private var expectedNumberOfContainers: Int = 10
-    private var receivedContainersCount: Int = 0
-    
+    let spiceMixedCharacteristicUUID = CBUUID(string: "2A59")  // UUID for spice mixed status
+    let trayStatusCharacteristicUUID = CBUUID(string: "19B10002-E8F2-537E-4F6C-D104768A1214")  // New: UUID for tray status
+
     init(spiceDataViewModel: SpiceDataViewModel) {
         self.spiceDataViewModel = spiceDataViewModel
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
         print("Central Manager initialized.")
     }
-    
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("Central Manager did update state: \(central.state.rawValue)")
         
@@ -45,7 +42,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             useExampleDataIfNeeded()
         }
     }
-    
+
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
         connectedPeripheral = peripheral
@@ -53,13 +50,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
         centralManager.connect(peripheral, options: nil)
     }
-    
+
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
         peripheral.delegate = self
         peripheral.discoverServices([spiceServiceUUID])
     }
-    
+
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             print("Error discovering services: \(error.localizedDescription)")
@@ -72,12 +69,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 print("Service UUID: \(service.uuid)")
                 if service.uuid == spiceServiceUUID {
                     print("Found spice service. Discovering characteristics...")
-                    peripheral.discoverCharacteristics([containerNumberCharacteristicUUID, spiceAmountCharacteristicUUID, serializedIngredientsCharacteristicUUID, spiceMixedCharacteristicUUID], for: service)  // Add spiceMixedCharacteristicUUID
+                    peripheral.discoverCharacteristics([serializedIngredientsCharacteristicUUID, spiceMixedCharacteristicUUID, trayStatusCharacteristicUUID], for: service)  // Add trayStatusCharacteristicUUID
                 }
             }
         }
     }
-    
+
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
             print("Error discovering characteristics: \(error.localizedDescription)")
@@ -88,14 +85,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 print("Characteristic UUID: \(characteristic.uuid)")
-                if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID || characteristic.uuid == spiceMixedCharacteristicUUID {
+                if characteristic.uuid == spiceMixedCharacteristicUUID || characteristic.uuid == trayStatusCharacteristicUUID {
                     print("Enabling notifications for characteristic: \(characteristic.uuid)")
                     peripheral.setNotifyValue(true, for: characteristic)
                 }
             }
         }
     }
-    
+
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("Error updating value for characteristic: \(error.localizedDescription)")
@@ -118,27 +115,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     }
 
     private func processData(characteristic: CBCharacteristic, data: Data) {
-        if characteristic.uuid == containerNumberCharacteristicUUID {
-            let containerNumber = Int(data[0])
-            print("Processed container number: \(containerNumber)")
-            currentContainerNumber = containerNumber
-        } else if characteristic.uuid == spiceAmountCharacteristicUUID, let containerNumber = currentContainerNumber {
-            let spiceAmount = data.withUnsafeBytes { $0.load(as: Float.self) }
-            print("Processed spice amount: \(spiceAmount)")
-            
-            // Update UI on the main thread
-            DispatchQueue.main.async { [weak self] in
-                self?.updateSpiceData(containerNumber: containerNumber, spiceAmount: Double(spiceAmount))
-                self?.receivedContainersCount += 1
-                self?.currentContainerNumber = nil
-                
-                if self?.receivedContainersCount == self?.expectedNumberOfContainers {
-                    print("All data received for \(self?.expectedNumberOfContainers ?? 0) containers.")
-                    self?.completeDataTransfer()
-                }
-            }
-        } else if characteristic.uuid == spiceMixedCharacteristicUUID {
-            // Process the boolean data
+        if characteristic.uuid == spiceMixedCharacteristicUUID {
+            // Process the boolean data for spice mixed status
             let isMixed = data[0] != 0
             print("Processed boolean: is order mixed? \(isMixed)")
             
@@ -147,12 +125,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 self?.isOrderMixed = isMixed
                 print("Order mixed status updated: \(isMixed)")
             }
+        } else if characteristic.uuid == trayStatusCharacteristicUUID {
+            // Process the boolean data for tray status
+            let trayEmpty = data[0] != 0
+            print("Processed boolean: is tray empty? \(trayEmpty)")
+            
+            // Update UI on the main thread
+            DispatchQueue.main.async { [weak self] in
+                self?.isTrayEmpty = trayEmpty
+                print("Tray empty status updated: \(trayEmpty)")
+            }
         }
-    }
-
-    private func updateSpiceData(containerNumber: Int, spiceAmount: Double) {
-        print("Updating spice data for container number: \(containerNumber) with amount: \(spiceAmount) grams.")
-        spiceDataViewModel.updateSpice(containerNumber: containerNumber, newAmount: spiceAmount, newUnit: "oz")
     }
 
     private func completeDataTransfer() {
@@ -160,15 +143,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if let peripheral = connectedPeripheral {
             if let characteristics = peripheral.services?.first(where: { $0.uuid == spiceServiceUUID })?.characteristics {
                 for characteristic in characteristics {
-                    if characteristic.uuid == containerNumberCharacteristicUUID || characteristic.uuid == spiceAmountCharacteristicUUID {
-                        print("Disabling notifications for characteristic: \(characteristic.uuid)")
-                        peripheral.setNotifyValue(false, for: characteristic)
-                    }
+                    print("Disabling notifications for characteristic: \(characteristic.uuid)")
+                    peripheral.setNotifyValue(false, for: characteristic)
                 }
             }
-            // Disconnect from the peripheral
-            // centralManager.cancelPeripheralConnection(peripheral)
-            // print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
         }
         
         print("All data processed. UI should be updated accordingly.")
@@ -203,12 +181,16 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     }
     
     private func getCharacteristic(peripheral: CBPeripheral, uuid: CBUUID) -> CBCharacteristic? {
-        return peripheral.services?.first(where: { $0.uuid == spiceServiceUUID })?.characteristics?.first(where: { $0.uuid == uuid })
+        return peripheral.services?
+            .first(where: { $0.uuid == spiceServiceUUID })?
+            .characteristics?
+            .first(where: { $0.uuid == uuid })
     }
     
     private func useExampleDataIfNeeded() {
         if !isDataRetrievedViaBluetooth {
             print("Using example data as no Bluetooth data was retrieved.")
+            // Provide example data to spiceDataViewModel if necessary
         }
     }
 }
