@@ -42,6 +42,7 @@ struct NewBlendView: View {
 
     @ObservedObject var recipeStore: RecipeStore
     @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
+    @EnvironmentObject var bleManager: BLEManager // Add BLEManager as an environment object to access tray status
 
     let servingOptions = Array(1...10)
 
@@ -54,6 +55,18 @@ struct NewBlendView: View {
     var body: some View {
         ZStack {
             VStack {
+                // Warning when the tray is not empty
+                if !bleManager.isTrayEmpty {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.yellow)
+                        Text("Warning: The tray is not empty")
+                            .font(.headline)
+                            .foregroundColor(.red)
+                    }
+                    .padding()
+                }
+
                 TextField("Spice Blend Name", text: $spiceName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)

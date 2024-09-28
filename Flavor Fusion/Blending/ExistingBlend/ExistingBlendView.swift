@@ -24,10 +24,23 @@ struct ExistingBlendView: View {
     /// The store object that manages the list of recipes.
     @ObservedObject var recipeStore = RecipeStore()
     @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
+    @EnvironmentObject var bleManager: BLEManager // Add BLEManager as EnvironmentObject
     
     var body: some View {
         NavigationView {
             VStack {
+                // Warning message when the tray is not empty
+                if !bleManager.isTrayEmpty {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.yellow)
+                        Text("Warning: The tray is not empty")
+                            .font(.headline)
+                            .foregroundColor(.red)
+                    }
+                    .padding()
+                }
+                
                 ScrollView {
                     // Display each recipe in a VStack
                     ForEach(recipeStore.recipes) { recipe in

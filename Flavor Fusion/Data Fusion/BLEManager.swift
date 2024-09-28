@@ -95,7 +95,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
-            // print("Error updating value for characteristic: \(error.localizedDescription)")
+            print("Error updating value for characteristic: \(error.localizedDescription)")
             return
         }
         
