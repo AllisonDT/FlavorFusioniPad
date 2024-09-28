@@ -10,30 +10,31 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("isFirstTimeOpen") private var isFirstTimeOpen: Bool = true
     let spiceDataViewModel: SpiceDataViewModel
-    let bleManager: BLEManager
-    
+    @State private var bleManager: BLEManager? = nil // Declare as State and optional
+
     // Custom initializer
     init() {
         self.spiceDataViewModel = SpiceDataViewModel()
-        self.bleManager = BLEManager(spiceDataViewModel: spiceDataViewModel)
     }
-    
+
     var body: some View {
         Group {
             if isFirstTimeOpen {
                 CreatePasscode()
                     .onDisappear {
-                        // Update the flag to indicate the app has been opened before
                         isFirstTimeOpen = false
                     }
             } else {
-                LoginPasscode() // or your main content view
+                LoginPasscode()
             }
         }
         .onAppear {
-            // Start Bluetooth scanning when the view appears
-            print("ContentView appeared. Starting BLE scanning...")
-            bleManager.centralManagerDidUpdateState(bleManager.centralManager)
+            if bleManager == nil {
+                // Initialize BLEManager here to ensure that the system services are ready
+                bleManager = BLEManager(spiceDataViewModel: spiceDataViewModel)
+                bleManager?.centralManagerDidUpdateState(bleManager!.centralManager)
+                print("ContentView appeared. Starting BLE scanning...")
+            }
         }
     }
 }

@@ -95,13 +95,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
-            print("Error updating value for characteristic: \(error.localizedDescription)")
+            // print("Error updating value for characteristic: \(error.localizedDescription)")
             return
         }
         
-        print("Received update for characteristic: \(characteristic.uuid).")
+        // print("Received update for characteristic: \(characteristic.uuid).")
         if let data = characteristic.value {
-            print("Data received: \(data as NSData)")
+            // print("Data received: \(data as NSData)")
             isDataRetrievedViaBluetooth = true
             
             // Process data on a background thread to avoid UI lag
@@ -109,7 +109,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 self?.processData(characteristic: characteristic, data: data)
             }
         } else {
-            print("No data received. Using example data.")
+            // print("No data received. Using example data.")
             useExampleDataIfNeeded()
         }
     }
@@ -118,22 +118,22 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if characteristic.uuid == spiceMixedCharacteristicUUID {
             // Process the boolean data for spice mixed status
             let isMixed = data[0] != 0
-            print("Processed boolean: is order mixed? \(isMixed)")
+            // print("Processed boolean: is order mixed? \(isMixed)")
             
             // Update UI on the main thread
             DispatchQueue.main.async { [weak self] in
                 self?.isOrderMixed = isMixed
-                print("Order mixed status updated: \(isMixed)")
+                // print("Order mixed status updated: \(isMixed)")
             }
         } else if characteristic.uuid == trayStatusCharacteristicUUID {
             // Process the boolean data for tray status
             let trayEmpty = data[0] != 0
-            print("Processed boolean: is tray empty? \(trayEmpty)")
+            // print("Processed boolean: is tray empty? \(trayEmpty)")
             
             // Update UI on the main thread
             DispatchQueue.main.async { [weak self] in
                 self?.isTrayEmpty = trayEmpty
-                print("Tray empty status updated: \(trayEmpty)")
+                // print("Tray empty status updated: \(trayEmpty)")
             }
         }
     }
