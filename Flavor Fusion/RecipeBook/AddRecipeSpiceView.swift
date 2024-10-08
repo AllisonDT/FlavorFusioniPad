@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice
-    @Binding var selectedSpices: [Spice: (Double, String)] // Update to Double to handle fractional values
+    @Binding var selectedSpices: [Spice: (Double, String)]
 
     @State private var wholeAmount = 1
     @State private var fractionalAmount = ""
