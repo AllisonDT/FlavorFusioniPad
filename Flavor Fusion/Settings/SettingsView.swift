@@ -19,7 +19,7 @@ struct SettingsView: View {
     @State private var confirmPasscode: String = ""
     
     @State private var displayName: String = UserDefaults.standard.string(forKey: "displayName") ?? ""
-    @State private var requiresPasscode: Bool = UserDefaults.standard.object(forKey: "requiresPasscode") as? Bool ?? true
+    @State private var requiresPasscode: Bool = UserDefaults.standard.object(forKey: "requiresPasscode") as? Bool ?? false
     
     @State private var alertType: AlertType? = nil
     

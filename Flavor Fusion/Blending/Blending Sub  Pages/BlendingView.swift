@@ -52,8 +52,8 @@ struct BlendingView: View {
                 print("Failed to encode ingredients string.")
             }
         }
-        .onChange(of: bleManager.isOrderMixed) { isMixed in
-            if isMixed {
+        .onChange(of: bleManager.isOrderMixed) {
+            if bleManager.isOrderMixed {
                 // If the boolean becomes true, schedule the blend completion notification and call onComplete()
                 scheduleBlendCompletionNotification()
                 onComplete()

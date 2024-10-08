@@ -24,6 +24,14 @@
 		BE2431D82BF051DB00B77990 /* ExistingBlendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */; };
 		BE35352E2B86B69100806E7D /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35352D2B86B69100806E7D /* AddRecipeView.swift */; };
 		BE3535322B87080B00806E7D /* SpiceRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3535312B87080B00806E7D /* SpiceRowTests.swift */; };
+		BE4BA6362CB5D6CB0016EB67 /* AddRecipeSpiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6352CB5D6C60016EB67 /* AddRecipeSpiceView.swift */; };
+		BE4BA6382CB5D7270016EB67 /* EditRecipeSpiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6372CB5D7220016EB67 /* EditRecipeSpiceView.swift */; };
+		BE4BA63A2CB5D7500016EB67 /* RecipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6392CB5D74D0016EB67 /* RecipeRow.swift */; };
+		BE4BA63C2CB5D7760016EB67 /* FiltersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA63B2CB5D7710016EB67 /* FiltersButton.swift */; };
+		BE4BA63F2CB5D7D50016EB67 /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA63E2CB5D7D10016EB67 /* TeamMember.swift */; };
+		BE4BA6412CB5D7FC0016EB67 /* TeamMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6402CB5D7F90016EB67 /* TeamMemberView.swift */; };
+		BE4BA6432CB5D80E0016EB67 /* BiographyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6422CB5D80B0016EB67 /* BiographyView.swift */; };
+		BE4BA6452CB5D83F0016EB67 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BA6442CB5D83C0016EB67 /* TeamView.swift */; };
 		BE70987E2BB0DDEA00E04F11 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987D2BB0DDEA00E04F11 /* List.swift */; };
 		BE7098802BB0DE9400E04F11 /* SpicePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */; };
 		BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7098862BB0E18E00E04F11 /* ListTabView.swift */; };
@@ -43,7 +51,6 @@
 		BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8193D2C431A530073606B /* BlendCompletionView.swift */; };
 		BEA819442C4C6E160073606B /* ExistingRecipesRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */; };
 		BEA8E2E32C866FB400AB2EB9 /* ListSpiceIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA8E2E22C866FB400AB2EB9 /* ListSpiceIndicator.swift */; };
-		BEA9D0F12BC1C17700B57779 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F02BC1C17700B57779 /* TeamView.swift */; };
 		BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */; };
 		BEA9D0F72BC1C1DC00B57779 /* ProjectOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */; };
 		BEA9D0F92BC1C1F400B57779 /* UserManualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9D0F82BC1C1F400B57779 /* UserManualView.swift */; };
@@ -93,6 +100,14 @@
 		BE2431D72BF051DB00B77990 /* ExistingBlendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingBlendView.swift; sourceTree = "<group>"; };
 		BE35352D2B86B69100806E7D /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		BE3535312B87080B00806E7D /* SpiceRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiceRowTests.swift; sourceTree = "<group>"; };
+		BE4BA6352CB5D6C60016EB67 /* AddRecipeSpiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSpiceView.swift; sourceTree = "<group>"; };
+		BE4BA6372CB5D7220016EB67 /* EditRecipeSpiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeSpiceView.swift; sourceTree = "<group>"; };
+		BE4BA6392CB5D74D0016EB67 /* RecipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRow.swift; sourceTree = "<group>"; };
+		BE4BA63B2CB5D7710016EB67 /* FiltersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersButton.swift; sourceTree = "<group>"; };
+		BE4BA63E2CB5D7D10016EB67 /* TeamMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMember.swift; sourceTree = "<group>"; };
+		BE4BA6402CB5D7F90016EB67 /* TeamMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberView.swift; sourceTree = "<group>"; };
+		BE4BA6422CB5D80B0016EB67 /* BiographyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiographyView.swift; sourceTree = "<group>"; };
+		BE4BA6442CB5D83C0016EB67 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		BE70987D2BB0DDEA00E04F11 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpicePopupView.swift; sourceTree = "<group>"; };
 		BE7098862BB0E18E00E04F11 /* ListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTabView.swift; sourceTree = "<group>"; };
@@ -112,7 +127,6 @@
 		BEA8193D2C431A530073606B /* BlendCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendCompletionView.swift; sourceTree = "<group>"; };
 		BEA819432C4C6E160073606B /* ExistingRecipesRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingRecipesRows.swift; sourceTree = "<group>"; };
 		BEA8E2E22C866FB400AB2EB9 /* ListSpiceIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpiceIndicator.swift; sourceTree = "<group>"; };
-		BEA9D0F02BC1C17700B57779 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyInfoView.swift; sourceTree = "<group>"; };
 		BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewView.swift; sourceTree = "<group>"; };
 		BEA9D0F82BC1C1F400B57779 /* UserManualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManualView.swift; sourceTree = "<group>"; };
@@ -233,6 +247,17 @@
 			path = "Data Fusion";
 			sourceTree = "<group>";
 		};
+		BE4BA63D2CB5D7C50016EB67 /* TeamView */ = {
+			isa = PBXGroup;
+			children = (
+				BE4BA6442CB5D83C0016EB67 /* TeamView.swift */,
+				BE4BA6422CB5D80B0016EB67 /* BiographyView.swift */,
+				BE4BA6402CB5D7F90016EB67 /* TeamMemberView.swift */,
+				BE4BA63E2CB5D7D10016EB67 /* TeamMember.swift */,
+			);
+			path = TeamView;
+			sourceTree = "<group>";
+		};
 		BE70987C2BB0DD8F00E04F11 /* HomeList */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,8 +283,8 @@
 		BE7098892BB0E3D000E04F11 /* About */ = {
 			isa = PBXGroup;
 			children = (
+				BE4BA63D2CB5D7C50016EB67 /* TeamView */,
 				BE70988C2BB0E41300E04F11 /* AboutView.swift */,
-				BEA9D0F02BC1C17700B57779 /* TeamView.swift */,
 				BEA9D0F42BC1C1BC00B57779 /* PrivacyInfoView.swift */,
 				BEA9D0F62BC1C1DC00B57779 /* ProjectOverviewView.swift */,
 				BEA9D0F82BC1C1F400B57779 /* UserManualView.swift */,
@@ -299,10 +324,14 @@
 		BE8D1CF42B73FE1000A71CE9 /* RecipeBook */ = {
 			isa = PBXGroup;
 			children = (
-				BE7F015A2CA4FE0D00FBB327 /* EditRecipeView.swift */,
 				BEDFF4012BB102F300EF4F56 /* RecipeData */,
+				BE4BA6352CB5D6C60016EB67 /* AddRecipeSpiceView.swift */,
 				BE35352D2B86B69100806E7D /* AddRecipeView.swift */,
+				BE4BA6372CB5D7220016EB67 /* EditRecipeSpiceView.swift */,
+				BE7F015A2CA4FE0D00FBB327 /* EditRecipeView.swift */,
+				BE4BA63B2CB5D7710016EB67 /* FiltersButton.swift */,
 				BE1C9D7B2BB8644D00D597FC /* RecipeList.swift */,
+				BE4BA6392CB5D74D0016EB67 /* RecipeRow.swift */,
 				BEAAB0B22C33755F008A11E9 /* MixRecipePreview.swift */,
 			);
 			path = RecipeBook;
@@ -479,17 +508,21 @@
 				BE8D1CED2B71A2DD00A71CE9 /* SpiceData.swift in Sources */,
 				BE95D8222BB1D2FD00A2E59C /* LoginPasscode.swift in Sources */,
 				BE1C9D882BBA487D00D597FC /* RecipeBookBackground.swift in Sources */,
+				BE4BA63C2CB5D7760016EB67 /* FiltersButton.swift in Sources */,
 				BE1C9D7E2BB8667200D597FC /* NewBlendView.swift in Sources */,
 				BE7098912BB0E98F00E04F11 /* SpiceRowView.swift in Sources */,
 				BEA8193A2C4319EE0073606B /* BlendingView.swift in Sources */,
 				BE02B7F82B719A9F0093AA4F /* ContentView.swift in Sources */,
 				BE7098932BB0E9C200E04F11 /* SpiceRow.swift in Sources */,
 				BE7F015B2CA4FE1200FBB327 /* EditRecipeView.swift in Sources */,
+				BE4BA6382CB5D7270016EB67 /* EditRecipeSpiceView.swift in Sources */,
 				BEAAB0B52C3E0D20008A11E9 /* NewBlendSpiceView.swift in Sources */,
 				BEA819442C4C6E160073606B /* ExistingRecipesRows.swift in Sources */,
 				BE1C9D822BB8D3A400D597FC /* SpiceBlendSelections.swift in Sources */,
 				BEA9D0F52BC1C1BC00B57779 /* PrivacyInfoView.swift in Sources */,
+				BE4BA6432CB5D80E0016EB67 /* BiographyView.swift in Sources */,
 				BE7098872BB0E18E00E04F11 /* ListTabView.swift in Sources */,
+				BE4BA6452CB5D83F0016EB67 /* TeamView.swift in Sources */,
 				BEA8E2E32C866FB400AB2EB9 /* ListSpiceIndicator.swift in Sources */,
 				BEA8193E2C431A530073606B /* BlendCompletionView.swift in Sources */,
 				BE95D8242BB1D5EE00A2E59C /* PasscodeButton.swift in Sources */,
@@ -504,16 +537,19 @@
 				BE7098802BB0DE9400E04F11 /* SpicePopupView.swift in Sources */,
 				BE70987E2BB0DDEA00E04F11 /* List.swift in Sources */,
 				BE7098992BB0F54600E04F11 /* BlendingNewExistingView.swift in Sources */,
-				BEA9D0F12BC1C17700B57779 /* TeamView.swift in Sources */,
+				BE4BA6362CB5D6CB0016EB67 /* AddRecipeSpiceView.swift in Sources */,
 				BE02B7F62B719A9F0093AA4F /* Flavor_FusionApp.swift in Sources */,
 				BE1C9D802BB8680000D597FC /* SpiceColumns.swift in Sources */,
 				BE2431D62BF04CE400B77990 /* BLEManager.swift in Sources */,
+				BE4BA63A2CB5D7500016EB67 /* RecipeRow.swift in Sources */,
 				BE8D1CF12B71A57400A71CE9 /* SpiceIndicator.swift in Sources */,
 				BE1C9D7C2BB8644D00D597FC /* RecipeList.swift in Sources */,
 				BE95D8202BB1D2F300A2E59C /* CreatePasscode.swift in Sources */,
 				BE70988B2BB0E3D900E04F11 /* SettingsView.swift in Sources */,
 				BEDFF4032BB102FF00EF4F56 /* RecipeModel.swift in Sources */,
+				BE4BA6412CB5D7FC0016EB67 /* TeamMemberView.swift in Sources */,
 				BEAAB0B32C33755F008A11E9 /* MixRecipePreview.swift in Sources */,
+				BE4BA63F2CB5D7D50016EB67 /* TeamMember.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,7 +738,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
@@ -747,7 +783,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
