@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-/// A view that provides a preview of a recipe with options to adjust servings and start the blending process.
+/// A view that provides a detailed preview of a recipe, with options to adjust servings and initiate the blending process.
 ///
-/// `MixRecipePreview` shows the recipe details, allows users to adjust the number of servings, and initiate the blending process.
+/// `MixRecipePreview` displays the recipe name, servings, and ingredients, allowing users to modify the number of servings. It also offers the option to start the blending process, leading through confirmation, blending, and completion steps.
 ///
 /// - Parameters:
-///   - recipe: The recipe to preview.
-///   - isPresented: A binding to control the presentation of the view.
+///   - recipe: The recipe to be previewed.
+///   - isPresented: A binding to control the visibility of the view.
+///   - spiceDataViewModel: An observed object that manages spice data and is used throughout the blending process.
 struct MixRecipePreview: View {
     var recipe: Recipe
     @Binding var isPresented: Bool

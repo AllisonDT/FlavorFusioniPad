@@ -7,9 +7,19 @@
 
 import SwiftUI
 
+/// A view for editing spice amounts in a recipe.
+///
+/// `EditRecipeSpiceView` allows users to modify the selected spice, adjust its amount using whole and fractional values,
+/// and change the unit of measurement. It updates the selected spices with the new amounts and units, ensuring the recipe
+/// reflects the correct spice quantities.
+///
+/// - Parameters:
+///   - spice: A binding to the spice being edited.
+///   - selectedSpices: A binding to a dictionary of selected spices with their corresponding amounts and units.
+
 struct EditRecipeSpiceView: View {
     @Binding var spice: Spice
-    @Binding var selectedSpices: [Spice: (Double, String)] // Update to Double to handle fractional values
+    @Binding var selectedSpices: [Spice: (Double, String)]
 
     @State private var wholeAmount = 1
     @State private var fractionalAmount = ""

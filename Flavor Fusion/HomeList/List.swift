@@ -8,6 +8,21 @@
 import SwiftUI
 import UserNotifications
 
+/// A view that displays a list of spices, allows blending, and monitors spice levels.
+///
+/// `List` presents a view where users can view, select, and blend spices. It also tracks when spices are running low
+/// and triggers a notification. Users can refresh the list, check the last update time, and interact with the spices via popups.
+///
+/// - Parameters:
+///   - isSelecting: A boolean state that determines if the user is in spice selection mode.
+///   - isBlendPopupVisible: A boolean state controlling the visibility of the blend popup view.
+///   - isSpicePopupVisible: A boolean state controlling the visibility of the spice popup view for the selected spice.
+///   - selectedSpice: An optional `Spice` object representing the currently selected spice for detailed view.
+///   - recipeStore: An `ObservedObject` for managing the list of recipes.
+///   - displayName: A string representing the display name of the user, fetched from `UserDefaults`.
+///   - isLoading: A boolean state that shows if the spices are being refreshed.
+///   - lastUpdated: An optional `Date` representing the last time the spice list was updated.
+///   - spiceDataViewModel: An `ObservedObject` for managing the spice data.
 struct List: View {
     @State private var isSelecting: Bool = false
     @State private var isBlendPopupVisible: Bool = false

@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+/// A view for selecting and configuring spice amounts for a recipe.
+///
+/// `AddRecipeSpiceView` allows users to select a spice, specify its amount using whole and fractional values,
+/// and choose the unit of measurement. It updates the selected spices with their corresponding amounts
+/// and units, maintaining a list of spices and their quantities for the recipe.
+///
+/// - Parameters:
+///   - spice: A binding to the spice being added or edited.
+///   - selectedSpices: A binding to a dictionary of selected spices and their corresponding amounts and units.
 struct AddRecipeSpiceView: View {
     @Binding var spice: Spice
     @Binding var selectedSpices: [Spice: (Double, String)]

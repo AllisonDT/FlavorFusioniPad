@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+/// A view that displays detailed information about a spice, allowing editing of the spice name and amount.
+///
+/// `SpicePopupView` presents detailed spice information, including its name, amount, and the container number.
+/// It also allows users to edit the spice's name and amount. If any recipes contain the spice, they are listed in the view.
+/// The view includes a button to save changes or toggle edit mode, and another to close the popup.
+///
+/// - Parameters:
+///   - spice: The `Spice` object representing the spice being displayed.
+///   - recipes: An array of `Recipe` objects to display recipes that use the spice.
+///   - isPresented: A binding to control the visibility of the popup.
+///   - spiceDataViewModel: An `ObservedObject` managing the spice data, allowing updates to the spice's name and amount.
 struct SpicePopupView: View {
     @ObservedObject var spiceDataViewModel: SpiceDataViewModel
     @State private var editedSpiceName: String

@@ -9,13 +9,20 @@ import SwiftUI
 
 /// A view for editing an existing recipe.
 ///
-/// `EditRecipeView` allows users to update the recipe name, servings, and spices.
-/// It validates the input and updates the recipe in the `RecipeStore`.
+/// `EditRecipeView` allows users to update the recipe name, number of servings, and spices.
+/// It validates the input and updates the recipe in the `RecipeStore`, ensuring no duplicate recipe names
+/// and requiring at least one spice to be selected.
 ///
 /// - Parameters:
 ///   - isPresented: A binding to control the presentation of the view.
 ///   - recipeStore: An observed object that manages the collection of recipes.
 ///   - recipe: The recipe to be edited.
+///   - recipeName: The name of the recipe being edited.
+///   - servings: The number of servings for the recipe.
+///   - spicesData: The list of available spices for selection.
+///   - selectedSpices: A dictionary of spices selected for the recipe, along with their corresponding amounts and units.
+///   - showAlert: A state controlling whether an error alert should be shown.
+///   - alertMessage: The message to display when the alert is presented.
 struct EditRecipeView: View {
     @Binding var isPresented: Bool
     @ObservedObject var recipeStore: RecipeStore

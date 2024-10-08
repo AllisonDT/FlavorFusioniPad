@@ -7,9 +7,14 @@
 
 import SwiftUI
 
-/// A view that displays a row representing a recipe.
+/// A view that displays a row representing a recipe with options to edit or delete.
 ///
-/// `RecipeRow` shows the recipe's name, servings, and provides options to preview or delete the recipe.
+/// `RecipeRow` shows the recipe's name, the number of servings, and provides buttons to either edit the recipe or delete it from the `RecipeStore`. It includes a confirmation alert before deleting a recipe.
+///
+/// - Parameters:
+///   - recipe: The recipe being displayed in the row.
+///   - recipeStore: The store that manages the collection of recipes.
+///   - spiceDataViewModel: An observed object that manages spice data used across the app.
 struct RecipeRow: View {
     var recipe: Recipe
     var recipeStore: RecipeStore
@@ -25,16 +30,6 @@ struct RecipeRow: View {
                 Text(recipe.name)
                     .font(.headline)
                     .foregroundColor(.blue)
-//                Button(action: {
-//                    isMixPreviewPresented.toggle()
-//                }) {
-//                    Text(recipe.name)
-//                        .font(.headline)
-//                        .foregroundColor(.blue)
-//                }
-//                .fullScreenCover(isPresented: $isMixPreviewPresented) {
-//                    MixRecipePreview(recipe: recipe, isPresented: $isMixPreviewPresented, spiceDataViewModel: spiceDataViewModel)
-//                }
 
                 Text("Servings: \(recipe.servings)")
                     .font(.caption)
