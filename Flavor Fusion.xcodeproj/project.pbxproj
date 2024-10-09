@@ -106,6 +106,7 @@
 		BE4BA6422CB5D80B0016EB67 /* BiographyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiographyView.swift; sourceTree = "<group>"; };
 		BE4BA6442CB5D83C0016EB67 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		BE4BA6462CB5DF4C0016EB67 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		BE4BA6482CB6D4E50016EB67 /* Flavor-Fusion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Flavor-Fusion-Info.plist"; sourceTree = SOURCE_ROOT; };
 		BE70987D2BB0DDEA00E04F11 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		BE70987F2BB0DE9400E04F11 /* SpicePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpicePopupView.swift; sourceTree = "<group>"; };
 		BE7098862BB0E18E00E04F11 /* ListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTabView.swift; sourceTree = "<group>"; };
@@ -183,6 +184,7 @@
 		BE02B7F42B719A9F0093AA4F /* Flavor Fusion */ = {
 			isa = PBXGroup;
 			children = (
+				BE4BA6482CB6D4E50016EB67 /* Flavor-Fusion-Info.plist */,
 				BE2431D22BF04BBD00B77990 /* Data Fusion */,
 				BE95D81C2BB1D2B200A2E59C /* Passcode */,
 				BE7098972BB0F52500E04F11 /* Blending */,
@@ -709,6 +711,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
@@ -754,6 +757,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
