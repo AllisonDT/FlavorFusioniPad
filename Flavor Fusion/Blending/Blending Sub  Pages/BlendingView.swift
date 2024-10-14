@@ -38,20 +38,24 @@ struct BlendingView: View {
             for ingredient in ingredients {
                 print("- \(ingredient.name): \(ingredient.amount)")
             }
-            
+
             // Serialize the ingredients array to a custom delimited string
             let serializedIngredients = ingredients.map { "\($0.containerNumber):\($0.amount)" }.joined(separator: ";")
-            
-            print("Serialized Ingredients String: \(serializedIngredients)")
-            print("Size of Serialized String in bytes: \(serializedIngredients.lengthOfBytes(using: .utf8))")
-            
+
+            // Append the end marker "#END" to signal completion
+            let fullSerializedIngredients = serializedIngredients + ";#END"
+
+            print("Serialized Ingredients String: \(fullSerializedIngredients)")
+            print("Size of Serialized String in bytes: \(fullSerializedIngredients.lengthOfBytes(using: .utf8))")
+
             // Send the serialized string over Bluetooth using BLEManager
-            if let serializedData = serializedIngredients.data(using: .utf8) {
+            if let serializedData = fullSerializedIngredients.data(using: .utf8) {
                 bleManager.sendSpiceDataToPeripheral(data: serializedData)
             } else {
                 print("Failed to encode ingredients string.")
             }
         }
+
         .onChange(of: bleManager.isOrderMixed) {
             if bleManager.isOrderMixed {
                 // If the boolean becomes true, schedule the blend completion notification and call onComplete()

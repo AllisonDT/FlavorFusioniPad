@@ -10,19 +10,21 @@ import CoreBluetooth
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @Published var isDataRetrievedViaBluetooth: Bool = false
-    @Published var isOrderMixed: Bool = false  // Track whether the spice blend is done being mixed
-    @Published var isTrayEmpty: Bool = false   // New: Track whether the tray is empty
-    
+    @Published var isOrderMixed: Bool = false   // Track whether the spice blend is done being mixed
+    @Published var isTrayEmpty: Bool = true    // Track whether the tray is empty
+
     var centralManager: CBCentralManager!
     var connectedPeripheral: CBPeripheral?
-    
+    var dataCharacteristic: CBCharacteristic?
+
     var spiceDataViewModel: SpiceDataViewModel
 
-    // Define your service and characteristic UUIDs
-    let spiceServiceUUID = CBUUID(string: "180C")
-    let serializedIngredientsCharacteristicUUID = CBUUID(string: "2A58")
-    let spiceMixedCharacteristicUUID = CBUUID(string: "2A59")  // UUID for spice mixed status
-    let trayStatusCharacteristicUUID = CBUUID(string: "19B10002-E8F2-537E-4F6C-D104768A1214")  // New: UUID for tray status
+    // HM-10 module UUIDs
+    let spiceServiceUUID = CBUUID(string: "FFE0")       // HM-10's service UUID
+    let dataCharacteristicUUID = CBUUID(string: "FFE1") // HM-10's data characteristic UUID
+
+    // Specific peripheral UUID
+    let targetPeripheralUUID = UUID(uuidString: "CA64A7F2-3E78-05AA-1784-4AF73E3029E3")
 
     init(spiceDataViewModel: SpiceDataViewModel) {
         self.spiceDataViewModel = spiceDataViewModel
@@ -31,24 +33,47 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         print("Central Manager initialized.")
     }
 
+    // MARK: - CBCentralManagerDelegate Methods
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("Central Manager did update state: \(central.state.rawValue)")
-        
+
         if central.state == .poweredOn {
-            print("Bluetooth is powered on. Starting scan for peripherals...")
-            centralManager.scanForPeripherals(withServices: [spiceServiceUUID], options: nil)
+            print("Bluetooth is powered on.")
+            // Attempt to retrieve the peripheral with the specific UUID
+            if let targetUUID = targetPeripheralUUID {
+                let retrievedPeripherals = centralManager.retrievePeripherals(withIdentifiers: [targetUUID])
+                if let peripheral = retrievedPeripherals.first {
+                    print("Retrieved peripheral with UUID: \(peripheral.identifier)")
+                    connectedPeripheral = peripheral
+                    peripheral.delegate = self
+                    centralManager.connect(peripheral, options: nil)
+                    return
+                }
+            }
+
+            // If not found, start scanning
+            print("Starting scan for peripherals...")
+            centralManager.scanForPeripherals(withServices: nil, options: nil)
         } else {
             print("Bluetooth is not available.")
             useExampleDataIfNeeded()
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
+                        advertisementData: [String: Any], rssi RSSI: NSNumber) {
         print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
-        connectedPeripheral = peripheral
-        centralManager.stopScan()
-        print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
-        centralManager.connect(peripheral, options: nil)
+
+        // Check if this is the target peripheral
+        if peripheral.identifier == targetPeripheralUUID {
+            connectedPeripheral = peripheral
+            centralManager.stopScan()
+            print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
+            centralManager.connect(peripheral, options: nil)
+        } else {
+            print("Peripheral UUID \(peripheral.identifier) does not match target UUID.")
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -57,136 +82,131 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         peripheral.discoverServices([spiceServiceUUID])
     }
 
+    // MARK: - CBPeripheralDelegate Methods
+
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             print("Error discovering services: \(error.localizedDescription)")
             return
         }
-        
+
         print("Discovered services for peripheral: \(peripheral.name ?? "Unknown").")
         if let services = peripheral.services {
             for service in services {
                 print("Service UUID: \(service.uuid)")
                 if service.uuid == spiceServiceUUID {
                     print("Found spice service. Discovering characteristics...")
-                    peripheral.discoverCharacteristics([serializedIngredientsCharacteristicUUID, spiceMixedCharacteristicUUID, trayStatusCharacteristicUUID], for: service)  // Add trayStatusCharacteristicUUID
+                    peripheral.discoverCharacteristics([dataCharacteristicUUID], for: service)
                 }
             }
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService,
+                    error: Error?) {
         if let error = error {
             print("Error discovering characteristics: \(error.localizedDescription)")
             return
         }
-        
+
         print("Discovered characteristics for service: \(service.uuid).")
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 print("Characteristic UUID: \(characteristic.uuid)")
-                if characteristic.uuid == spiceMixedCharacteristicUUID || characteristic.uuid == trayStatusCharacteristicUUID {
+                if characteristic.uuid == dataCharacteristicUUID {
                     print("Enabling notifications for characteristic: \(characteristic.uuid)")
                     peripheral.setNotifyValue(true, for: characteristic)
+                    self.dataCharacteristic = characteristic // Store the characteristic
                 }
             }
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic,
+                    error: Error?) {
         if let error = error {
             print("Error updating value for characteristic: \(error.localizedDescription)")
             return
         }
-        
-        // print("Received update for characteristic: \(characteristic.uuid).")
+
         if let data = characteristic.value {
-            // print("Data received: \(data as NSData)")
             isDataRetrievedViaBluetooth = true
-            
             // Process data on a background thread to avoid UI lag
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.processData(characteristic: characteristic, data: data)
             }
         } else {
-            // print("No data received. Using example data.")
             useExampleDataIfNeeded()
         }
     }
 
+    // MARK: - Data Processing Methods
+
     private func processData(characteristic: CBCharacteristic, data: Data) {
-        if characteristic.uuid == spiceMixedCharacteristicUUID {
-            // Process the boolean data for spice mixed status
-            let isMixed = data[0] != 0
-            // print("Processed boolean: is order mixed? \(isMixed)")
-            
-            // Update UI on the main thread
-            DispatchQueue.main.async { [weak self] in
-                self?.isOrderMixed = isMixed
-                // print("Order mixed status updated: \(isMixed)")
-            }
-        } else if characteristic.uuid == trayStatusCharacteristicUUID {
-            // Process the boolean data for tray status
-            let trayEmpty = data[0] != 0
-            // print("Processed boolean: is tray empty? \(trayEmpty)")
-            
-            // Update UI on the main thread
-            DispatchQueue.main.async { [weak self] in
-                self?.isTrayEmpty = trayEmpty
-                // print("Tray empty status updated: \(trayEmpty)")
+        if characteristic.uuid == dataCharacteristicUUID {
+            if let message = String(data: data, encoding: .utf8) {
+                print("Received message: \(message)")
+                // Process the message
+                parseMessage(message)
+            } else {
+                print("Failed to decode data as UTF-8 string.")
             }
         }
     }
 
-    private func completeDataTransfer() {
-        // Stop notifications
-        if let peripheral = connectedPeripheral {
-            if let characteristics = peripheral.services?.first(where: { $0.uuid == spiceServiceUUID })?.characteristics {
-                for characteristic in characteristics {
-                    print("Disabling notifications for characteristic: \(characteristic.uuid)")
-                    peripheral.setNotifyValue(false, for: characteristic)
-                }
+    private func parseMessage(_ message: String) {
+        // Example messages: "ORDER_MIXED:1", "TRAY_EMPTY:0"
+        if message.hasPrefix("ORDER_MIXED:") {
+            let value = message.replacingOccurrences(of: "ORDER_MIXED:", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+            DispatchQueue.main.async { [weak self] in
+                self?.isOrderMixed = (value == "1")
+                print("Order mixed status updated: \((value == "1"))")
             }
+        } else if message.hasPrefix("TRAY_EMPTY:") {
+            let value = message.replacingOccurrences(of: "TRAY_EMPTY:", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+            DispatchQueue.main.async { [weak self] in
+                self?.isTrayEmpty = (value == "1")
+                print("Tray empty status updated: \((value == "1"))")
+            }
+        } else {
+            print("Unknown message received: \(message)")
         }
-        
-        print("All data processed. UI should be updated accordingly.")
     }
+
+    // MARK: - Data Sending Method
 
     func sendSpiceDataToPeripheral(data: Data) {
         guard let peripheral = connectedPeripheral else {
             print("No connected peripheral to send data to.")
             return
         }
-        
-        if let serializedIngredientsCharacteristic = getCharacteristic(peripheral: peripheral, uuid: serializedIngredientsCharacteristicUUID) {
-            let chunkSize = 20  // Adjust as necessary for your Bluetooth characteristic size
-            var offset = 0
-            
-            while offset < data.count {
-                let chunkLength = min(chunkSize, data.count - offset)
-                let chunk = data.subdata(in: offset..<offset + chunkLength)
-                
-                // Send this chunk over Bluetooth
-                peripheral.writeValue(chunk, for: serializedIngredientsCharacteristic, type: .withResponse)
-                print("Sending chunk: \(String(data: chunk, encoding: .utf8) ?? "Error")")
-                
-                offset += chunkLength
-            }
-            
-            print("All data has been sent.")
-            
-        } else {
-            print("Could not find characteristic to send serialized ingredients data.")
+
+        guard let dataCharacteristic = self.dataCharacteristic else {
+            print("Data characteristic not found.")
+            return
         }
+
+        let chunkSize = 20  // BLE characteristic size limit
+        var offset = 0
+
+        while offset < data.count {
+            let chunkLength = min(chunkSize, data.count - offset)
+            let chunk = data.subdata(in: offset..<offset + chunkLength)
+
+            // Send this chunk over Bluetooth
+            peripheral.writeValue(chunk, for: dataCharacteristic, type: .withoutResponse)
+            print("Sending chunk: \(String(data: chunk, encoding: .utf8) ?? "Error")")
+
+            offset += chunkLength
+            // Sleep briefly to prevent overwhelming the peripheral
+            usleep(10000) // Sleep for 10ms
+        }
+
+        print("All data has been sent.")
     }
-    
-    private func getCharacteristic(peripheral: CBPeripheral, uuid: CBUUID) -> CBCharacteristic? {
-        return peripheral.services?
-            .first(where: { $0.uuid == spiceServiceUUID })?
-            .characteristics?
-            .first(where: { $0.uuid == uuid })
-    }
-    
+
+    // MARK: - Helper Methods
+
     private func useExampleDataIfNeeded() {
         if !isDataRetrievedViaBluetooth {
             print("Using example data as no Bluetooth data was retrieved.")
