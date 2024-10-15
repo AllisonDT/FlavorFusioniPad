@@ -24,7 +24,10 @@ struct BlendConfirmationView: View {
     let onConfirm: () -> Void
     
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add the view model
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
+    @EnvironmentObject var bleManager: BLEManager // Inject BLEManager as an environment object
+    
+    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
@@ -74,8 +77,12 @@ struct BlendConfirmationView: View {
                 
                 HStack {
                     Button(action: {
-                        subtractSpicesInOunces() // Subtract spice amounts in ounces
-                        onConfirm()
+                        if bleManager.connectedPeripheral != nil {
+                            subtractSpicesInOunces() // Subtract spice amounts in ounces
+                            onConfirm()
+                        } else {
+                            showAlert = true // Show alert if Bluetooth is not connected
+                        }
                     }) {
                         Text("Confirm")
                             .font(.headline)
@@ -87,6 +94,13 @@ struct BlendConfirmationView: View {
                             .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
                     .padding(.horizontal)
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Device Not Connected"),
+                            message: Text("Please turn on Bluetooth to proceed."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
                 }
                 .padding(.bottom)
             }
@@ -157,7 +171,6 @@ struct BlendConfirmationView: View {
         for ingredient in ingredients {
             let amountInOunces = convertToOunces(amount: ingredient.amount, unit: ingredient.unit)
             
-            // Find the spice by name instead of container number
             if let spiceIndex = spiceDataViewModel.spices.firstIndex(where: { $0.name == ingredient.name }) {
                 let currentAmount = spiceDataViewModel.spices[spiceIndex].spiceAmount
                 let updatedAmount = currentAmount - amountInOunces
@@ -165,8 +178,6 @@ struct BlendConfirmationView: View {
                 if updatedAmount >= 0 {
                     spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: updatedAmount)
                 } else {
-                    // Handle case where subtraction would result in a negative amount
-                    // For example, set the amount to 0 or show an error
                     spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: 0)
                     print("Error: Attempted to subtract more than available in container \(spiceDataViewModel.spices[spiceIndex].containerNumber). Setting amount to 0.")
                 }
