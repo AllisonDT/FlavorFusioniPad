@@ -9,6 +9,7 @@ import Foundation
 import CoreBluetooth
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    @Published var isBluetoothConnected: Bool = false // Track Bluetooth connection status
     @Published var isDataRetrievedViaBluetooth: Bool = false
     @Published var isOrderMixed: Bool = false   // Track whether the spice blend is done being mixed
     @Published var isTrayEmpty: Bool = true    // Track whether the tray is empty
@@ -19,11 +20,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     var spiceDataViewModel: SpiceDataViewModel
 
-    // HM-10 module UUIDs
-    let spiceServiceUUID = CBUUID(string: "FFE0")       // HM-10's service UUID
-    let dataCharacteristicUUID = CBUUID(string: "FFE1") // HM-10's data characteristic UUID
-
-    // Specific peripheral UUID
+    let spiceServiceUUID = CBUUID(string: "FFE0")
+    let dataCharacteristicUUID = CBUUID(string: "FFE1")
     let targetPeripheralUUID = UUID(uuidString: "CA64A7F2-3E78-05AA-1784-4AF73E3029E3")
 
     init(spiceDataViewModel: SpiceDataViewModel) {
@@ -37,10 +35,11 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("Central Manager did update state: \(central.state.rawValue)")
-
+        
         if central.state == .poweredOn {
             print("Bluetooth is powered on.")
-            // Attempt to retrieve the peripheral with the specific UUID
+            isBluetoothConnected = true // Bluetooth is available
+            // Continue attempting to connect or scan for peripherals
             if let targetUUID = targetPeripheralUUID {
                 let retrievedPeripherals = centralManager.retrievePeripherals(withIdentifiers: [targetUUID])
                 if let peripheral = retrievedPeripherals.first {
@@ -51,14 +50,18 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                     return
                 }
             }
-
-            // If not found, start scanning
+            // Start scanning if the peripheral is not found
             print("Starting scan for peripherals...")
             centralManager.scanForPeripherals(withServices: nil, options: nil)
+        } else if central.state == .poweredOff {
+            print("Bluetooth is powered off.")
+            isBluetoothConnected = false // Update when Bluetooth is powered off
         } else {
             print("Bluetooth is not available.")
-            useExampleDataIfNeeded()
+            isBluetoothConnected = false // Handle other unavailable states
         }
+        
+        useExampleDataIfNeeded() // Handle the fallback to example data
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
@@ -77,9 +80,15 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
-        peripheral.delegate = self
-        peripheral.discoverServices([spiceServiceUUID])
+            print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
+            isBluetoothConnected = true // Update connection status
+            peripheral.delegate = self
+            peripheral.discoverServices([spiceServiceUUID])
+        }
+
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
+        isBluetoothConnected = false // Update connection status when disconnected
     }
 
     // MARK: - CBPeripheralDelegate Methods

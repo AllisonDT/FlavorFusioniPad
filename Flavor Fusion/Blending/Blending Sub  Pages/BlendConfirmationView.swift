@@ -77,7 +77,7 @@ struct BlendConfirmationView: View {
                 
                 HStack {
                     Button(action: {
-                        if bleManager.connectedPeripheral != nil {
+                        if bleManager.isBluetoothConnected {
                             subtractSpicesInOunces() // Subtract spice amounts in ounces
                             onConfirm()
                         } else {
@@ -97,7 +97,7 @@ struct BlendConfirmationView: View {
                     .alert(isPresented: $showAlert) {
                         Alert(
                             title: Text("Device Not Connected"),
-                            message: Text("Please turn on Bluetooth to proceed."),
+                            message: Text("Please turn on Bluetooth or plug in device."),
                             dismissButton: .default(Text("OK"))
                         )
                     }
