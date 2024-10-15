@@ -77,7 +77,7 @@ struct BlendConfirmationView: View {
                 
                 HStack {
                     Button(action: {
-                        if bleManager.isBluetoothConnected {
+                        if bleManager.isBluetoothConnected && bleManager.connectedPeripheral != nil {
                             subtractSpicesInOunces() // Subtract spice amounts in ounces
                             onConfirm()
                         } else {

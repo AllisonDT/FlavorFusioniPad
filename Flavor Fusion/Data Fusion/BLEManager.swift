@@ -39,18 +39,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         if central.state == .poweredOn {
             print("Bluetooth is powered on.")
             isBluetoothConnected = true // Bluetooth is available
-            // Continue attempting to connect or scan for peripherals
-            if let targetUUID = targetPeripheralUUID {
-                let retrievedPeripherals = centralManager.retrievePeripherals(withIdentifiers: [targetUUID])
-                if let peripheral = retrievedPeripherals.first {
-                    print("Retrieved peripheral with UUID: \(peripheral.identifier)")
-                    connectedPeripheral = peripheral
-                    peripheral.delegate = self
-                    centralManager.connect(peripheral, options: nil)
-                    return
-                }
-            }
-            // Start scanning if the peripheral is not found
+
+            // Start scanning for all peripherals
             print("Starting scan for peripherals...")
             centralManager.scanForPeripherals(withServices: nil, options: nil)
         } else if central.state == .poweredOff {
@@ -66,16 +56,16 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
                         advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
-
+        // print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
+        
         // Check if this is the target peripheral
-        if peripheral.identifier == targetPeripheralUUID {
+        if peripheral.identifier.uuidString == targetPeripheralUUID?.uuidString {
             connectedPeripheral = peripheral
             centralManager.stopScan()
             print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
             centralManager.connect(peripheral, options: nil)
         } else {
-            print("Peripheral UUID \(peripheral.identifier) does not match target UUID.")
+            //print("Peripheral UUID \(peripheral.identifier.uuidString) does not match target UUID.")
         }
     }
 
