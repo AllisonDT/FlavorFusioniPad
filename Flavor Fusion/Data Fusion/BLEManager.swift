@@ -22,7 +22,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     let spiceServiceUUID = CBUUID(string: "FFE0")
     let dataCharacteristicUUID = CBUUID(string: "FFE1")
-    let targetPeripheralUUID = UUID(uuidString: "CA64A7F2-3E78-05AA-1784-4AF73E3029E3")
+    let targetPeripheralName = "HMSoft"
 
     init(spiceDataViewModel: SpiceDataViewModel) {
         self.spiceDataViewModel = spiceDataViewModel
@@ -56,25 +56,24 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
                         advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        // print("Discovered peripheral: \(peripheral.name ?? "Unknown") with RSSI: \(RSSI)")
-        
-        // Check if this is the target peripheral
-        if peripheral.identifier.uuidString == targetPeripheralUUID?.uuidString {
+        // Check if this is the target peripheral based on the name
+        if let peripheralName = peripheral.name, peripheralName == targetPeripheralName {
             connectedPeripheral = peripheral
             centralManager.stopScan()
-            print("Stopped scanning. Connecting to peripheral: \(peripheral.name ?? "Unknown")")
+            print("Stopped scanning. Connecting to peripheral: \(peripheralName)")
             centralManager.connect(peripheral, options: nil)
         } else {
-            //print("Peripheral UUID \(peripheral.identifier.uuidString) does not match target UUID.")
+            // Optionally log peripherals that do not match the target name
+            print("Discovered peripheral: \(peripheral.name ?? "Unknown") does not match target name.")
         }
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-            print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
-            isBluetoothConnected = true // Update connection status
-            peripheral.delegate = self
-            peripheral.discoverServices([spiceServiceUUID])
-        }
+        print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
+        isBluetoothConnected = true // Update connection status
+        peripheral.delegate = self
+        peripheral.discoverServices([spiceServiceUUID])
+    }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
