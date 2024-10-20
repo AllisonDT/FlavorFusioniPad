@@ -106,9 +106,12 @@ struct NewBlendView: View {
             VStack {
                 Spacer()
                 Button(action: {
-                    if spiceName.isEmpty || selectedIngredients.isEmpty {
+                    if selectedIngredients.isEmpty {
                         alertType = .incompleteBlend
                         showAlert = true
+                    } else if spiceName.isEmpty {
+                        // Proceed to blending without prompting to save to recipe book
+                        showPopup = true
                     } else {
                         alertType = .saveToRecipeBook
                         showAlert = true
@@ -129,7 +132,7 @@ struct NewBlendView: View {
                     case .incompleteBlend:
                         return Alert(
                             title: Text("Incomplete Blend"),
-                            message: Text("Please enter a spice blend name and select at least one ingredient."),
+                            message: Text("Please select at least one ingredient."),
                             dismissButton: .default(Text("OK"))
                         )
                     case .saveToRecipeBook:
@@ -194,10 +197,29 @@ struct NewBlendView: View {
                 .sheet(isPresented: $showCompletion) {
                     BlendCompletionView(onDone: {
                         showCompletion = false
+                        resetState()
                     })
                 }
             }
         }
+    }
+
+    private func resetState() {
+        spiceName = ""
+        servings = 1
+        spicesData = spiceData.map { spice in
+            var newSpice = spice
+            newSpice.isSelected = false
+            newSpice.selectedAmount = 1.0 // Set to default amount
+            newSpice.unit = "Tsp" // Set to default unit
+            return newSpice
+        }
+        isSelecting = false
+        showPopup = false
+        showBlending = false
+        showCompletion = false
+        showAlert = false
+        alertType = nil
     }
 }
 
