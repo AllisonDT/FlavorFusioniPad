@@ -23,6 +23,9 @@ struct SettingsView: View {
     
     @State private var alertType: AlertType? = nil
     
+    // Use BLEManager from the environment
+    @EnvironmentObject var bleManager: BLEManager
+
     enum AlertType: Identifiable {
         case incorrectPasscode
         case passcodeChanged
@@ -57,6 +60,24 @@ struct SettingsView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    // Bluetooth connection status
+                    HStack {
+                        Text("Bluetooth Status:")
+                            .font(.headline)
+                        Spacer()
+                        if bleManager.isBluetoothConnected {
+                            Text("Connected")
+                                .foregroundColor(.green)
+                        } else {
+                            Text("Not Connected")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    Divider()
+                        .padding(.vertical, 10)
+                    
                     Group {
                         Text("Change Passcode")
                             .font(.headline)

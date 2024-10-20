@@ -32,15 +32,20 @@ struct BlendingView: View {
         }
         .padding()
         .onAppear {
+            bleManager.isOrderMixed = false
             print("Spice Name: \(spiceName)")
             print("Servings: \(servings)")
             print("Ingredients:")
             for ingredient in ingredients {
-                print("- \(ingredient.name): \(ingredient.amount)")
+                print("- \(ingredient.name): \(ingredient.amount) \(ingredient.unit)")
+
+                // Convert to ounces before serialization
+                let amountInOunces = convertToOunces(amount: ingredient.amount, unit: ingredient.unit)
+                print("- Converted amount in ounces: \(amountInOunces)")
             }
 
-            // Serialize the ingredients array to a custom delimited string
-            let serializedIngredients = ingredients.map { "\($0.containerNumber):\($0.amount)" }.joined(separator: ";")
+            // Serialize the ingredients array to a custom delimited string in ounces
+            let serializedIngredients = ingredients.map { "\($0.containerNumber):\(convertToOunces(amount: $0.amount, unit: $0.unit))" }.joined(separator: ";")
 
             // Append the end marker "#END" to signal completion
             let fullSerializedIngredients = serializedIngredients + ";#END"
@@ -62,6 +67,17 @@ struct BlendingView: View {
                 scheduleBlendCompletionNotification()
                 onComplete()
             }
+        }
+    }
+    
+    private func convertToOunces(amount: Double, unit: String) -> Double {
+        switch unit {
+        case "t":
+            return amount / 6.0 // 1 tsp = 1/6 oz
+        case "T":
+            return amount / 2.0 // 1 tbsp = 1/2 oz
+        default:
+            return amount
         }
     }
     

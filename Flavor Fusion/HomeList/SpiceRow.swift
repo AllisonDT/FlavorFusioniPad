@@ -43,6 +43,8 @@ struct SpiceRow: View {
                     Text("Container: \(spice.containerNumber)")
                         .font(.caption)
                         .foregroundColor(.primary)
+                        .lineLimit(1)  // Limit the text to one line
+                        .minimumScaleFactor(0.5)  // Allow the text to scale down to 50% of its size if needed
                 }
                 .padding()
 

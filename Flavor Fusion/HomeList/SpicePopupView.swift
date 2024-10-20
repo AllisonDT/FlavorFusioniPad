@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// `SpicePopupView` presents detailed spice information, including its name, amount, and the container number.
 /// It also allows users to edit the spice's name and amount. If any recipes contain the spice, they are listed in the view.
-/// The view includes a button to save changes or toggle edit mode, and another to close the popup.
+/// The view includes a button to save changes or tog  bvcgle edit mode, and another to close the popup.
 ///
 /// - Parameters:
 ///   - spice: The `Spice` object representing the spice being displayed.
@@ -23,6 +23,8 @@ struct SpicePopupView: View {
     @State private var editedSpiceName: String
     @State private var editedSpiceAmount: String
     @State private var isEditing: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     let spice: Spice
     let recipes: [Recipe]
     @Binding var isPresented: Bool
@@ -111,16 +113,19 @@ struct SpicePopupView: View {
             .navigationBarItems(
                 leading: Button(action: {
                     if isEditing {
-                        // Force the text fields to commit their changes
-                        UIApplication.shared.endEditing()
-                        
-                        // Save changes when the user toggles off editing mode
-                        spiceDataViewModel.updateSpiceName(containerNumber: spice.containerNumber, newName: editedSpiceName)
-                        
-                        if let newAmount = Double(editedSpiceAmount), newAmount <= 16.0 {
-                            spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spice.containerNumber, newAmountInOunces: newAmount)
+                        if validateInputs() {
+                            // Force the text fields to commit their changes
+                            UIApplication.shared.endEditing()
+                            
+                            // Save changes when the user toggles off editing mode
+                            spiceDataViewModel.updateSpiceName(containerNumber: spice.containerNumber, newName: editedSpiceName)
+                            
+                            if let newAmount = Double(editedSpiceAmount), newAmount <= 16.0 {
+                                spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spice.containerNumber, newAmountInOunces: newAmount)
+                            }
                         } else {
-                            print("Invalid amount entered. Please enter a value up to 16oz.")
+                            // Show the alert if validation fails
+                            showAlert = true
                         }
                     }
                     isEditing.toggle()
@@ -135,6 +140,24 @@ struct SpicePopupView: View {
                         .foregroundColor(.primary)
                 }
             )
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
+        }
+    }
+    
+    // Validation function to check spice name and amount
+    private func validateInputs() -> Bool {
+        if editedSpiceName.isEmpty {
+            alertMessage = "Please enter a spice name."
+            return false
+        }
+        
+        if let amount = Double(editedSpiceAmount), amount > 0 && amount <= 16 {
+            return true
+        } else {
+            alertMessage = "Please enter a valid amount (up to 16 oz)."
+            return false
         }
     }
 }

@@ -77,3 +77,8 @@ git clone https://github.com/AllisonDT/Flavor-Fusion.git
 - 9/12 Added ability to type in spice amount
 - 9/13 Added update to spice indicator on popup view, fixed data not updating on home screen until user refreshes
 - 9/25 Added edit recipe feature, bug fixes
+
+
+
+
+- go back to home screen after blending

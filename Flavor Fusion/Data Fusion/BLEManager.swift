@@ -22,7 +22,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
 
     let spiceServiceUUID = CBUUID(string: "FFE0")
     let dataCharacteristicUUID = CBUUID(string: "FFE1")
-    let targetPeripheralName = "HMSoft"
+    let targetPeripheralName = "HMSoft"  // The specific peripheral name you're expecting
 
     init(spiceDataViewModel: SpiceDataViewModel) {
         self.spiceDataViewModel = spiceDataViewModel
@@ -38,46 +38,47 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         
         if central.state == .poweredOn {
             print("Bluetooth is powered on.")
-            isBluetoothConnected = true // Bluetooth is available
-
-            // Start scanning for all peripherals
-            print("Starting scan for peripherals...")
+            // Start scanning for peripherals
             centralManager.scanForPeripherals(withServices: nil, options: nil)
-        } else if central.state == .poweredOff {
-            print("Bluetooth is powered off.")
-            isBluetoothConnected = false // Update when Bluetooth is powered off
         } else {
-            print("Bluetooth is not available.")
-            isBluetoothConnected = false // Handle other unavailable states
+            isBluetoothConnected = false // Reset connection status if Bluetooth is not available
         }
         
-        useExampleDataIfNeeded() // Handle the fallback to example data
+        useExampleDataIfNeeded() // Handle fallback data if Bluetooth is not connected
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
-                        advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        // Check if this is the target peripheral based on the name
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        // Check if the discovered peripheral matches the one you're looking for
         if let peripheralName = peripheral.name, peripheralName == targetPeripheralName {
             connectedPeripheral = peripheral
-            centralManager.stopScan()
-            print("Stopped scanning. Connecting to peripheral: \(peripheralName)")
-            centralManager.connect(peripheral, options: nil)
+            centralManager.stopScan()  // Stop scanning once the peripheral is found
+            centralManager.connect(peripheral, options: nil)  // Connect to the target peripheral
         } else {
-            // Optionally log peripherals that do not match the target name
-            print("Discovered peripheral: \(peripheral.name ?? "Unknown") does not match target name.")
+            print("Discovered peripheral: \(peripheral.name ?? "Unknown") does not match the target.")
         }
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected to peripheral: \(peripheral.name ?? "Unknown"). Discovering services...")
-        isBluetoothConnected = true // Update connection status
-        peripheral.delegate = self
-        peripheral.discoverServices([spiceServiceUUID])
+        // Only update the connection status if connected to your specific peripheral
+        if peripheral.name == targetPeripheralName {
+            print("Connected to target peripheral: \(peripheral.name ?? "Unknown")")
+            isBluetoothConnected = true // Set connected status only for your module
+            peripheral.delegate = self
+            peripheral.discoverServices([spiceServiceUUID])
+        } else {
+            isBluetoothConnected = false // Ensure connection status is false for other devices
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected from peripheral: \(peripheral.name ?? "Unknown").")
         isBluetoothConnected = false // Update connection status when disconnected
+        
+        // Automatically restart scanning for the peripheral
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // Delay a bit before rescanning
+            print("Reconnecting... Restarting scan for peripherals.")
+            self.centralManager.scanForPeripherals(withServices: nil, options: nil)
+        }
     }
 
     // MARK: - CBPeripheralDelegate Methods
