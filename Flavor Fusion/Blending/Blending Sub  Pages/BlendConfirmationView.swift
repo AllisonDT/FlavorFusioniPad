@@ -28,7 +28,8 @@ struct BlendConfirmationView: View {
     @EnvironmentObject var bleManager: BLEManager // Inject BLEManager as an environment object
     
     @State private var showAlert = false
-    
+    @State private var alertMessage = ""
+
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
@@ -78,10 +79,14 @@ struct BlendConfirmationView: View {
                 HStack {
                     Button(action: {
                         if bleManager.isBluetoothConnected && bleManager.connectedPeripheral != nil {
-                            subtractSpicesInOunces() // Subtract spice amounts in ounces
-                            onConfirm()
+                            if subtractSpicesInOunces() {
+                                onConfirm()
+                            } else {
+                                showAlert = true
+                            }
                         } else {
-                            showAlert = true // Show alert if Bluetooth is not connected
+                            showAlert = true
+                            alertMessage = "Please turn on Bluetooth or plug in the device."
                         }
                     }) {
                         Text("Confirm")
@@ -96,8 +101,8 @@ struct BlendConfirmationView: View {
                     .padding(.horizontal)
                     .alert(isPresented: $showAlert) {
                         Alert(
-                            title: Text("Device Not Connected"),
-                            message: Text("Please turn on Bluetooth or plug in device."),
+                            title: Text("Warning"),
+                            message: Text(alertMessage),
                             dismissButton: .default(Text("OK"))
                         )
                     }
@@ -167,7 +172,8 @@ struct BlendConfirmationView: View {
         }
     }
 
-    private func subtractSpicesInOunces() {
+    private func subtractSpicesInOunces() -> Bool {
+        var sufficientSpices = true
         for ingredient in ingredients {
             let amountInOunces = convertToOunces(amount: ingredient.amount, unit: ingredient.unit)
             
@@ -178,12 +184,20 @@ struct BlendConfirmationView: View {
                 if updatedAmount >= 0 {
                     spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: updatedAmount)
                 } else {
-                    spiceDataViewModel.updateSpiceAmountInOunces(containerNumber: spiceDataViewModel.spices[spiceIndex].containerNumber, newAmountInOunces: 0)
-                    print("Error: Attempted to subtract more than available in container \(spiceDataViewModel.spices[spiceIndex].containerNumber). Setting amount to 0.")
+                    sufficientSpices = false
+                    DispatchQueue.main.async {
+                        alertMessage = "Insufficient spice in container \(spiceDataViewModel.spices[spiceIndex].containerNumber) for \(ingredient.name). Please refill the container."
+                    }
+                    break
                 }
             } else {
-                print("Error: Spice with name \(ingredient.name) not found.")
+                sufficientSpices = false
+                DispatchQueue.main.async {
+                    alertMessage = "Spice \(ingredient.name) not found."
+                }
+                break
             }
         }
+        return sufficientSpices
     }
 }
