@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// `SpicePopupView` presents detailed spice information, including its name, amount, and the container number.
 /// It also allows users to edit the spice's name and amount. If any recipes contain the spice, they are listed in the view.
-/// The view includes a button to save changes or tog  bvcgle edit mode, and another to close the popup.
+/// The view includes a button to save changes or toggle edit mode, and another to close the popup.
 ///
 /// - Parameters:
 ///   - spice: The `Spice` object representing the spice being displayed.
@@ -25,6 +25,7 @@ struct SpicePopupView: View {
     @State private var isEditing: Bool = false
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
+    @FocusState private var spiceNameIsFocused: Bool // New focus state
     let spice: Spice
     let recipes: [Recipe]
     @Binding var isPresented: Bool
@@ -48,6 +49,7 @@ struct SpicePopupView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         if isEditing {
                             TextField("Spice Name", text: $editedSpiceName)
+                                .focused($spiceNameIsFocused) // Add focus state
                                 .padding(8)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(8)
@@ -127,6 +129,9 @@ struct SpicePopupView: View {
                             // Show the alert if validation fails
                             showAlert = true
                         }
+                    } else {
+                        // Focus the spice name field when editing starts
+                        spiceNameIsFocused = true
                     }
                     isEditing.toggle()
                 }) {
