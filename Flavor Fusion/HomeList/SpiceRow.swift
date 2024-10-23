@@ -37,19 +37,21 @@ struct SpiceRow: View {
                         .foregroundColor(spice.isSelected ? .blue : .primary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
-                    
+
                     Spacer()
-                    
+
                     Text("Container: \(spice.containerNumber)")
                         .font(.caption)
                         .foregroundColor(.primary)
-                        .lineLimit(1)  // Limit the text to one line
-                        .minimumScaleFactor(0.5)  // Allow the text to scale down to 50% of its size if needed
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
                 .padding()
 
-                ListSpiceIndicator(amount: spice.spiceAmount, isSelected: true).padding(.trailing, 10)
+                ListSpiceIndicator(amount: spice.spiceAmount, isSelected: true)
+                    .padding(.trailing, 10)
             }
+            .frame(maxWidth: .infinity) // Fill the available width
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color(UIColor.systemBackground))
@@ -58,7 +60,12 @@ struct SpiceRow: View {
             .padding(.vertical, 4)
         }
         .sheet(isPresented: $isShowingPopup) {
-            SpicePopupView(spice: spice, recipes: recipes, isPresented: $isShowingPopup, spiceDataViewModel: spiceDataViewModel)
+            SpicePopupView(
+                spice: spice,
+                recipes: recipes,
+                isPresented: $isShowingPopup,
+                spiceDataViewModel: spiceDataViewModel
+            )
         }
     }
 }

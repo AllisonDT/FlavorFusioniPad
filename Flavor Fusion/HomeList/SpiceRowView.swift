@@ -24,23 +24,26 @@ struct SpiceRowView: View {
     let isSelecting: Bool
     let recipes: [Recipe]
     let onSelect: (Bool) -> Void
-    
+
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(spice.isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
-                    .frame(width: geometry.size.width)
-                
-                SpiceRow(spiceDataViewModel: spiceDataViewModel, spice: spice, isSelecting: isSelecting, recipes: recipes) { selected in
-                    onSelect(selected)
-                }
-                .onTapGesture {
-                    // Update the spice's selected state in the view model
-                    if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
-                        spiceDataViewModel.spices[index].isSelected.toggle()
-                        onSelect(spiceDataViewModel.spices[index].isSelected)
-                    }
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(spice.isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
+                .frame(maxWidth: .infinity) // Fill the available width
+
+            SpiceRow(
+                spiceDataViewModel: spiceDataViewModel,
+                spice: spice,
+                isSelecting: isSelecting,
+                recipes: recipes
+            ) { selected in
+                onSelect(selected)
+            }
+            .onTapGesture {
+                // Update the spice's selected state in the view model
+                if let index = spiceDataViewModel.spices.firstIndex(where: { $0.id == spice.id }) {
+                    spiceDataViewModel.spices[index].isSelected.toggle()
+                    onSelect(spiceDataViewModel.spices[index].isSelected)
                 }
             }
         }
