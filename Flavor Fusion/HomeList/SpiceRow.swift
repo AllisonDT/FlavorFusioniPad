@@ -47,6 +47,8 @@ struct SpiceRow: View {
                         .minimumScaleFactor(0.5)
                 }
                 .padding()
+                
+                Spacer()
 
                 ListSpiceIndicator(amount: spice.spiceAmount, isSelected: true)
                     .padding(.trailing, 10)
