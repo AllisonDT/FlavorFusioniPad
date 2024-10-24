@@ -712,6 +712,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
@@ -729,7 +730,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
@@ -738,7 +739,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -758,6 +759,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
@@ -775,7 +777,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
@@ -784,7 +786,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
