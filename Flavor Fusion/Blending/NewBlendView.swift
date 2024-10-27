@@ -41,8 +41,8 @@ struct NewBlendView: View {
     @State private var alertType: BlendAlertType? = nil
 
     @ObservedObject var recipeStore: RecipeStore
-    @ObservedObject var spiceDataViewModel: SpiceDataViewModel // Add this
-    @EnvironmentObject var bleManager: BLEManager // Add BLEManager as an environment object to access tray status
+    @ObservedObject var spiceDataViewModel: SpiceDataViewModel
+    @EnvironmentObject var bleManager: BLEManager
 
     let servingOptions = Array(1...10)
 
@@ -55,7 +55,6 @@ struct NewBlendView: View {
     var body: some View {
         ZStack {
             VStack {
-                // Warning when the tray is not empty
                 if !bleManager.isTrayEmpty {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
@@ -103,14 +102,13 @@ struct NewBlendView: View {
                 }
             }
 
-            VStack {
-                Spacer()
+            // Fixed blend button within the safe area
+            .safeAreaInset(edge: .bottom) {
                 Button(action: {
                     if selectedIngredients.isEmpty {
                         alertType = .incompleteBlend
                         showAlert = true
                     } else if spiceName.isEmpty {
-                        // Proceed to blending without prompting to save to recipe book
                         showPopup = true
                     } else {
                         alertType = .saveToRecipeBook
@@ -126,7 +124,7 @@ struct NewBlendView: View {
                         .cornerRadius(10)
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                 }
-                .padding(.horizontal)
+                .padding([.leading, .trailing, .bottom])
                 .alert(isPresented: $showAlert) {
                     switch alertType {
                     case .incompleteBlend:
@@ -170,36 +168,36 @@ struct NewBlendView: View {
                         return Alert(title: Text("Unknown Alert"))
                     }
                 }
-                .sheet(isPresented: $showPopup) {
-                    BlendConfirmationView(
-                        spiceName: spiceName,
-                        servings: servings,
-                        ingredients: selectedIngredients,
-                        onConfirm: {
-                            showPopup = false
-                            showBlending = true
-                        }, spiceDataViewModel: spiceDataViewModel
-                    )
-                    .environmentObject(spiceDataViewModel) // Pass the view model to child views
-                }
-                .sheet(isPresented: $showBlending) {
-                    BlendingView(
-                        spiceName: spiceName,
-                        servings: servings,
-                        ingredients: selectedIngredients,
-                        onComplete: {
-                            showBlending = false
-                            showCompletion = true
-                        }
-                    )
-                    .environmentObject(spiceDataViewModel) // Pass the view model to child views
-                }
-                .sheet(isPresented: $showCompletion) {
-                    BlendCompletionView(onDone: {
-                        showCompletion = false
-                        resetState()
-                    })
-                }
+            }
+            .sheet(isPresented: $showPopup) {
+                BlendConfirmationView(
+                    spiceName: spiceName,
+                    servings: servings,
+                    ingredients: selectedIngredients,
+                    onConfirm: {
+                        showPopup = false
+                        showBlending = true
+                    }, spiceDataViewModel: spiceDataViewModel
+                )
+                .environmentObject(spiceDataViewModel)
+            }
+            .sheet(isPresented: $showBlending) {
+                BlendingView(
+                    spiceName: spiceName,
+                    servings: servings,
+                    ingredients: selectedIngredients,
+                    onComplete: {
+                        showBlending = false
+                        showCompletion = true
+                    }
+                )
+                .environmentObject(spiceDataViewModel)
+            }
+            .sheet(isPresented: $showCompletion) {
+                BlendCompletionView(onDone: {
+                    showCompletion = false
+                    resetState()
+                })
             }
         }
     }
@@ -210,8 +208,8 @@ struct NewBlendView: View {
         spicesData = spiceData.map { spice in
             var newSpice = spice
             newSpice.isSelected = false
-            newSpice.selectedAmount = 1.0 // Set to default amount
-            newSpice.unit = "Tsp" // Set to default unit
+            newSpice.selectedAmount = 1.0
+            newSpice.unit = "Tsp"
             return newSpice
         }
         isSelecting = false

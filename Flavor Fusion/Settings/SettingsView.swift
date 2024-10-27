@@ -13,6 +13,14 @@ import SwiftUI
 /// input fields for the current passcode, new passcode, and confirmation of the new passcode,
 /// as well as an input field for changing the display name. It also includes an option to toggle
 /// whether the passcode screen is required when the app opens.
+import SwiftUI
+
+/// A view that provides settings options for the Flavor Fusion app.
+///
+/// `SettingsView` allows users to change their passcode and display name. It provides
+/// input fields for the current passcode, new passcode, and confirmation of the new passcode,
+/// as well as an input field for changing the display name. It also includes an option to toggle
+/// whether the passcode screen is required when the app opens.
 struct SettingsView: View {
     @State private var currentPasscode: String = ""
     @State private var newPasscode: String = ""
@@ -57,7 +65,14 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        NavigationView {
+        VStack(spacing: 0) {
+            // Title outside the ScrollView
+            Text("Settings")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     // Bluetooth connection status
@@ -152,14 +167,14 @@ struct SettingsView: View {
                     }
                     .padding(.horizontal)
                 }
-                .padding()
+                .padding(.bottom, 20) // Adjust padding to make space below content
             }
             .background(Color(.systemGroupedBackground))
-            .navigationBarTitle("Settings", displayMode: .inline)
             .alert(item: $alertType) { alertType in
                 Alert(title: Text(alertType.title), message: Text(alertType.message), dismissButton: .default(Text("OK")))
             }
         }
+        .background(Color(.systemGroupedBackground))
     }
     
     func changePasscode() {
@@ -196,8 +211,6 @@ struct SettingsView: View {
     }
 }
 
-
 #Preview {
     SettingsView()
 }
-

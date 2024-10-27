@@ -84,28 +84,25 @@ struct MixRecipePreview: View {
                     .padding(.vertical)
                     
                     Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            isBlendConfirmationViewPresented.toggle()
-                        }) {
-                            Text("BLEND")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                        }
-                        .padding(.horizontal)
-                        Spacer()
-                    }
                 }
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
+            .safeAreaInset(edge: .bottom) { // Fixed blend button within the safe area
+                Button(action: {
+                    isBlendConfirmationViewPresented.toggle()
+                }) {
+                    Text("BLEND")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                }
+                .padding([.leading, .trailing, .bottom])
+            }
             .sheet(isPresented: $isBlendConfirmationViewPresented) {
                 BlendConfirmationView(
                     spiceName: recipe.name,
@@ -194,7 +191,6 @@ struct MixRecipePreview: View {
         }
     }
 }
-
 
 // Preview Provider for the MixRecipePreview
 #Preview {

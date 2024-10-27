@@ -57,11 +57,3 @@ struct BlendingNewExistingView: View {
         }
     }
 }
-
-struct BlendingNewExistingView_Previews: PreviewProvider {
-    @State static var isPresented = true
-    
-    static var previews: some View {
-        BlendingNewExistingView(isPresented: $isPresented, spiceDataViewModel: SpiceDataViewModel())
-    }
-}

@@ -35,7 +35,14 @@ struct List: View {
     @ObservedObject var spiceDataViewModel = SpiceDataViewModel()
 
     var body: some View {
-        NavigationView {
+        VStack(spacing: 0) {
+            // Title outside of the ScrollView
+            Text("\(displayName)'s Cabinet")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
+
             ScrollView {
                 VStack {
                     // Always show the last updated date
@@ -101,7 +108,6 @@ struct List: View {
                     SpicePopupView(spice: selectedSpice, recipes: recipeStore.recipes, isPresented: $isSpicePopupVisible, spiceDataViewModel: spiceDataViewModel)
                 }
             }
-            .navigationBarTitle("\(displayName)'s Cabinet", displayMode: .inline)
             .onAppear {
                 requestNotificationPermission()
                 checkSpiceLevels()
@@ -181,3 +187,4 @@ struct List_Previews: PreviewProvider {
         List()
     }
 }
+

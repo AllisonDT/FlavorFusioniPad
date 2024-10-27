@@ -25,7 +25,7 @@ struct BlendConfirmationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var spiceDataViewModel: SpiceDataViewModel
-    @EnvironmentObject var bleManager: BLEManager // Inject BLEManager as an environment object
+    @EnvironmentObject var bleManager: BLEManager
     
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -74,40 +74,7 @@ struct BlendConfirmationView: View {
                 }
                 .frame(maxHeight: 200)
                 
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        if bleManager.isBluetoothConnected && bleManager.connectedPeripheral != nil {
-                            if subtractSpicesInOunces() {
-                                onConfirm()
-                            } else {
-                                showAlert = true
-                            }
-                        } else {
-                            showAlert = true
-                            alertMessage = "Please turn on Bluetooth or plug in the device."
-                        }
-                    }) {
-                        Text("Confirm")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                    }
-                    .padding(.horizontal)
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Warning"),
-                            message: Text(alertMessage),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
-                }
-                .padding(.bottom)
+                Spacer() // Spacer for aligning the button at the bottom
             }
             .padding()
             .background(Color(.systemGroupedBackground))
@@ -118,6 +85,37 @@ struct BlendConfirmationView: View {
                 Image(systemName: "xmark")
                     .foregroundColor(.primary)
             })
+            .safeAreaInset(edge: .bottom) { // Fixed confirm button at the bottom
+                Button(action: {
+                    if bleManager.isBluetoothConnected && bleManager.connectedPeripheral != nil {
+                        if subtractSpicesInOunces() {
+                            onConfirm()
+                        } else {
+                            showAlert = true
+                        }
+                    } else {
+                        showAlert = true
+                        alertMessage = "Please turn on Bluetooth or plug in the device."
+                    }
+                }) {
+                    Text("Confirm")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                }
+                .padding([.leading, .trailing, .bottom])
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Warning"),
+                        message: Text(alertMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+            }
         }
     }
 
@@ -127,7 +125,7 @@ struct BlendConfirmationView: View {
     }
 
     private func convertToFraction(amount: Double) -> String {
-        let tolerance = 1.0 / 64.0 // To account for rounding errors
+        let tolerance = 1.0 / 64.0
         let number = amount
         var lowerNumerator = 0
         var lowerDenominator = 1
@@ -164,9 +162,9 @@ struct BlendConfirmationView: View {
     private func convertToOunces(amount: Double, unit: String) -> Double {
         switch unit {
         case "t":
-            return amount / 6.0 // 1 tsp = 1/6 oz
+            return amount / 6.0
         case "T":
-            return amount / 2.0 // 1 tbsp = 1/2 oz
+            return amount / 2.0
         default:
             return amount
         }
