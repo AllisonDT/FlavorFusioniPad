@@ -77,15 +77,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flavor Fusion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B7F22B719A9F0093AA4F /* Flavor Fusion iPad iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flavor Fusion iPad iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE02B7F52B719A9F0093AA4F /* Flavor_FusionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionApp.swift; sourceTree = "<group>"; };
 		BE02B7F72B719A9F0093AA4F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BE02B7F92B719AA00093AA4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE02B7FB2B719AA00093AA4F /* Flavor_Fusion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flavor_Fusion.entitlements; sourceTree = "<group>"; };
 		BE02B7FD2B719AA00093AA4F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B8032B719AA10093AA4F /* Flavor Fusion iPadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor Fusion iPadTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE02B8072B719AA10093AA4F /* Flavor_FusionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionTests.swift; sourceTree = "<group>"; };
-		BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor FusionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE02B80D2B719AA10093AA4F /* Flavor Fusion iPadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flavor Fusion iPadUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE02B8112B719AA10093AA4F /* Flavor_FusionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITests.swift; sourceTree = "<group>"; };
 		BE02B8132B719AA10093AA4F /* Flavor_FusionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flavor_FusionUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BE0588D22BC1F92A00BDB6E1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -174,9 +174,9 @@
 		BE02B7F32B719A9F0093AA4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */,
-				BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */,
-				BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */,
+				BE02B7F22B719A9F0093AA4F /* Flavor Fusion iPad iPad.app */,
+				BE02B8032B719AA10093AA4F /* Flavor Fusion iPadTests.xctest */,
+				BE02B80D2B719AA10093AA4F /* Flavor Fusion iPadUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -369,9 +369,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BE02B7F12B719A9F0093AA4F /* Flavor Fusion */ = {
+		BE02B7F12B719A9F0093AA4F /* Flavor Fusion iPad iPad */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion" */;
+			buildConfigurationList = BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPad iPad" */;
 			buildPhases = (
 				BE02B7EE2B719A9F0093AA4F /* Sources */,
 				BE02B7EF2B719A9F0093AA4F /* Frameworks */,
@@ -381,14 +381,14 @@
 			);
 			dependencies = (
 			);
-			name = "Flavor Fusion";
+			name = "Flavor Fusion iPad iPad";
 			productName = "Flavor Fusion";
-			productReference = BE02B7F22B719A9F0093AA4F /* Flavor Fusion.app */;
+			productReference = BE02B7F22B719A9F0093AA4F /* Flavor Fusion iPad iPad.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BE02B8022B719AA10093AA4F /* Flavor FusionTests */ = {
+		BE02B8022B719AA10093AA4F /* Flavor Fusion iPadTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionTests" */;
+			buildConfigurationList = BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPadTests" */;
 			buildPhases = (
 				BE02B7FF2B719AA10093AA4F /* Sources */,
 				BE02B8002B719AA10093AA4F /* Frameworks */,
@@ -399,14 +399,14 @@
 			dependencies = (
 				BE02B8052B719AA10093AA4F /* PBXTargetDependency */,
 			);
-			name = "Flavor FusionTests";
+			name = "Flavor Fusion iPadTests";
 			productName = "Flavor FusionTests";
-			productReference = BE02B8032B719AA10093AA4F /* Flavor FusionTests.xctest */;
+			productReference = BE02B8032B719AA10093AA4F /* Flavor Fusion iPadTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		BE02B80C2B719AA10093AA4F /* Flavor FusionUITests */ = {
+		BE02B80C2B719AA10093AA4F /* Flavor Fusion iPadUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionUITests" */;
+			buildConfigurationList = BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPadUITests" */;
 			buildPhases = (
 				BE02B8092B719AA10093AA4F /* Sources */,
 				BE02B80A2B719AA10093AA4F /* Frameworks */,
@@ -417,9 +417,9 @@
 			dependencies = (
 				BE02B80F2B719AA10093AA4F /* PBXTargetDependency */,
 			);
-			name = "Flavor FusionUITests";
+			name = "Flavor Fusion iPadUITests";
 			productName = "Flavor FusionUITests";
-			productReference = BE02B80D2B719AA10093AA4F /* Flavor FusionUITests.xctest */;
+			productReference = BE02B80D2B719AA10093AA4F /* Flavor Fusion iPadUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -445,7 +445,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion" */;
+			buildConfigurationList = BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion iPad" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -458,9 +458,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BE02B7F12B719A9F0093AA4F /* Flavor Fusion */,
-				BE02B8022B719AA10093AA4F /* Flavor FusionTests */,
-				BE02B80C2B719AA10093AA4F /* Flavor FusionUITests */,
+				BE02B7F12B719A9F0093AA4F /* Flavor Fusion iPad iPad */,
+				BE02B8022B719AA10093AA4F /* Flavor Fusion iPadTests */,
+				BE02B80C2B719AA10093AA4F /* Flavor Fusion iPadUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -566,12 +566,12 @@
 /* Begin PBXTargetDependency section */
 		BE02B8052B719AA10093AA4F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion */;
+			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion iPad iPad */;
 			targetProxy = BE02B8042B719AA10093AA4F /* PBXContainerItemProxy */;
 		};
 		BE02B80F2B719AA10093AA4F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion */;
+			target = BE02B7F12B719A9F0093AA4F /* Flavor Fusion iPad iPad */;
 			targetProxy = BE02B80E2B719AA10093AA4F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -712,7 +712,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion";
+				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion-iPad";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
@@ -730,8 +730,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion-iPad";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
 				SDKROOT = auto;
@@ -739,7 +739,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -759,7 +759,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Flavor-Fusion-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion";
+				INFOPLIST_KEY_CFBundleDisplayName = "Flavor Fusion-iPad";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to connect to and communicate with your spice containers.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app uses Face ID to securely log you in using your saved passcode.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need access to your location to discover Bluetooth devices.";
@@ -777,8 +777,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "FF.Flavor-Fusion-iPad";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_DOCUMENTATION_COMPILER = NO;
 				SDKROOT = auto;
@@ -786,7 +786,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -809,7 +809,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion iPad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion iPad";
 			};
 			name = Debug;
 		};
@@ -832,7 +832,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flavor Fusion iPad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flavor Fusion iPad";
 			};
 			name = Release;
 		};
@@ -883,7 +883,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion" */ = {
+		BE02B7ED2B719A9F0093AA4F /* Build configuration list for PBXProject "Flavor Fusion iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE02B8152B719AA10093AA4F /* Debug */,
@@ -892,7 +892,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion" */ = {
+		BE02B8172B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPad iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE02B8182B719AA10093AA4F /* Debug */,
@@ -901,7 +901,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionTests" */ = {
+		BE02B81A2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPadTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE02B81B2B719AA10093AA4F /* Debug */,
@@ -910,7 +910,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor FusionUITests" */ = {
+		BE02B81D2B719AA10093AA4F /* Build configuration list for PBXNativeTarget "Flavor Fusion iPadUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE02B81E2B719AA10093AA4F /* Debug */,

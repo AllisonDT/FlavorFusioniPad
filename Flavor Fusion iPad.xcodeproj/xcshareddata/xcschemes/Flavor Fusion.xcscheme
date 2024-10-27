@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE02B7F12B719A9F0093AA4F"
-               BuildableName = "Flavor Fusion.app"
-               BlueprintName = "Flavor Fusion"
-               ReferencedContainer = "container:Flavor Fusion.xcodeproj">
+               BuildableName = "Flavor Fusion iPad iPad.app"
+               BlueprintName = "Flavor Fusion iPad iPad"
+               ReferencedContainer = "container:Flavor Fusion iPad.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE02B8022B719AA10093AA4F"
-               BuildableName = "Flavor FusionTests.xctest"
-               BlueprintName = "Flavor FusionTests"
-               ReferencedContainer = "container:Flavor Fusion.xcodeproj">
+               BuildableName = "Flavor Fusion iPadTests.xctest"
+               BlueprintName = "Flavor Fusion iPadTests"
+               ReferencedContainer = "container:Flavor Fusion iPad.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,9 +46,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE02B80C2B719AA10093AA4F"
-               BuildableName = "Flavor FusionUITests.xctest"
-               BlueprintName = "Flavor FusionUITests"
-               ReferencedContainer = "container:Flavor Fusion.xcodeproj">
+               BuildableName = "Flavor Fusion iPadUITests.xctest"
+               BlueprintName = "Flavor Fusion iPadUITests"
+               ReferencedContainer = "container:Flavor Fusion iPad.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE02B7F12B719A9F0093AA4F"
-            BuildableName = "Flavor Fusion.app"
-            BlueprintName = "Flavor Fusion"
-            ReferencedContainer = "container:Flavor Fusion.xcodeproj">
+            BuildableName = "Flavor Fusion iPad iPad.app"
+            BlueprintName = "Flavor Fusion iPad iPad"
+            ReferencedContainer = "container:Flavor Fusion iPad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -98,9 +98,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE02B7F12B719A9F0093AA4F"
-            BuildableName = "Flavor Fusion.app"
-            BlueprintName = "Flavor Fusion"
-            ReferencedContainer = "container:Flavor Fusion.xcodeproj">
+            BuildableName = "Flavor Fusion iPad iPad.app"
+            BlueprintName = "Flavor Fusion iPad iPad"
+            ReferencedContainer = "container:Flavor Fusion iPad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
