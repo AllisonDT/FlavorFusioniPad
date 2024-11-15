@@ -70,7 +70,7 @@ struct SettingsView: View {
             Text("Settings")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .padding(.top, 20)
+                .padding(.top, 10)
                 .padding(.bottom, 20)
 
             ScrollView {

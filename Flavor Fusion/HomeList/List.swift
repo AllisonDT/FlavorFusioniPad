@@ -40,7 +40,7 @@ struct List: View {
             Text("\(displayName)'s Cabinet")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .padding(.top, 20)
+                .padding(.top, 10)
                 .padding(.bottom, 20)
 
             ScrollView {

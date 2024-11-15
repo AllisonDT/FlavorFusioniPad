@@ -28,7 +28,7 @@ struct AboutView: View {
             Text("About Flavor Fusion")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .padding(.top, 20)
+                .padding(.top, 10)
                 .padding(.bottom, 20)
 
             ScrollView {
